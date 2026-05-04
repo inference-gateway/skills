@@ -1,0 +1,371 @@
+{
+  "lockfile-version": 1,
+  "manifest": {
+    "schema-version": "1.11.0",
+    "install": {
+      "claude-code": {
+        "pkg-path": "claude-code",
+        "version": "2.1.112"
+      },
+      "go-task": {
+        "pkg-path": "go-task",
+        "version": "3.48.0"
+      },
+      "markdownlint-cli": {
+        "pkg-path": "markdownlint-cli",
+        "version": "0.48.0"
+      }
+    },
+    "options": {}
+  },
+  "packages": [
+    {
+      "attr_path": "claude-code",
+      "broken": false,
+      "derivation": "/nix/store/vr51n6hnj5vx05q15g5vz8y3q6ys1m2f-claude-code-2.1.112.drv",
+      "description": "Agentic coding tool that lives in your terminal, understands your codebase, and helps you code faster",
+      "install_id": "claude-code",
+      "license": "Unfree",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=0726a0ecb6d4e08f6adced58726b95db924cef57",
+      "name": "claude-code-2.1.112",
+      "pname": "claude-code",
+      "rev": "0726a0ecb6d4e08f6adced58726b95db924cef57",
+      "rev_count": 985613,
+      "rev_date": "2026-04-22T17:02:47Z",
+      "scrape_date": "2026-04-29T20:03:39.904895Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": true,
+      "version": "2.1.112",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/9h2v715cvlpdh6w5rdzxaq9s4z4xn570-claude-code-2.1.112"
+      },
+      "system": "aarch64-darwin",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "claude-code",
+      "broken": false,
+      "derivation": "/nix/store/pbjqm71bgwjrlrb1n0hjpp9n5j4q5mh6-claude-code-2.1.112.drv",
+      "description": "Agentic coding tool that lives in your terminal, understands your codebase, and helps you code faster",
+      "install_id": "claude-code",
+      "license": "Unfree",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=0726a0ecb6d4e08f6adced58726b95db924cef57",
+      "name": "claude-code-2.1.112",
+      "pname": "claude-code",
+      "rev": "0726a0ecb6d4e08f6adced58726b95db924cef57",
+      "rev_count": 985613,
+      "rev_date": "2026-04-22T17:02:47Z",
+      "scrape_date": "2026-04-29T21:17:23.059816Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": true,
+      "version": "2.1.112",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/1m8vb23j05gq201vxgdf0hnf7zc927xf-claude-code-2.1.112"
+      },
+      "system": "aarch64-linux",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "claude-code",
+      "broken": false,
+      "derivation": "/nix/store/531qa5pk4556a5vwivhz8j5jscickycj-claude-code-2.1.112.drv",
+      "description": "Agentic coding tool that lives in your terminal, understands your codebase, and helps you code faster",
+      "install_id": "claude-code",
+      "license": "Unfree",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=0726a0ecb6d4e08f6adced58726b95db924cef57",
+      "name": "claude-code-2.1.112",
+      "pname": "claude-code",
+      "rev": "0726a0ecb6d4e08f6adced58726b95db924cef57",
+      "rev_count": 985613,
+      "rev_date": "2026-04-22T17:02:47Z",
+      "scrape_date": "2026-04-29T22:26:12.628793Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": true,
+      "version": "2.1.112",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/l2qrc7k1hjids75391ivbqslmyh5z056-claude-code-2.1.112"
+      },
+      "system": "x86_64-darwin",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "claude-code",
+      "broken": false,
+      "derivation": "/nix/store/b76yckj8f366syis58c1ij27xc0rjb9b-claude-code-2.1.112.drv",
+      "description": "Agentic coding tool that lives in your terminal, understands your codebase, and helps you code faster",
+      "install_id": "claude-code",
+      "license": "Unfree",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=0726a0ecb6d4e08f6adced58726b95db924cef57",
+      "name": "claude-code-2.1.112",
+      "pname": "claude-code",
+      "rev": "0726a0ecb6d4e08f6adced58726b95db924cef57",
+      "rev_count": 985613,
+      "rev_date": "2026-04-22T17:02:47Z",
+      "scrape_date": "2026-04-29T23:48:06.033786Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": true,
+      "version": "2.1.112",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/0zxm3ic96w2yq2s6dkl8w1iwsskzhrg4-claude-code-2.1.112"
+      },
+      "system": "x86_64-linux",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "go-task",
+      "broken": false,
+      "derivation": "/nix/store/nb7wzw4x040dz0zxvg987i0vv89fa6ck-go-task-3.48.0.drv",
+      "description": "Task runner / simpler Make alternative written in Go",
+      "install_id": "go-task",
+      "license": "MIT",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=0726a0ecb6d4e08f6adced58726b95db924cef57",
+      "name": "go-task-3.48.0",
+      "pname": "go-task",
+      "rev": "0726a0ecb6d4e08f6adced58726b95db924cef57",
+      "rev_count": 985613,
+      "rev_date": "2026-04-22T17:02:47Z",
+      "scrape_date": "2026-04-29T20:03:40.925407Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "3.48.0",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/gx97hxd28ymbxf2nj4kq6masld4qk7yw-go-task-3.48.0"
+      },
+      "system": "aarch64-darwin",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "go-task",
+      "broken": false,
+      "derivation": "/nix/store/y3q5bpvw5smpm2y97azm4sp8cin7l9vg-go-task-3.48.0.drv",
+      "description": "Task runner / simpler Make alternative written in Go",
+      "install_id": "go-task",
+      "license": "MIT",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=0726a0ecb6d4e08f6adced58726b95db924cef57",
+      "name": "go-task-3.48.0",
+      "pname": "go-task",
+      "rev": "0726a0ecb6d4e08f6adced58726b95db924cef57",
+      "rev_count": 985613,
+      "rev_date": "2026-04-22T17:02:47Z",
+      "scrape_date": "2026-04-29T21:17:25.082882Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "3.48.0",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/di0pkf2d113g9nkcbm4p51sgivfbkcxg-go-task-3.48.0"
+      },
+      "system": "aarch64-linux",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "go-task",
+      "broken": false,
+      "derivation": "/nix/store/31ix4zbv7rw8zrw0m4qkqb8pjlpd7nrp-go-task-3.48.0.drv",
+      "description": "Task runner / simpler Make alternative written in Go",
+      "install_id": "go-task",
+      "license": "MIT",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=0726a0ecb6d4e08f6adced58726b95db924cef57",
+      "name": "go-task-3.48.0",
+      "pname": "go-task",
+      "rev": "0726a0ecb6d4e08f6adced58726b95db924cef57",
+      "rev_count": 985613,
+      "rev_date": "2026-04-22T17:02:47Z",
+      "scrape_date": "2026-04-29T22:26:13.671468Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "3.48.0",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/4mdamkq6v7xi11525ah95nb4psdd1a9m-go-task-3.48.0"
+      },
+      "system": "x86_64-darwin",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "go-task",
+      "broken": false,
+      "derivation": "/nix/store/48fsygvnlrh7g8na7y0wxc750bqwpzpc-go-task-3.48.0.drv",
+      "description": "Task runner / simpler Make alternative written in Go",
+      "install_id": "go-task",
+      "license": "MIT",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=0726a0ecb6d4e08f6adced58726b95db924cef57",
+      "name": "go-task-3.48.0",
+      "pname": "go-task",
+      "rev": "0726a0ecb6d4e08f6adced58726b95db924cef57",
+      "rev_count": 985613,
+      "rev_date": "2026-04-22T17:02:47Z",
+      "scrape_date": "2026-04-29T23:48:08.266861Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "3.48.0",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/gak3jfx9splyph60r0vvvv24vjcwyakx-go-task-3.48.0"
+      },
+      "system": "x86_64-linux",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "markdownlint-cli",
+      "broken": false,
+      "derivation": "/nix/store/6c1mwx98ivjwg2shaq9968safar62vji-markdownlint-cli-0.48.0.drv",
+      "description": "Command line interface for MarkdownLint",
+      "install_id": "markdownlint-cli",
+      "license": "MIT",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=0726a0ecb6d4e08f6adced58726b95db924cef57",
+      "name": "markdownlint-cli-0.48.0",
+      "pname": "markdownlint-cli",
+      "rev": "0726a0ecb6d4e08f6adced58726b95db924cef57",
+      "rev_count": 985613,
+      "rev_date": "2026-04-22T17:02:47Z",
+      "scrape_date": "2026-04-29T20:04:01.883330Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "0.48.0",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/375943y8zpzmxipls055d6bkp48yy68k-markdownlint-cli-0.48.0"
+      },
+      "system": "aarch64-darwin",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "markdownlint-cli",
+      "broken": false,
+      "derivation": "/nix/store/v5wq0cxg5pfw0hdm3qsnjx552j9gb3z0-markdownlint-cli-0.48.0.drv",
+      "description": "Command line interface for MarkdownLint",
+      "install_id": "markdownlint-cli",
+      "license": "MIT",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=0726a0ecb6d4e08f6adced58726b95db924cef57",
+      "name": "markdownlint-cli-0.48.0",
+      "pname": "markdownlint-cli",
+      "rev": "0726a0ecb6d4e08f6adced58726b95db924cef57",
+      "rev_count": 985613,
+      "rev_date": "2026-04-22T17:02:47Z",
+      "scrape_date": "2026-04-29T21:17:56.748992Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "0.48.0",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/nh1iablhmj7n806b6y72bmh0c9aix7d0-markdownlint-cli-0.48.0"
+      },
+      "system": "aarch64-linux",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "markdownlint-cli",
+      "broken": false,
+      "derivation": "/nix/store/98s2nz45l1a8wsqks5ap39l3pa2xps4w-markdownlint-cli-0.48.0.drv",
+      "description": "Command line interface for MarkdownLint",
+      "install_id": "markdownlint-cli",
+      "license": "MIT",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=0726a0ecb6d4e08f6adced58726b95db924cef57",
+      "name": "markdownlint-cli-0.48.0",
+      "pname": "markdownlint-cli",
+      "rev": "0726a0ecb6d4e08f6adced58726b95db924cef57",
+      "rev_count": 985613,
+      "rev_date": "2026-04-22T17:02:47Z",
+      "scrape_date": "2026-04-29T22:26:34.446357Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "0.48.0",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/b0wcf7mlj7pa5r5al36i84jjgr7l9802-markdownlint-cli-0.48.0"
+      },
+      "system": "x86_64-darwin",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "markdownlint-cli",
+      "broken": false,
+      "derivation": "/nix/store/hzs0xhdb7w3cd62zzkl4i8szp77xydlz-markdownlint-cli-0.48.0.drv",
+      "description": "Command line interface for MarkdownLint",
+      "install_id": "markdownlint-cli",
+      "license": "MIT",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=0726a0ecb6d4e08f6adced58726b95db924cef57",
+      "name": "markdownlint-cli-0.48.0",
+      "pname": "markdownlint-cli",
+      "rev": "0726a0ecb6d4e08f6adced58726b95db924cef57",
+      "rev_count": 985613,
+      "rev_date": "2026-04-22T17:02:47Z",
+      "scrape_date": "2026-04-29T23:48:42.233743Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "0.48.0",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/fa2dd63i6mg5ny73799ndmm20yin8575-markdownlint-cli-0.48.0"
+      },
+      "system": "x86_64-linux",
+      "group": "toplevel",
+      "priority": 5
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "updated": "2026-05-05T00:00:00Z",
+  "skills": [
+    {
+      "name": "skill-creator",
+      "description": "Author a new Agent Skill from a minimal SKILL.md template.",
+      "source": "https://github.com/inference-gateway/skills/tree/main/skills/skill-creator",
+      "ref": "main",
+      "vendor": "inference-gateway",
+      "license": "MIT",
+      "tags": ["meta", "skills", "authoring"],
+      "categories": ["developer-tools"],
+      "homepage": "https://github.com/inference-gateway/skills"
+    }
+  ]
+}

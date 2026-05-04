@@ -1,0 +1,30 @@
+---
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  ci:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6.3.0
+        with:
+          node-version: 'lts/*'
+
+      - name: Install markdownlint
+        run: npm install -g markdownlint-cli@0.48.0
+
+      - name: Run markdownlint
+        run: markdownlint '**/*.md' --ignore node_modules

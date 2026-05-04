@@ -1,0 +1,13 @@
+---
+version: '3'
+
+tasks:
+  default:
+    cmds:
+      - task --list
+    silent: true
+
+  lint:
+    desc: Lint all markdown files
+    cmds:
+      - markdownlint '**/*.md' --ignore node_modules
