@@ -30,9 +30,10 @@ This repository serves two purposes:
 
 Open a pull request that:
 
-- Adds an entry to `catalog.json` with `name`, `description`, `source`, `ref`
-  (commit SHA or tag — pin for reproducibility), `vendor`, `license`, `tags`,
-  `categories`, and optional `homepage`.
+- Adds an entry to `catalog.json` with `name`, `description`, `source`,
+  `vendor`, `license`, `tags`, `categories`, and optional `homepage`. The
+  catalog is versioned as a whole via the repo's git tag (see [Releases](https://github.com/inference-gateway/skills/releases)),
+  so per-entry refs aren't needed — consumers pin to a catalog version.
 - If hosting the body here, also adds the skill folder under `skills/<name>/`
   with a valid `SKILL.md` (frontmatter `name` + `description`).
 - For skills derived from a third party, preserves the upstream `LICENSE` inside

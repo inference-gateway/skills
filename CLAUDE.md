@@ -32,10 +32,11 @@ with `markdownlint-cli@0.48.0`. The lint config is `.markdownlint.json` - note
 
 When the entry is hosted in this repo, every PR must touch both sides:
 
-- A `catalog.json` entry with `name`, `description`, `source`, `ref` (pinned commit
-  SHA or tag for reproducibility - `main` is acceptable for IG-vendored skills but
-  prefer a SHA/tag for upstream-vendored ones), `vendor`, `license`, `tags`,
-  `categories`, optional `homepage`.
+- A `catalog.json` entry with `name`, `description`, `source`, `vendor`,
+  `license`, `tags`, `categories`, optional `homepage`. The catalog is versioned
+  as a whole by the repo's git tag (semantic-release writes `release` and
+  `updated` at release time); per-entry refs aren't carried because consumers
+  pin to a catalog version, not to individual skill refs.
 - `skills/<name>/SKILL.md` with frontmatter `name` (matching the folder) and
   `description` (1–1024 chars, must let a reader decide whether to invoke without
   reading the body).

@@ -59,8 +59,10 @@ This repository is a **curated catalog of Agent Skills** for the
 ### Two Things Must Stay in Sync
 
 1. **`catalog.json`** - Must contain an entry for every skill. Each entry requires:
-   `name`, `description`, `source`, `ref` (pinned commit SHA or tag), `vendor`,
-   `license`, `tags`, `categories`, and optional `homepage`.
+   `name`, `description`, `source`, `vendor`, `license`, `tags`, `categories`,
+   and optional `homepage`. The catalog itself is versioned by the repo's git
+   tag (semantic-release maintains `release` and `updated` at the top level),
+   so per-entry refs aren't carried.
 
 2. **`skills/<name>/SKILL.md`** - The folder name must match the `name:` field in the frontmatter **exactly**. Frontmatter requires `name` and `description` (1–1024 chars).
 
@@ -292,7 +294,6 @@ Use this skill when <trigger condition>.
   "name": "<skill-name>",
   "description": "<one sentence>",
   "source": "https://github.com/inference-gateway/skills/tree/main/skills/<skill-name>",
-  "ref": "main",
   "vendor": "inference-gateway",
   "license": "MIT",
   "tags": ["tag1", "tag2"],
