@@ -69,6 +69,20 @@ These commands work identically locally and inside a GitHub Actions job (as long
 - **Pre-commit hook:** `task pre-commit:install` in the main gateway. If skipped, run `task generate && task format && task lint && task build && task test` before pushing - CI mirrors this.
 - **Vision / multimodal:** disabled by default (`ENABLE_VISION=false`); enable explicitly when testing vision flows.
 
+## Feature and refactor workflow
+
+Every `feat:` or `refactor:` landing in any ecosystem repo (except `inference-gateway/docs` itself) requires a corresponding `[DOCS]` ticket filed against `inference-gateway/docs` - created at the same time as the source PR, not "later." Default to filing; the burden is on the author to justify *not* filing one. Shipped features without docs follow-up silently rot the documentation site and break newcomer onboarding.
+
+| Source change | Docs ticket scope |
+| --- | --- |
+| `feat:` - any user-facing addition (endpoint, flag, env var, config, provider, SDK method, agent capability) | New `[DOCS]` issue: describe the feature, the user-facing surface, and any code samples to add. |
+| `refactor:` - public API or user-visible behavior change | `[DOCS]` issue: list affected pages and what must change. |
+| `refactor:` - purely internal (no public-surface change) | Skipping is allowed, but the PR body must state "no docs ticket: internal-only refactor" so the absence is intentional, not an oversight. |
+
+Use the `documentation_request.md` template (see "Reporting GitHub issues" below): title prefix `[DOCS] `, label `documentation`, type `documentation`. Always link the docs ticket back to the originating PR/issue so it carries enough context to act on without re-discovering it.
+
+Filing the docs ticket is a maintainer-owned task, not something to automate from a downstream CI run. When you (the assistant) identify that a PR or commit qualifies under this rule, surface a prepared ticket draft (title + body) in your response so the maintainer can file it; do not file cross-repo issues automatically. Do not silently skip the docs ticket - if you think it isn't needed, say so explicitly so the maintainer can confirm.
+
 ## Cross-repo change checklist
 
 When a change in one repo logically requires updates in another, surface this to the user (or in the PR description, when running in CI) explicitly before shipping:
