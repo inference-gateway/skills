@@ -1,6 +1,7 @@
 ---
-name: inference-gateway-maintainer
+name: maintainer
 description: Guidance for maintaining the Inference Gateway ecosystem - a polyrepo project under the `inference-gateway` GitHub organization (main Go gateway, CLI, operator, SDKs, docs, schemas, ADL, registry, etc.). Use when working inside any repo in that org (locally or in a GitHub Actions / CI checkout), when changes need to ripple across multiple repos (e.g., OpenAPI/schema changes that affect SDKs and docs), or when the user asks ecosystem-level questions.
+license: MIT
 ---
 
 # Inference Gateway Maintainer

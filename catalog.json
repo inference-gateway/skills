@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-05-05T00:00:00Z",
+  "updated": "2026-05-22T00:00:00Z",
   "skills": [
     {
       "name": "skill-creator",
@@ -10,6 +10,17 @@
       "vendor": "inference-gateway",
       "license": "MIT",
       "tags": ["meta", "skills", "authoring"],
+      "categories": ["developer-tools"],
+      "homepage": "https://github.com/inference-gateway/skills"
+    },
+    {
+      "name": "maintainer",
+      "description": "Guidance for maintaining the Inference Gateway ecosystem (main Go gateway, CLI, operator, SDKs, docs, schemas, ADL, low-code, registry, etc.). Use when working inside any repo in that GitHub org (locally or in a CI checkout), when changes ripple across repos (e.g., OpenAPI/schema changes that affect SDKs and docs), or when filing GitHub issues against ecosystem repos.",
+      "source": "https://github.com/inference-gateway/skills/tree/main/skills/maintainer",
+      "ref": "main",
+      "vendor": "inference-gateway",
+      "license": "MIT",
+      "tags": ["inference-gateway", "maintainer", "polyrepo", "ecosystem"],
       "categories": ["developer-tools"],
       "homepage": "https://github.com/inference-gateway/skills"
     }
