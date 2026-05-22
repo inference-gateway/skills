@@ -11,3 +11,8 @@ tasks:
     desc: Lint all markdown files
     cmds:
       - markdownlint '**/*.md' --ignore node_modules
+
+  lint:fix:
+    desc: Lint and auto-fix all markdown files
+    cmds:
+      - markdownlint '**/*.md' --ignore node_modules --fix
