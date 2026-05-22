@@ -23,6 +23,17 @@
       "tags": ["inference-gateway", "maintainer", "polyrepo", "ecosystem"],
       "categories": ["developer-tools"],
       "homepage": "https://github.com/inference-gateway/skills"
+    },
+    {
+      "name": "adl",
+      "description": "Author and maintain projects built with ADL (Agent Definition Language) - the YAML manifest format from inference-gateway/adl that adl-cli turns into a full A2A agent scaffold (Go/Rust/TypeScript). Use when working inside a generated agent project (presence of agent.yaml + .adl-ignore), when editing the manifest, when implementing custom tools and skills against the generated scaffold, or when planning the schema-first / domain modelling for a new agent.",
+      "source": "https://github.com/inference-gateway/skills/tree/main/skills/adl",
+      "ref": "main",
+      "vendor": "inference-gateway",
+      "license": "MIT",
+      "tags": ["inference-gateway", "adl", "agent", "schema-driven", "scaffolding"],
+      "categories": ["developer-tools"],
+      "homepage": "https://github.com/inference-gateway/skills"
     }
   ]
 }
