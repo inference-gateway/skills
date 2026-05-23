@@ -39,7 +39,7 @@ This repository is a **curated catalog of Agent Skills** for the
 ├── Taskfile.yml              # Task runner commands
 ├── CLAUDE.md                 # Guidance for Claude Code
 ├── AGENTS.md                 # Guidance for AI agents (this file)
-├── LICENSE                   # Repository license (MIT)
+├── LICENSE                   # Repository license (Apache-2.0)
 ├── .markdownlint.json        # Markdown linting configuration
 ├── .gitignore                # Git ignore rules
 ├── .github/
@@ -50,10 +50,10 @@ This repository is a **curated catalog of Agent Skills** for the
 └── skills/
     ├── skill-creator/
     │   ├── SKILL.md          # Skill body: guides creating new skills
-    │   └── LICENSE           # MIT (IG-authored)
+    │   └── LICENSE           # Apache-2.0 (IG-authored)
     └── maintainer/
         ├── SKILL.md          # Skill body: ecosystem-wide maintenance guidance
-        └── LICENSE           # MIT (IG-authored)
+        └── LICENSE           # Apache-2.0 (IG-authored)
 ```
 
 ### Two Things Must Stay in Sync
@@ -224,8 +224,8 @@ Key rule codes disabled/allowed:
 
 ### Licensing
 
-- **Repository-level files** (`README.md`, `catalog.json`, `LICENSE`, `Taskfile.yml`, configs) - MIT
-- **IG-authored skills** (under `skills/<name>/`) - MIT (each folder carries its own `LICENSE`)
+- **Repository-level files** (`README.md`, `catalog.json`, `LICENSE`, `Taskfile.yml`, configs) - Apache-2.0
+- **IG-authored skills** (under `skills/<name>/`) - Apache-2.0 (each folder carries its own `LICENSE`)
 - **Third-party/vendored skills** - Their own license takes precedence inside the skill folder; must preserve the upstream `LICENSE` and add a `NOTICE` file at the repo root
 - **No em dash or en dash** in titles, bodies, comments, or footers when filing issues against `inference-gateway/docs` - use ASCII hyphen `-` (U+002D)
 
@@ -250,7 +250,7 @@ Key rule codes disabled/allowed:
 | **`.gitignore`** | Currently ignores `**/.env` files only. |
 | **`CLAUDE.md`** | Guidance for Claude Code when working in this repo. Read before making changes. |
 | **`AGENTS.md`** | Guidance for AI agents working in this repo (this file). |
-| **`LICENSE`** | Repository-level MIT license. |
+| **`LICENSE`** | Repository-level Apache 2.0 license. |
 | **`skills/<name>/SKILL.md`** | Individual skill bodies. Each has frontmatter `name` and `description`, plus markdown body. |
 
 ---
@@ -295,7 +295,7 @@ Use this skill when <trigger condition>.
   "description": "<one sentence>",
   "source": "https://github.com/inference-gateway/skills/tree/main/skills/<skill-name>",
   "vendor": "inference-gateway",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "tags": ["tag1", "tag2"],
   "categories": ["developer-tools"],
   "homepage": "https://github.com/inference-gateway/skills"

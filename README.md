@@ -52,6 +52,6 @@ The catalog is consumed by:
 ## Licensing
 
 - Repository-level files (`README.md`, `catalog.json`, `LICENSE`) and IG-authored
-  skills under `skills/` are MIT.
+  skills under `skills/` are Apache-2.0.
 - Skills derived from a third-party project carry their own license inside the
   skill folder; that license takes precedence for that skill's contents.

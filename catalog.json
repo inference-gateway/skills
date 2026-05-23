@@ -7,7 +7,7 @@
       "description": "Author a new Agent Skill from a minimal SKILL.md template.",
       "source": "https://github.com/inference-gateway/skills/tree/main/skills/skill-creator",
       "vendor": "inference-gateway",
-      "license": "MIT",
+      "license": "Apache-2.0",
       "tags": ["meta", "skills", "authoring"],
       "categories": ["developer-tools"],
       "homepage": "https://github.com/inference-gateway/skills"
@@ -17,7 +17,7 @@
       "description": "Guidance for maintaining the Inference Gateway ecosystem (main Go gateway, CLI, operator, SDKs, docs, schemas, ADL, low-code, registry, etc.). Use when working inside any repo in that GitHub org (locally or in a CI checkout), when changes ripple across repos (e.g., OpenAPI/schema changes that affect SDKs and docs), or when filing GitHub issues against ecosystem repos.",
       "source": "https://github.com/inference-gateway/skills/tree/main/skills/maintainer",
       "vendor": "inference-gateway",
-      "license": "MIT",
+      "license": "Apache-2.0",
       "tags": ["inference-gateway", "maintainer", "polyrepo", "ecosystem"],
       "categories": ["developer-tools"],
       "homepage": "https://github.com/inference-gateway/skills"
@@ -27,7 +27,7 @@
       "description": "Author and maintain projects built with ADL (Agent Definition Language) - the YAML manifest format from inference-gateway/adl that adl-cli turns into a full A2A agent scaffold (Go/Rust/TypeScript). Use when working inside a generated agent project (presence of agent.yaml + .adl-ignore), when editing the manifest, when implementing custom tools and skills against the generated scaffold, or when planning the schema-first / domain modelling for a new agent.",
       "source": "https://github.com/inference-gateway/skills/tree/main/skills/adl",
       "vendor": "inference-gateway",
-      "license": "MIT",
+      "license": "Apache-2.0",
       "tags": ["inference-gateway", "adl", "agent", "schema-driven", "scaffolding"],
       "categories": ["developer-tools"],
       "homepage": "https://github.com/inference-gateway/skills"

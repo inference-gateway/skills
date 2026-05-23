@@ -45,7 +45,7 @@ If the skill is derived from a third party:
 
 - Preserve the upstream `LICENSE` inside `skills/<name>/`.
 - Add a `NOTICE` file at the repo root recording the attribution.
-- That skill's contents are governed by its own license, not the repo-level MIT.
+- That skill's contents are governed by its own license, not the repo-level Apache-2.0.
 
 The `skill-creator` skill in this repo documents the SKILL.md authoring contract:
 
@@ -55,7 +55,7 @@ The `skill-creator` skill in this repo documents the SKILL.md authoring contract
 
 - **Commits:** Conventional Commits (`feat:`, `fix:`, `chore:`, `docs:`, ...).
   semantic-release reads these.
-- **Don't conflate** this public catalog repo (`inference-gateway/skills`, MIT,
+- **Don't conflate** this public catalog repo (`inference-gateway/skills`, Apache-2.0,
   Agent Skills spec) with any private Claude Code skills directory on a developer
   machine. They are different things.
 - The `maintainer` skill in this repo encodes ecosystem-wide guidance for the

@@ -6,7 +6,7 @@ description: >
   inside a generated agent project (presence of `agent.yaml` + `.adl-ignore`), when editing the manifest, when
   implementing custom tools and skills against the generated scaffold, or when planning the schema-first / domain
   modelling for a new agent.
-license: MIT
+license: Apache-2.0
 ---
 
 # ADL (Agent Definition Language) Expert

@@ -5,7 +5,7 @@ description: >
   organization (main Go gateway, CLI, operator, SDKs, docs, schemas, ADL, registry, etc.). Use when working inside any
   repo in that org (locally or in a GitHub Actions / CI checkout), when changes need to ripple across multiple repos
   (e.g., OpenAPI/schema changes that affect SDKs and docs), or when the user asks ecosystem-level questions.
-license: MIT
+license: Apache-2.0
 ---
 
 # Inference Gateway Maintainer
@@ -195,7 +195,7 @@ When this skill runs inside a GitHub Actions job:
   explicit job/step authorized to do so) - these are high-blast-radius actions across the ecosystem.
 - Don't hand-edit generated files. If output looks wrong, fix the generator input (`openapi.yaml`, schema, template).
 - Don't assume one repo's `CLAUDE.md` applies to another. Re-read per repo.
-- Don't conflate the public skills catalog repo (`inference-gateway/skills`, open-source, MIT, follows the Agent Skills
+- Don't conflate the public skills catalog repo (`inference-gateway/skills`, open-source, Apache-2.0, follows the Agent Skills
   spec) with any private Claude Code skills directory on a developer machine.
 - Don't bypass hooks (`--no-verify`, `--no-gpg-sign`) unless the user explicitly asks.
 - Don't assume sibling repos exist on disk - reach for `gh` to read them.
