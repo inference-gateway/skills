@@ -41,16 +41,48 @@ else and will regenerate it on demand.
 If you forget which half a file belongs to, `cat .adl-ignore` - anything
 matched there survives `adl generate --overwrite`.
 
+**Spec at a glance.** Every `spec.*` top-level field the v1 schema defines:
+
+| `spec.*` field | Required? | Purpose |
+| --- | --- | --- |
+| `capabilities` | yes | A2A feature flags - `streaming`, `pushNotifications`, `stateTransitionHistory` (all three booleans) |
+| `server` | yes | `port` (1-65535), optional `scheme`, `debug`, `auth.enabled` |
+| `language` | yes | At least one of `go`, `typescript`, `rust` (each with its own required pair, e.g. `module`+`version`) |
+| `agent` | no | LLM provider/model/systemPrompt/maxTokens/temperature |
+| `card` | no | Static A2A agent-card metadata served at `.well-known/agent-card.json` |
+| `services` | no | Domain services declared as ports (`type`, `interface`, `factory`, `description`) |
+| `config` | no | Arbitrary per-section config maps; one section per service (env-mapped) |
+| `tools` | no | Function-call entrypoints - reserved built-in ids and user tools |
+| `skills` | no | Markdown playbooks - registry / GitHub `source:` / `bare: true` |
+| `acronyms` | no | String list the generator preserves in generated identifier casing |
+| `artifacts` | no | `enabled: true` to generate an artifacts server (filesystem or MinIO backend) |
+| `hooks` | no | `post: [...]` commands the CLI runs after each `adl generate` |
+| `scm` | no | `provider`, `url`, `github_app`, `issue_templates`, `dependabot`, `ci`, `cd` |
+| `development` | no | `sandbox.{flox,devcontainer,dockerCompose}` + `ai.{claudecode,codex,gemini,opencode,infer}` |
+| `deployment` | no | `type: kubernetes \| cloudrun` plus the matching block |
+
+The sections below cover each in turn. Anything not in this table is not in
+v1 - if you see it in an existing manifest, treat it as a CLI extension and
+verify against `adl-cli`'s changelog.
+
 ## Schema-first / domain-first workflow
 
 ADL is schema-driven by design: the manifest is the domain model. Sequence
 work so the manifest leads and the code follows.
 
 1. **Model the domain in YAML before touching any source file.**
-   - Name the bounded context in `metadata.name` (lowercase, hyphenated).
-   - Enumerate **services** (`spec.services.*`) as ports: each gets an
-     `interface`, a `factory`, and a description. One service per
-     responsibility - don't conflate `database` and `cache`.
+   - Name the bounded context in `metadata.name` (lowercase, hyphenated) and
+     pin `metadata.version` (semver - `^\d+\.\d+\.\d+$`).
+   - **Declare the required spec frame first:** `spec.capabilities` (all
+     three booleans - `streaming`, `pushNotifications`,
+     `stateTransitionHistory`), `spec.server.port`, and at least one
+     `spec.language.{go|typescript|rust}` target. Almost always set
+     `spec.agent` (provider + model) and `spec.card` (A2A discovery) too -
+     they're optional in the schema but the agent is useless without them.
+   - Enumerate **services** (`spec.services.*`) as ports: each gets a
+     `type` (`service`/`repository`/`client`/`middleware`), an `interface`,
+     a `factory`, and a description. One service per responsibility - don't
+     conflate `database` and `cache`.
    - Enumerate **config sections** (`spec.config.*`) as value objects. Use
      dotted-name injection (`config.database`) to give a tool *only* the
      subsection it needs.
@@ -75,6 +107,107 @@ work so the manifest leads and the code follows.
    non-negotiable part).
 6. **Run.** `task build && task run` (Go/Rust) or the equivalent in the chosen
    language. The generated `Taskfile.yml` is the entry point.
+
+## Capabilities, the LLM, and the agent card
+
+Three top-of-spec blocks shape what the agent advertises, which model it
+talks to, and how clients discover it. Set them before anything domain-
+specific.
+
+**`spec.capabilities` (required).** All three booleans must be present -
+the validator rejects the manifest if any is missing:
+
+```yaml
+capabilities:
+  streaming: true              # SSE-based streaming responses
+  pushNotifications: false     # webhook callbacks on long-running tasks
+  stateTransitionHistory: true # record task state transitions for replay
+```
+
+**`spec.agent` (optional but near-universal).** The LLM the generated agent
+defers to. Provider is a fixed enum: `openai`, `anthropic`, `ollama`,
+`deepseek`, `google`, `mistral`, `groq`, or `""` for "configure at runtime
+via env vars only". Temperature is bounded to 0-2; `maxTokens` must be ≥1.
+
+```yaml
+agent:
+  provider: deepseek
+  model: deepseek-v4-flash
+  systemPrompt: |
+    You are a helpful A2A agent. Use the AVAILABLE SKILLS playbooks for
+    workflows; call tools for deterministic actions.
+  maxTokens: 4096
+  temperature: 0.3
+```
+
+**`spec.card` (optional).** Static fields for the A2A agent card served at
+`/.well-known/agent-card.json`. Used by other agents and the Inference
+Gateway registry for discovery. Fields are all free-form strings/arrays
+(no enum constraints in v1):
+
+```yaml
+card:
+  protocolVersion: "0.3.0"
+  preferredTransport: JSONRPC
+  defaultInputModes: [text, voice]
+  defaultOutputModes: [text, audio]
+  url: "https://my-agent.example.com:8443"
+  documentationUrl: "https://github.com/company/my-agent/docs"
+  iconUrl: "https://github.com/company/my-agent/icon.png"
+```
+
+## Server, auth, and language targets
+
+**`spec.server` (required).** Only `port` is mandatory. `scheme` (`http`/
+`https`), `debug`, and `auth.enabled` are optional. v1 only models the auth
+on/off toggle - specific providers (OIDC, JWT, ...) live in the generated
+code and config sections, not the schema:
+
+```yaml
+server:
+  port: 8443
+  scheme: https
+  debug: false
+  auth:
+    enabled: true
+```
+
+**`spec.language` (required).** At least one of three children; the
+generator emits the corresponding scaffold. Required pairs per language:
+
+| Language | Required fields | Optional |
+| --- | --- | --- |
+| `go` | `module`, `version` | - |
+| `typescript` | `packageName`, `nodeVersion` | - |
+| `rust` | `packageName`, `version`, `edition` | `features[]` |
+
+```yaml
+language:
+  go:
+    module: github.com/example/my-agent
+    version: "1.26.2"
+```
+
+**`vendor.{deps,devdeps}` (CLI extension, not in v1 schema).** `adl-cli`
+reads `spec.language.<lang>.vendor.deps[]` (runtime) and `vendor.devdeps[]`
+(code generators / dev tools) for Go and Rust to pre-populate `go.mod` /
+`Cargo.toml`. The v1 JSON Schema doesn't validate these keys, but it permits
+additional properties so they round-trip cleanly:
+
+```yaml
+language:
+  go:
+    module: github.com/example/my-agent
+    version: "1.26.2"
+    vendor:                                      # CLI extension
+      deps:
+        - github.com/stretchr/testify@v1.10.0
+      devdeps:
+        - golang.org/x/tools/cmd/stringer@v0.20.0
+```
+
+Verify against the latest `adl-cli` changelog before relying on it; treat
+schema-validated fields as load-bearing and extensions as best-effort.
 
 ## Tools vs Skills (the often-confused distinction)
 
@@ -117,6 +250,46 @@ config block accepts only the typed keys the generator knows; typos like
 Resolution precedence at runtime is **env > compile-time literal > built-in
 default (disabled)**. The kill-switch envs (`A2A_BASH_DISABLED=1`,
 `A2A_FETCH_DISABLED=1`, etc.) override the compile-time `enabled: true`.
+
+Each built-in accepts its own typed config keys under
+`spec.config.tools.<id>`. Anything not on this list fails validation:
+
+| Tool | Config keys |
+| --- | --- |
+| `read` | `enabled`, `max_lines` (default file slice), `allowed_roots[]` (empty = project-wide) |
+| `bash` | `enabled`, `whitelist[]` (allowed commands), `timeout_seconds` |
+| `write` | `enabled` |
+| `edit` | `enabled` |
+| `fetch` | `enabled`, `allowed_domains[]` (entries starting with `.` match any subdomain), `max_bytes`, `timeout_seconds`, `allow_downloads`, `download_dir` |
+
+A representative configuration that opts in the three tools with the
+richest config surfaces:
+
+```yaml
+config:
+  tools:
+    read:
+      enabled: true
+      max_lines: 2000
+    bash:
+      enabled: true
+      whitelist: [ls, cat, grep, find, rg, jq, wc, head, tail, git, go]
+      timeout_seconds: 30
+    fetch:
+      enabled: true
+      allowed_domains:
+        - pkg.go.dev
+        - .rust-lang.org           # any subdomain of rust-lang.org
+        - raw.githubusercontent.com
+      max_bytes: 5242880           # 5 MiB
+      timeout_seconds: 20
+      allow_downloads: true
+      download_dir: /tmp/adl-fetch-cache
+tools:
+  - id: read
+  - id: bash
+  - id: fetch
+```
 
 ## Custom tool implementation
 
@@ -255,7 +428,20 @@ the manifest."
 Services are first-class - declare them in `spec.services` with `type`,
 `interface`, `factory`, and `description`, and the generator creates
 `internal/<service>/<service>.{go,rs}` with an interface stub and a factory
-that takes `(*zap.Logger, *config.Config)`. Three rules keep this
+that takes `(*zap.Logger, *config.Config)`.
+
+`type` is a closed enum - pick the one that best names the role so the
+generator can emit idiomatic scaffolding:
+
+| `type` | Use it for |
+| --- | --- |
+| `service` | Domain logic / orchestration (default choice when in doubt) |
+| `repository` | Persistence and data-access ports - DBs, object stores |
+| `client` | Outbound HTTP / gRPC / RPC clients to another system |
+| `middleware` | Request-pipeline behaviour - auth, logging, rate limits |
+
+`interface` and `factory` must match `^[a-zA-Z][a-zA-Z0-9_]*$` - they
+become real identifiers in the generated code. Three rules keep this
 maintainable:
 
 1. **One interface per responsibility.** Don't ship a `UtilService`. Split
@@ -305,23 +491,190 @@ accepts (`MIT`, `Apache-2.0`, `BSD-2-Clause`, `BSD-3-Clause`, `GPL-2.0`,
 `CC-BY-4.0`, `CC-BY-SA-4.0`, `Unlicense`) or the literal `Proprietary`. SPDX
 expressions like `MIT OR Apache-2.0` are not currently accepted.
 
+## Local development: sandbox and AI assistants
+
+`spec.development` configures the experience of working *on* the agent
+locally - reproducible dev environments and AI-assistant onboarding files.
+Two independent subsections, both optional.
+
+**`spec.development.sandbox`.** Three alternative packagings - pick any
+combination; each declares its own `enabled` boolean. Generated artefacts:
+
+| Sub-block | `enabled: true` generates |
+| --- | --- |
+| `flox` | `.flox/env/manifest.toml` (Flox/Nix-backed reproducible env) |
+| `devcontainer` | `.devcontainer/devcontainer.json` (VS Code Dev Containers) |
+| `dockerCompose` | `docker-compose.yaml` (with the artifacts server wired in when `spec.artifacts.enabled: true`) |
+
+**`spec.development.ai`.** Per-agent toggles for the coding assistants the
+project is meant to be edited with. Each is independent; all default off.
+The CLI generates each agent's onboarding file the first time it's enabled,
+and keeps it in sync on subsequent `adl generate --overwrite` runs unless
+you list it in `.adl-ignore`:
+
+| Sub-block | Generated file |
+| --- | --- |
+| `claudecode` | `CLAUDE.md` (Anthropic Claude Code) |
+| `gemini` | `GEMINI.md` (Google Gemini) |
+| `codex` | shared `AGENTS.md` (OpenAI Codex) |
+| `opencode` | shared `AGENTS.md` |
+| `infer` | shared `AGENTS.md` (Inference Gateway `infer`) |
+
+A small example combining sandbox + AI toggles:
+
+```yaml
+development:
+  sandbox:
+    flox:
+      enabled: true
+    devcontainer:
+      enabled: false
+    dockerCompose:
+      enabled: true
+  ai:
+    claudecode:
+      enabled: true
+    codex:
+      enabled: true
+```
+
+**`spec.development.deps[]` (CLI extension, not in v1 schema).**
+`adl-cli` v0.38.0+ reads a cross-cutting list of sandbox-level tool
+dependencies to install across every enabled sandbox flavour. Treat it as
+a CLI convention - useful, but not schema-validated.
+
+## SCM, CI/CD, and deployment
+
+Two related blocks that together drive everything outside `main.go`: where
+the code lives, how it ships, and where it runs.
+
+**`spec.scm`.** All fields optional; the provider enum is closed:
+
+| Field | Effect |
+| --- | --- |
+| `provider` | `github` \| `gitlab` \| `bitbucket` - selects the workflow templates |
+| `url` | Repository URL (used in generated `README.md`, agent card, etc.) |
+| `github_app` | Generate a GitHub App / token configuration in CI |
+| `issue_templates` | Write `.github/ISSUE_TEMPLATE/*.md` |
+| `dependabot` | Write `.github/dependabot.yml` |
+| `ci` | Write `.github/workflows/ci.yml` |
+| `cd` | Write `.github/workflows/cd.yml` and `.releaserc.yaml` (semantic-release) |
+
+**`spec.deployment`.** Choose `type: kubernetes` or `type: cloudrun`; the
+matching sub-block carries the detail. Both share an `image` shape with
+`registry`, `repository`, `tag`, optional `useCloudBuild`.
+
+`type: kubernetes` generates `k8s/deployment.yaml`:
+
+```yaml
+deployment:
+  type: kubernetes
+  kubernetes:
+    image:
+      registry: ghcr.io
+      repository: example/my-agent
+      tag: v1.0.0
+```
+
+`type: cloudrun` generates `cloudrun/` helpers plus a `deploy` target in
+the `Taskfile.yml`. Fields map 1:1 to Cloud Run concepts:
+
+```yaml
+deployment:
+  type: cloudrun
+  cloudrun:
+    image:
+      registry: gcr.io
+      repository: my-agent
+      tag: v1.0.0
+      useCloudBuild: true
+    resources:
+      cpu: "1"
+      memory: 512Mi
+    scaling:
+      minInstances: 0
+      maxInstances: 100
+      concurrency: 1000
+    service:
+      timeout: 3600
+      allowUnauthenticated: true
+      serviceAccount: my-agent@PROJECT_ID.iam.gserviceaccount.com
+      executionEnvironment: gen2
+    environment:
+      LOG_LEVEL: info
+      ENVIRONMENT: production
+```
+
+`adl generate` exposes equivalent CLI flags (`--ci`, `--cd`,
+`--deployment kubernetes|cloudrun`, `--flox`, `--devcontainer`) that **OR
+with the manifest values**. Prefer the manifest for anything that needs to
+be reproducible across machines and CI runs - treat the flags as
+one-off escape hatches.
+
+## Artifacts and post-generate hooks
+
+Two small spec blocks that round out the manifest.
+
+**`spec.artifacts.enabled`.** Set `true` to generate an artifacts server -
+a small HTTP service for storing task outputs - and to wire the matching
+`create_artifact` / `read_artifact` / `list_artifacts` helpers into the
+generated code. The backend (filesystem vs MinIO) is chosen at runtime via
+env vars on the generated binary, not via the manifest. When
+`spec.development.sandbox.dockerCompose.enabled: true`, the MinIO instance
+is wired into the generated `docker-compose.yaml` (adl-cli v0.39.0+).
+
+```yaml
+artifacts:
+  enabled: true
+```
+
+**`spec.hooks.post`.** A list of shell commands the CLI runs at the end of
+every `adl generate`. Use for the things a generator can't reasonably
+infer:
+
+```yaml
+hooks:
+  post:
+    - go mod tidy
+    - go generate ./...
+```
+
 ## Common commands
 
-Run from the repo root of the generated project:
+`adl init` is for bootstrapping a fresh `agent.yaml`; `adl validate` /
+`adl generate` are the steady-state loop. Run from the repo root:
 
 ```sh
-adl validate agent.yaml                   # shape check before generating
-adl generate -f agent.yaml -o .           # initial scaffold
+adl init [name]                              # interactive wizard for a new agent.yaml
+adl init [name] --defaults                   # non-interactive; accept the defaults
+adl validate [file]                          # shape check; default file is agent.yaml
+adl generate -f agent.yaml -o .              # initial scaffold
 adl generate -f agent.yaml -o . --overwrite  # refresh after manifest edit (respects .adl-ignore)
-adl generate -f agent.yaml -o . --offline    # skip network; uses ~/.adl/skills-cache/
-task build                                # compile
-task test                                 # run unit tests - INCLUDING custom tool tests
-task run                                  # start the agent on spec.server.port
+adl generate ... --offline                   # skip skills registry; require local cache (~/.adl/skills-cache/)
+adl generate ... --ci                        # also write .github/workflows/ci.yml
+adl generate ... --cd                        # also write cd.yml + .releaserc.yaml
+adl generate ... --deployment kubernetes     # also write k8s/deployment.yaml
+adl generate ... --deployment cloudrun       # also write cloudrun/ helpers + Taskfile deploy target
+adl generate ... --flox                      # enable Flox sandbox (OR with spec.development.sandbox.flox.enabled)
+adl generate ... --devcontainer              # enable DevContainer sandbox (OR with spec.development.sandbox.devcontainer.enabled)
+adl generate ... -t minimal                  # template selector (currently only "minimal" ships)
+```
+
+Once generated:
+
+```sh
+task build                                   # compile
+task test                                    # run unit tests - INCLUDING custom tool tests
+task run                                     # start the agent on spec.server.port
+task deploy                                  # only present when spec.deployment is set
 ```
 
 Validate the manifest in CI on every PR. Add a job step that runs
 `adl validate agent.yaml` before any code build - it's faster and surfaces
-schema drift early.
+schema drift early. Keep the manifest as the source of truth - prefer
+`spec.scm.ci: true` over `--ci`, `spec.deployment.type: cloudrun` over
+`--deployment cloudrun`, and so on. The flags exist for one-off enabling;
+they are not a substitute for declarative state.
 
 ## Cross-repo awareness
 
@@ -361,3 +714,11 @@ restating it.
 - Don't conflate ADL with ADK. ADL is the manifest format; the ADK
   (`inference-gateway/adk`) is the Go runtime the generated `main.go`
   imports.
+- Don't omit `spec.capabilities`. All three booleans (`streaming`,
+  `pushNotifications`, `stateTransitionHistory`) are required by the v1
+  schema; `adl validate` rejects the manifest if any are missing.
+- Don't hand-edit generated `CLAUDE.md`, `AGENTS.md`, or `GEMINI.md`. They're
+  re-emitted by the `spec.development.ai.*` generators on every
+  `adl generate --overwrite` unless you add them to `.adl-ignore`. If you
+  want the AI-onboarding docs to stay hand-written, ignore the file and
+  accept that you've forked it from the generator.
