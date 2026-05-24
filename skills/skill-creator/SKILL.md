@@ -13,7 +13,7 @@ A skill is a folder containing a `SKILL.md` file. The frontmatter declares the
 skill's `name` and `description` so an agent runtime can decide whether to load
 it; the body is markdown instructions the runtime reads on demand.
 
-The format is portable — the same folder works with any agent runtime that
+The format is portable - the same folder works with any agent runtime that
 follows the [spec](https://github.com/anthropics/skills/tree/main/spec).
 
 ## Steps
@@ -23,14 +23,14 @@ follows the [spec](https://github.com/anthropics/skills/tree/main/spec).
    exactly.
 2. **Write a one-line description.** 1–1024 characters. Describe *what the
    skill does* and *when to invoke it* in a single sentence. The runtime
-   decides whether to surface the skill from this string alone — vague
+   decides whether to surface the skill from this string alone - vague
    descriptions get skipped.
 3. **Create the folder and `SKILL.md`.** Place it under either
    `.infer/skills/<name>/SKILL.md` (project-local) or
    `~/.infer/skills/<name>/SKILL.md` (user-global). Project scope wins on name
    collisions.
 4. **Write the body.** Lead with the trigger condition ("Use this skill
-   when …"), then numbered steps, then any notes. Keep it tight — no preamble,
+   when …"), then numbered steps, then any notes. Keep it tight - no preamble,
    no marketing copy.
 5. **Validate before committing.** The folder name must match the frontmatter
    `name`. The description must let a reader decide whether to use the skill
@@ -59,7 +59,7 @@ Use this skill when <trigger condition>.
 
 ## What to avoid
 
-- Don't restate the description in the body — the runtime already shows it.
+- Don't restate the description in the body - the runtime already shows it.
 - Don't embed screenshots, diagrams, or long code samples in `SKILL.md`. Put
   them in sibling files and link.
 - Don't write skills that duplicate the runtime's built-in tools (file reads,
