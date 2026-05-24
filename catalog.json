@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-05-22T00:00:00Z",
+  "updated": "2026-05-24T14:15:03Z",
   "skills": [
     {
       "name": "skill-creator",
@@ -8,8 +8,14 @@
       "source": "https://github.com/inference-gateway/skills/tree/main/skills/skill-creator",
       "vendor": "inference-gateway",
       "license": "Apache-2.0",
-      "tags": ["meta", "skills", "authoring"],
-      "categories": ["developer-tools"],
+      "tags": [
+        "meta",
+        "skills",
+        "authoring"
+      ],
+      "categories": [
+        "developer-tools"
+      ],
       "homepage": "https://github.com/inference-gateway/skills"
     },
     {
@@ -18,8 +24,15 @@
       "source": "https://github.com/inference-gateway/skills/tree/main/skills/maintainer",
       "vendor": "inference-gateway",
       "license": "Apache-2.0",
-      "tags": ["inference-gateway", "maintainer", "polyrepo", "ecosystem"],
-      "categories": ["developer-tools"],
+      "tags": [
+        "inference-gateway",
+        "maintainer",
+        "polyrepo",
+        "ecosystem"
+      ],
+      "categories": [
+        "developer-tools"
+      ],
       "homepage": "https://github.com/inference-gateway/skills"
     },
     {
@@ -28,9 +41,18 @@
       "source": "https://github.com/inference-gateway/skills/tree/main/skills/adl",
       "vendor": "inference-gateway",
       "license": "Apache-2.0",
-      "tags": ["inference-gateway", "adl", "agent", "schema-driven", "scaffolding"],
-      "categories": ["developer-tools"],
+      "tags": [
+        "inference-gateway",
+        "adl",
+        "agent",
+        "schema-driven",
+        "scaffolding"
+      ],
+      "categories": [
+        "developer-tools"
+      ],
       "homepage": "https://github.com/inference-gateway/skills"
     }
-  ]
+  ],
+  "release": "0.1.1"
 }
