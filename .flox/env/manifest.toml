@@ -2,9 +2,9 @@ schema-version = "1.11.0"
 
 [install]
 claude-code.pkg-path = "claude-code"
-claude-code.version = "^2.1.145"
+claude-code.version = "^2.1.148"
 go-task.pkg-path = "go-task"
 go-task.version = "3.48.0"
 markdownlint-cli.pkg-path = "markdownlint-cli"
 markdownlint-cli.version = "0.48.0"
-infer.flake = "github:inference-gateway/cli/v0.110.0"
+infer.flake = "github:inference-gateway/cli/v0.112.0"
