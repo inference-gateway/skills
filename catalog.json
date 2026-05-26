@@ -20,7 +20,7 @@
     },
     {
       "name": "maintainer",
-      "description": "Guidance for maintaining the Inference Gateway ecosystem (main Go gateway, CLI, operator, SDKs, docs, schemas, ADL, low-code, registry, etc.). Use when working inside any repo in that GitHub org (locally or in a CI checkout), when changes ripple across repos (e.g., OpenAPI/schema changes that affect SDKs and docs), or when filing GitHub issues against ecosystem repos.",
+      "description": "Guidance for maintaining the Inference Gateway ecosystem (main Go gateway, CLI, operator, SDKs, docs, schemas, ADL, registry, etc.). Use when working inside any repo in that GitHub org (locally or in a CI checkout), when changes ripple across repos (e.g., OpenAPI/schema changes that affect SDKs and docs), or when filing GitHub issues against ecosystem repos.",
       "source": "https://github.com/inference-gateway/skills/tree/main/skills/maintainer",
       "vendor": "inference-gateway",
       "license": "Apache-2.0",
