@@ -21,10 +21,16 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v6.4.0
         with:
-          node-version: 'lts/*'
+          node-version: '24.15.0'
 
       - name: Install markdownlint
         run: npm install -g markdownlint-cli@0.48.0
 
       - name: Run markdownlint
-        run: markdownlint '**/*.md' --ignore node_modules
+        run: markdownlint '**/*.md'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Check formatting
+        run: npx prettier '**/*.md' --check

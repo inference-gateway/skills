@@ -7,9 +7,12 @@
     "node": "^24.15.0"
   },
   "scripts": {
-    "build": "node scripts/build-catalog.mjs"
+    "build": "node scripts/build-catalog.mjs",
+    "format": "prettier '**/*.md' --write",
+    "format:check": "prettier '**/*.md' --check"
   },
   "dependencies": {
+    "prettier": "^3.8.3",
     "gray-matter": "^4.0.3",
     "js-yaml": "^4.1.1"
   }

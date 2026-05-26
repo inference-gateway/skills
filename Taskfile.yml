@@ -20,4 +20,9 @@ tasks:
   format:
     desc: Format all markdown files
     cmds:
-      - prettier '**/*.md' --ignore node_modules --write
+      - npm run format
+
+  format:check:
+    desc: Check formatting of all markdown files
+    cmds:
+      - npm run format:check

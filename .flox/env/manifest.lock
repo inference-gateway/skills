@@ -24,9 +24,9 @@
         "pkg-path": "markdownlint-cli",
         "version": "0.48.0"
       },
-      "prettier": {
-        "pkg-path": "prettier",
-        "version": "3.8.3"
+      "nodejs_24": {
+        "pkg-path": "nodejs_24",
+        "version": "24.15.0"
       }
     },
     "options": {}
@@ -497,116 +497,116 @@
       "priority": 5
     },
     {
-      "attr_path": "prettier",
+      "attr_path": "nodejs_24",
       "broken": false,
-      "derivation": "/nix/store/1gn4wfid50smxbcaghsfjg3wqh96ykgb-prettier-3.8.3.drv",
-      "description": "Code formatter",
-      "install_id": "prettier",
+      "derivation": "/nix/store/4f7gz4vdm9msfw3958cy6d7b4mn8zcpn-nodejs-24.15.0.drv",
+      "description": "Event-driven I/O framework for the V8 JavaScript engine",
+      "install_id": "nodejs_24",
       "license": "MIT",
       "locked_url": "https://github.com/flox/nixpkgs?rev=29916453413845e54a65b8a1cf996842300cd299",
-      "name": "prettier-3.8.3",
-      "pname": "prettier",
+      "name": "nodejs-24.15.0",
+      "pname": "nodejs_24",
       "rev": "29916453413845e54a65b8a1cf996842300cd299",
       "rev_count": 1003640,
       "rev_date": "2026-05-23T03:54:30Z",
-      "scrape_date": "2026-05-24T07:06:30.282371Z",
+      "scrape_date": "2026-05-24T07:06:15.301055Z",
       "stabilities": [
         "unstable"
       ],
       "unfree": false,
-      "version": "3.8.3",
+      "version": "24.15.0",
       "outputs_to_install": [
         "out"
       ],
       "outputs": {
-        "out": "/nix/store/p66lch2l5idjix079nw6dbcp81svzjws-prettier-3.8.3"
+        "out": "/nix/store/3mvbmkd7lmxi3xlka1avra24flwbgjv9-nodejs-24.15.0"
       },
       "system": "aarch64-darwin",
       "group": "toplevel",
       "priority": 5
     },
     {
-      "attr_path": "prettier",
+      "attr_path": "nodejs_24",
       "broken": false,
-      "derivation": "/nix/store/dly1idks1ayrsfxkcfylawmcnfla2d6p-prettier-3.8.3.drv",
-      "description": "Code formatter",
-      "install_id": "prettier",
+      "derivation": "/nix/store/lzdf2d8kky8k67nqjv07r9zbcqmihns7-nodejs-24.15.0.drv",
+      "description": "Event-driven I/O framework for the V8 JavaScript engine",
+      "install_id": "nodejs_24",
       "license": "MIT",
       "locked_url": "https://github.com/flox/nixpkgs?rev=29916453413845e54a65b8a1cf996842300cd299",
-      "name": "prettier-3.8.3",
-      "pname": "prettier",
+      "name": "nodejs-24.15.0",
+      "pname": "nodejs_24",
       "rev": "29916453413845e54a65b8a1cf996842300cd299",
       "rev_count": 1003640,
       "rev_date": "2026-05-23T03:54:30Z",
-      "scrape_date": "2026-05-24T07:35:04.369493Z",
+      "scrape_date": "2026-05-24T07:34:42.815905Z",
       "stabilities": [
         "unstable"
       ],
       "unfree": false,
-      "version": "3.8.3",
+      "version": "24.15.0",
       "outputs_to_install": [
         "out"
       ],
       "outputs": {
-        "out": "/nix/store/4k98mwg6q91nrdnfh9kxcw0ifns7rcla-prettier-3.8.3"
+        "out": "/nix/store/rmdjmd0iy5zlyg0j2i1cd0s7ha1562fs-nodejs-24.15.0"
       },
       "system": "aarch64-linux",
       "group": "toplevel",
       "priority": 5
     },
     {
-      "attr_path": "prettier",
+      "attr_path": "nodejs_24",
       "broken": false,
-      "derivation": "/nix/store/lwykmlkzrszcvhpnmdd2g1f56m3269di-prettier-3.8.3.drv",
-      "description": "Code formatter",
-      "install_id": "prettier",
+      "derivation": "/nix/store/3q3jmp4ahvdy9dr6zhwsd2zhv12nw3d2-nodejs-24.15.0.drv",
+      "description": "Event-driven I/O framework for the V8 JavaScript engine",
+      "install_id": "nodejs_24",
       "license": "MIT",
       "locked_url": "https://github.com/flox/nixpkgs?rev=29916453413845e54a65b8a1cf996842300cd299",
-      "name": "prettier-3.8.3",
-      "pname": "prettier",
+      "name": "nodejs-24.15.0",
+      "pname": "nodejs_24",
       "rev": "29916453413845e54a65b8a1cf996842300cd299",
       "rev_count": 1003640,
       "rev_date": "2026-05-23T03:54:30Z",
-      "scrape_date": "2026-05-24T08:02:13.272576Z",
+      "scrape_date": "2026-05-24T08:01:57.475640Z",
       "stabilities": [
         "unstable"
       ],
       "unfree": false,
-      "version": "3.8.3",
+      "version": "24.15.0",
       "outputs_to_install": [
         "out"
       ],
       "outputs": {
-        "out": "/nix/store/15mp846gfvf4ca67kl9x63j4a8ddzs7j-prettier-3.8.3"
+        "out": "/nix/store/rhv8jiklgw2bw4ljh4nm3h3r3bpnkcl3-nodejs-24.15.0"
       },
       "system": "x86_64-darwin",
       "group": "toplevel",
       "priority": 5
     },
     {
-      "attr_path": "prettier",
+      "attr_path": "nodejs_24",
       "broken": false,
-      "derivation": "/nix/store/lpzq8872xnj626awa50r4ggspd4q3yzl-prettier-3.8.3.drv",
-      "description": "Code formatter",
-      "install_id": "prettier",
+      "derivation": "/nix/store/jk98cvnvcb5adz3d58r8x6zxrvnhlng0-nodejs-24.15.0.drv",
+      "description": "Event-driven I/O framework for the V8 JavaScript engine",
+      "install_id": "nodejs_24",
       "license": "MIT",
       "locked_url": "https://github.com/flox/nixpkgs?rev=29916453413845e54a65b8a1cf996842300cd299",
-      "name": "prettier-3.8.3",
-      "pname": "prettier",
+      "name": "nodejs-24.15.0",
+      "pname": "nodejs_24",
       "rev": "29916453413845e54a65b8a1cf996842300cd299",
       "rev_count": 1003640,
       "rev_date": "2026-05-23T03:54:30Z",
-      "scrape_date": "2026-05-24T08:32:57.462671Z",
+      "scrape_date": "2026-05-24T08:32:36.292744Z",
       "stabilities": [
         "unstable"
       ],
       "unfree": false,
-      "version": "3.8.3",
+      "version": "24.15.0",
       "outputs_to_install": [
         "out"
       ],
       "outputs": {
-        "out": "/nix/store/phjkrasanj180ckfhkjb82az4am3v39z-prettier-3.8.3"
+        "out": "/nix/store/5a8ysg1jnj8jmzzyfcfw7rvpvnp5rfpa-nodejs-24.15.0"
       },
       "system": "x86_64-linux",
       "group": "toplevel",
