@@ -16,8 +16,11 @@
 //     block. Self-referencing (local) entries do not.
 //   * `release` is preserved from the existing `catalog.json` so the daily
 //     rebuild doesn't wipe semantic-release's version between releases.
-//     `updated` is always rewritten (semantic-release's `prepareCmd` will
-//     overwrite both at release time).
+//     `updated` (and per-entry `_source.fetchedAt`) are rewritten only when
+//     the catalog content actually changed; otherwise the previous timestamps
+//     are preserved so the file stays byte-identical and the rebuild workflow
+//     doesn't open spurious PRs. Semantic-release's `prepareCmd` overwrites
+//     both at release time.
 //   * Fail-closed: any fetch, parse, frontmatter, license, or dedupe error
 //     aborts the catalog write - we never publish a partial catalog.
 //
@@ -241,14 +244,39 @@ async function buildSkillEntry(source, fetchedAt) {
   return entry;
 }
 
-function loadExistingRelease() {
+function loadExistingCatalog() {
   if (!existsSync(OUTPUT_FILE)) return undefined;
   try {
-    const existing = JSON.parse(readFileSync(OUTPUT_FILE, 'utf8'));
-    return typeof existing.release === 'string' ? existing.release : undefined;
+    return JSON.parse(readFileSync(OUTPUT_FILE, 'utf8'));
   } catch {
     return undefined;
   }
+}
+
+function withoutTimestamps(catalog) {
+  const clone = JSON.parse(JSON.stringify(catalog));
+  delete clone.updated;
+  for (const skill of clone.skills ?? []) {
+    if (skill._source) delete skill._source.fetchedAt;
+  }
+  return clone;
+}
+
+// If the only thing that would change vs. the existing catalog is the wall-clock
+// timestamps, preserve the previous timestamps so the on-disk file is
+// byte-identical. Keeps the daily rebuild cron from producing churn PRs.
+function preserveTimestampsIfUnchanged(next, existing) {
+  if (!existing) return;
+  if (JSON.stringify(withoutTimestamps(next)) !== JSON.stringify(withoutTimestamps(existing))) return;
+  if (typeof existing.updated === 'string') next.updated = existing.updated;
+  const prevByName = new Map((existing.skills ?? []).map((s) => [s.name, s]));
+  for (const skill of next.skills) {
+    const prev = prevByName.get(skill.name);
+    if (skill._source && typeof prev?._source?.fetchedAt === 'string') {
+      skill._source.fetchedAt = prev._source.fetchedAt;
+    }
+  }
+  console.log('No meaningful changes; preserved existing timestamps');
 }
 
 async function main() {
@@ -292,8 +320,10 @@ async function main() {
     updated: fetchedAt,
     skills,
   };
-  const release = loadExistingRelease();
+  const existing = loadExistingCatalog();
+  const release = typeof existing?.release === 'string' ? existing.release : undefined;
   if (release !== undefined) catalog.release = release;
+  preserveTimestampsIfUnchanged(catalog, existing);
 
   const serialized = JSON.stringify(catalog, null, 2) + '\n';
   // Re-parse before writing: defends against any future code path that hands
