@@ -1,0 +1,16 @@
+{
+  "name": "skills-catalog",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "engines": {
+    "node": "^24.15.0"
+  },
+  "scripts": {
+    "build": "node scripts/build-catalog.mjs"
+  },
+  "dependencies": {
+    "gray-matter": "^4.0.3",
+    "js-yaml": "^4.1.1"
+  }
+}

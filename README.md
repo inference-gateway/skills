@@ -18,27 +18,45 @@ for the Inference Gateway ecosystem.
 
 This repository serves two purposes:
 
-1. **Catalog** - `catalog.json` is the source of truth for the skills listed at
-   <https://registry.inference-gateway.com/skills/>. Entries can point at upstream
-   skills hosted in vendor repos (e.g. `anthropics/skills`) or at skills hosted
-   directly in this repo under `skills/`.
+1. **Catalog** - `catalog.json` is the generated index served at
+   <https://registry.inference-gateway.com/skills/>. It is **not hand-edited** -
+   `scripts/build-catalog.mjs` rebuilds it from two source-of-truth inputs:
+   skills hosted directly under `skills/<name>/` and external skills listed in
+   `skills.yaml`.
 2. **Skill bodies** - folders under `skills/` contain skill content that the
    Inference Gateway maintainers have authored, vendored, or adapted. Each folder
    retains its own LICENSE.
 
 ## Adding a skill
 
+There are two paths depending on where the skill body lives.
+
+### Locally-hosted skill (body lives in this repo)
+
 Open a pull request that:
 
-- Adds an entry to `catalog.json` with `name`, `description`, `source`,
-  `vendor`, `license`, `tags`, `categories`, and optional `homepage`. The
-  catalog is versioned as a whole via the repo's git tag (see [Releases](https://github.com/inference-gateway/skills/releases)),
-  so per-entry refs aren't needed - consumers pin to a catalog version.
-- If hosting the body here, also adds the skill folder under `skills/<name>/`
-  with a valid `SKILL.md` (frontmatter `name` + `description`).
-- For skills derived from a third party, preserves the upstream `LICENSE` inside
-  the skill folder and adds a `NOTICE` file at the repo root recording the
-  attribution.
+- Adds `skills/<name>/SKILL.md` with valid Agent Skills frontmatter (`name`
+  matching the folder, `description` 1-1024 chars). `license:` in the
+  frontmatter is recommended.
+- Adds `skills/<name>/catalog.yaml` with the catalog metadata that isn't in
+  SKILL.md frontmatter: `vendor`, `tags`, `categories`, optional `homepage`,
+  and optional `license` (override / fallback when the frontmatter omits one).
+- For skills derived from a third party, preserves the upstream `LICENSE`
+  inside the skill folder and adds a `NOTICE` file at the repo root recording
+  the attribution.
+
+You do not edit `catalog.json` by hand - the build script regenerates it.
+Run `npm install && npm run build` locally to preview the resulting entry.
+
+### Externally-hosted skill (body lives in another repo)
+
+Open a pull request adding a single entry to `skills.yaml`. The build job
+fetches the upstream `SKILL.md`, validates the frontmatter, and merges the
+entry into `catalog.json`. See the comment block at the top of `skills.yaml`
+for the entry schema. Pin a release tag (`ref:`) for third-party skills.
+
+The catalog is versioned as a whole via the repo's git tag (see [Releases](https://github.com/inference-gateway/skills/releases)),
+so per-entry refs aren't needed - consumers pin to a catalog version.
 
 The catalog is consumed by:
 
