@@ -19,23 +19,23 @@ developer checkout and in a CI runner (e.g., GitHub Actions) where typically onl
 The `inference-gateway` GitHub organization is a polyrepo. Each repository is separately versioned and separately released.
 Refer to repos by their `inference-gateway/<repo>` GitHub slug rather than any local path.
 
-| Repo (`inference-gateway/…`) | Purpose |
-| --- | --- |
-| `inference-gateway` | Main Go HTTP gateway. Source of truth for provider configs via `openapi.yaml`. |
-| `cli` | Command-line client (`infer`). |
-| `operator` | Kubernetes operator. |
-| `sdks` | Multi-language SDKs (generated from `schemas`). |
-| `schemas` | Shared OpenAPI/JSON schemas consumed by SDKs and docs. |
-| `docs` | Next.js + MDX documentation site. |
-| `adl`, `adl-cli` | Agent Definition Language and its CLI. |
-| `a2a-debugger` | Agent-to-agent tooling. |
-| `*-agent` | Agent-to-agent agents. |
-| `awesome-a2a` | Curated awesome-list for A2A. |
-| `registry` | Component / agent registry. |
-| `infer-action` | GitHub Action wrapper. |
-| `tools` | Shared tooling. |
-| `skills` | Public Agent Skills catalog (the open-source catalog repo, distinct from any local Claude Code skills directory). |
-| `.github` | Org-level community health repo - holds default issue templates and shared workflows. |
+| Repo (`inference-gateway/…`) | Purpose                                                                                                           |
+| ---------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `inference-gateway`          | Main Go HTTP gateway. Source of truth for provider configs via `openapi.yaml`.                                    |
+| `cli`                        | Command-line client (`infer`).                                                                                    |
+| `operator`                   | Kubernetes operator.                                                                                              |
+| `sdks`                       | Multi-language SDKs (generated from `schemas`).                                                                   |
+| `schemas`                    | Shared OpenAPI/JSON schemas consumed by SDKs and docs.                                                            |
+| `docs`                       | Next.js + MDX documentation site.                                                                                 |
+| `adl`, `adl-cli`             | Agent Definition Language and its CLI.                                                                            |
+| `a2a-debugger`               | Agent-to-agent tooling.                                                                                           |
+| `*-agent`                    | Agent-to-agent agents.                                                                                            |
+| `awesome-a2a`                | Curated awesome-list for A2A.                                                                                     |
+| `registry`                   | Component / agent registry.                                                                                       |
+| `infer-action`               | GitHub Action wrapper.                                                                                            |
+| `tools`                      | Shared tooling.                                                                                                   |
+| `skills`                     | Public Agent Skills catalog (the open-source catalog repo, distinct from any local Claude Code skills directory). |
+| `.github`                    | Org-level community health repo - holds default issue templates and shared workflows.                             |
 
 Each repo has its own `CLAUDE.md` and/or `AGENTS.md` - read those for repo-specific guidance before making changes. Don't assume conventions from one repo apply to another.
 
@@ -84,14 +84,14 @@ These commands work identically locally and inside a GitHub Actions job (as long
 
 Every `feat:` or `refactor:` landing in any ecosystem repo (except `inference-gateway/docs` itself) requires a corresponding
 `[DOCS]` ticket filed against `inference-gateway/docs` - created at the same time as the source PR, not "later." Default
-to filing; the burden is on the author to justify *not* filing one. Shipped features without docs follow-up silently rot
+to filing; the burden is on the author to justify _not_ filing one. Shipped features without docs follow-up silently rot
 the documentation site and break newcomer onboarding.
 
-| Source change | Docs ticket scope |
-| --- | --- |
-| `feat:` - any user-facing addition (endpoint, flag, env var, config, provider, SDK method, agent capability) | New `[DOCS]` issue: describe the feature, the user-facing surface, and any code samples to add. |
-| `refactor:` - public API or user-visible behavior change | `[DOCS]` issue: list affected pages and what must change. |
-| `refactor:` - purely internal (no public-surface change) | Skipping is allowed, but the PR body must state "no docs ticket: internal-only refactor" so the absence is intentional, not an oversight. |
+| Source change                                                                                                | Docs ticket scope                                                                                                                         |
+| ------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `feat:` - any user-facing addition (endpoint, flag, env var, config, provider, SDK method, agent capability) | New `[DOCS]` issue: describe the feature, the user-facing surface, and any code samples to add.                                           |
+| `refactor:` - public API or user-visible behavior change                                                     | `[DOCS]` issue: list affected pages and what must change.                                                                                 |
+| `refactor:` - purely internal (no public-surface change)                                                     | Skipping is allowed, but the PR body must state "no docs ticket: internal-only refactor" so the absence is intentional, not an oversight. |
 
 Use the `documentation_request.md` template (see "Reporting GitHub issues" below): title prefix `[DOCS]`, label
 `documentation`, type `documentation`. Always link the docs ticket back to the originating PR/issue so it carries enough
@@ -136,12 +136,12 @@ override exists.
 
 The four canonical templates and their stable title prefixes / labels / types:
 
-| Template | Title prefix | Labels | Type |
-| --- | --- | --- | --- |
-| `bug_report.md` | `[BUG]` | `bug` | `bug` |
-| `feature_request.md` | `[FEATURE]` | `enhancement` | `feature` |
-| `documentation_request.md` | `[DOCS]` | `documentation` | `documentation` |
-| `refactor_request.md` | `[TASK] Refactor` | `refactor` | `task` |
+| Template                   | Title prefix      | Labels          | Type            |
+| -------------------------- | ----------------- | --------------- | --------------- |
+| `bug_report.md`            | `[BUG]`           | `bug`           | `bug`           |
+| `feature_request.md`       | `[FEATURE]`       | `enhancement`   | `feature`       |
+| `documentation_request.md` | `[DOCS]`          | `documentation` | `documentation` |
+| `refactor_request.md`      | `[TASK] Refactor` | `refactor`      | `task`          |
 
 ### Procedure
 

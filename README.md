@@ -35,8 +35,8 @@ Open a pull request that:
 - Adds one entry to `skills.yaml`. See the comment block at the top of that
   file for the entry schema.
   - **Skill body in this repo**: set `url:
-    https://github.com/inference-gateway/skills` and `path:
-    skills/<name>/SKILL.md`. Also add `skills/<name>/SKILL.md` with valid
+https://github.com/inference-gateway/skills` and `path:
+skills/<name>/SKILL.md`. Also add `skills/<name>/SKILL.md` with valid
     Agent Skills frontmatter (`name` matching the folder, `description`
     1-1024 chars; `license:` recommended).
   - **Skill body in another repo**: set `url` to the upstream repo and pin
@@ -58,8 +58,8 @@ The catalog is consumed by:
   - human-browsable listing.
 - [registry.inference-gateway.com/skills/index.json](https://registry.inference-gateway.com/skills/index.json)
   - machine-readable index used by `infer skills search` /
-  `infer skills install <name>` in the
-  [inference-gateway CLI](https://github.com/inference-gateway/cli).
+    `infer skills install <name>` in the
+    [inference-gateway CLI](https://github.com/inference-gateway/cli).
 
 ## Licensing
 
