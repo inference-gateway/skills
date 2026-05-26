@@ -18,6 +18,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 jobs:
   build:
@@ -34,7 +35,13 @@ jobs:
 
       - run: npm run build
 
-      - uses: stefanzweifel/git-auto-commit-action@v7.1.0
+      - uses: peter-evans/create-pull-request@v8.1.1
         with:
-          commit_message: 'chore(catalog): Rebuild catalog.json [skip ci]'
-          file_pattern: catalog.json
+          commit-message: 'chore(catalog): Rebuild catalog.json'
+          title: 'chore(catalog): Rebuild catalog.json'
+          body: |
+            Automated rebuild of `catalog.json` from `skills.yaml` + `skills/**`.
+          branch: chore/rebuild-catalog
+          delete-branch: true
+          add-paths: catalog.json
+          sign-commits: true
