@@ -1,17 +1,19 @@
 #!/usr/bin/env node
-// Aggregates locally-hosted Agent Skills (`skills/<name>/SKILL.md` +
-// `skills/<name>/catalog.yaml`) and externally-hosted skills listed in
-// `skills.yaml` into a single `catalog.json`.
+// Aggregates every Agent Skill listed in `skills.yaml` into `catalog.json`.
 //
 // Design contract (see issue #4):
-//   * Two sources, one output: walk `skills/` for in-repo entries, fetch
-//     `skills.yaml` entries from upstream, merge, then write.
+//   * One source, one output: `skills.yaml` lists every skill, local or
+//     external. No directory walk, no sidecar metadata files.
+//   * Entries whose `url` matches this repo are read from the local working
+//     tree at `path`; all other entries are fetched from
+//     raw.githubusercontent.com at `<ref>/<path>`. This lets PRs that add a
+//     new local skill build correctly before merging to main.
 //   * `name` and `description` come from SKILL.md frontmatter (single source
 //     of truth). `vendor`, `tags`, `categories`, `homepage`, and optional
-//     `license` overrides come from the sidecar (local) or skills.yaml entry
-//     (external). `license` is read from SKILL.md frontmatter when present.
+//     `license` overrides come from the skills.yaml entry. `license` is read
+//     from SKILL.md frontmatter when the entry omits it.
 //   * Externally-aggregated entries carry a `_source: {url, ref, fetchedAt}`
-//     block. Local entries do not.
+//     block. Self-referencing (local) entries do not.
 //   * `release` is preserved from the existing `catalog.json` so the daily
 //     rebuild doesn't wipe semantic-release's version between releases.
 //     `updated` is always rewritten (semantic-release's `prepareCmd` will
@@ -20,18 +22,17 @@
 //     aborts the catalog write - we never publish a partial catalog.
 //
 // Run with: npm run build
-import { existsSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
-import { dirname, join, resolve } from 'node:path';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
+import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import yaml from 'js-yaml';
 import matter from 'gray-matter';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const SOURCES_FILE = resolve(ROOT, 'skills.yaml');
-const SKILLS_DIR = resolve(ROOT, 'skills');
 const OUTPUT_FILE = resolve(ROOT, 'catalog.json');
 
-const REPO_TREE_BASE = 'https://github.com/inference-gateway/skills/tree/main/skills';
+const SELF_URL = 'https://github.com/inference-gateway/skills';
 
 const GITHUB_URL_RE = /^https:\/\/github\.com\/([^/]+)\/([^/]+?)\/?$/i;
 const NAME_RE = /^[a-zA-Z0-9_][a-zA-Z0-9_-]*$/;
@@ -120,63 +121,14 @@ function assertStringArray(label, field, value) {
   }
 }
 
-function loadLocalSkills() {
-  if (!existsSync(SKILLS_DIR)) return [];
-  const entries = [];
-  for (const name of readdirSync(SKILLS_DIR).sort()) {
-    const dir = join(SKILLS_DIR, name);
-    if (!statSync(dir).isDirectory()) continue;
-    const skillMdPath = join(dir, 'SKILL.md');
-    if (!existsSync(skillMdPath)) continue;
-
-    const label = `skills/${name}/SKILL.md`;
-    const parsed = matter(readFileSync(skillMdPath, 'utf8'));
-    const fm = validateFrontmatter(label, parsed.data);
-    if (fm.name !== name) {
-      throw new Error(`${label}: frontmatter name '${fm.name}' does not match folder '${name}'`);
-    }
-
-    const sidecarPath = join(dir, 'catalog.yaml');
-    if (!existsSync(sidecarPath)) {
-      throw new Error(`skills/${name}/catalog.yaml: missing - locally-hosted skills require a catalog sidecar`);
-    }
-    const sidecar = yaml.load(readFileSync(sidecarPath, 'utf8'));
-    if (!sidecar || typeof sidecar !== 'object') {
-      throw new Error(`skills/${name}/catalog.yaml: must be a YAML mapping`);
-    }
-
-    const sidecarLabel = `skills/${name}/catalog.yaml`;
-    if (typeof sidecar.vendor !== 'string' || !sidecar.vendor) {
-      throw new Error(`${sidecarLabel}: 'vendor' is required (string)`);
-    }
-    assertStringArray(sidecarLabel, 'tags', sidecar.tags);
-    assertStringArray(sidecarLabel, 'categories', sidecar.categories);
-    if (sidecar.homepage !== undefined && typeof sidecar.homepage !== 'string') {
-      throw new Error(`${sidecarLabel}: 'homepage' must be a string if provided`);
-    }
-    const license = sidecar.license ?? fm.license;
-    if (!license) {
-      throw new Error(`${sidecarLabel}: 'license' missing (not in sidecar and not in SKILL.md frontmatter)`);
-    }
-    validateLicense(sidecarLabel, license);
-
-    const entry = {
-      name: fm.name,
-      description: fm.description,
-      source: `${REPO_TREE_BASE}/${name}`,
-      vendor: sidecar.vendor,
-      license,
-      tags: sidecar.tags,
-      categories: sidecar.categories,
-    };
-    if (sidecar.homepage) entry.homepage = sidecar.homepage;
-    entries.push(entry);
-  }
-  return entries;
+function normalizeUrl(url) {
+  return url.replace(/\/+$/, '');
 }
 
-function loadExternalSources() {
-  if (!existsSync(SOURCES_FILE)) return [];
+function loadSources() {
+  if (!existsSync(SOURCES_FILE)) {
+    throw new Error(`${SOURCES_FILE}: missing - skills.yaml is required`);
+  }
   const raw = readFileSync(SOURCES_FILE, 'utf8');
   const parsed = yaml.load(raw);
   if (parsed == null) return [];
@@ -187,6 +139,7 @@ function loadExternalSources() {
   if (!Array.isArray(parsed.skills)) {
     throw new Error(`${SOURCES_FILE}: top-level 'skills' must be an array`);
   }
+  const selfUrl = normalizeUrl(SELF_URL);
   return parsed.skills.map((entry, i) => {
     const label = `${SOURCES_FILE}#skills[${i}]`;
     if (!entry || typeof entry !== 'object') {
@@ -199,6 +152,7 @@ function loadExternalSources() {
     if (!m) {
       throw new Error(`${label}: invalid GitHub URL '${entry.url}'`);
     }
+    const url = normalizeUrl(entry.url);
     const ref = typeof entry.ref === 'string' && entry.ref.length > 0 ? entry.ref : 'main';
     const path = typeof entry.path === 'string' && entry.path.length > 0 ? entry.path : 'SKILL.md';
     if (typeof entry.vendor !== 'string' || !entry.vendor) {
@@ -216,11 +170,13 @@ function loadExternalSources() {
       validateLicense(label, entry.license);
     }
     return {
-      url: entry.url.replace(/\/+$/, ''),
+      label,
+      url,
       ref,
       path,
       owner: m[1],
       repo: m[2],
+      isSelf: url === selfUrl,
       vendor: entry.vendor,
       license: entry.license,
       tags: entry.tags,
@@ -230,12 +186,24 @@ function loadExternalSources() {
   });
 }
 
-async function fetchExternalSkill(source, fetchedAt) {
+async function readSkillMarkdown(source) {
+  if (source.isSelf) {
+    const localPath = resolve(ROOT, source.path);
+    if (!existsSync(localPath)) {
+      throw new Error(`${source.label}: local path '${source.path}' not found in working tree`);
+    }
+    return { text: readFileSync(localPath, 'utf8'), label: `skills.yaml -> ${source.path}` };
+  }
   const { owner, repo, ref, path, url } = source;
   const rawUrl = `https://raw.githubusercontent.com/${owner}/${repo}/${ref}/${path}`;
   const label = `${url}@${ref} (${path})`;
   const res = await fetchWithRetry(rawUrl, label);
-  const text = await res.text();
+  return { text: await res.text(), label };
+}
+
+async function buildSkillEntry(source, fetchedAt) {
+  const { text, label } = await readSkillMarkdown(source);
+
   let parsed;
   try {
     parsed = matter(text);
@@ -252,10 +220,10 @@ async function fetchExternalSkill(source, fetchedAt) {
 
   // `source` URL points at the directory containing SKILL.md when path is nested,
   // else at the repo tree at the given ref.
-  const pathDir = path === 'SKILL.md' ? '' : dirname(path);
+  const pathDir = source.path === 'SKILL.md' ? '' : dirname(source.path);
   const sourceUrl = pathDir
-    ? `${url}/tree/${ref}/${pathDir}`
-    : `${url}/tree/${ref}`;
+    ? `${source.url}/tree/${source.ref}/${pathDir}`
+    : `${source.url}/tree/${source.ref}`;
 
   const entry = {
     name: fm.name,
@@ -267,7 +235,9 @@ async function fetchExternalSkill(source, fetchedAt) {
     categories: source.categories,
   };
   if (source.homepage) entry.homepage = source.homepage;
-  entry._source = { url, ref, fetchedAt };
+  if (!source.isSelf) {
+    entry._source = { url: source.url, ref: source.ref, fetchedAt };
+  }
   return entry;
 }
 
@@ -284,47 +254,37 @@ function loadExistingRelease() {
 async function main() {
   const fetchedAt = new Date().toISOString();
 
-  const localEntries = loadLocalSkills();
-  console.log(`Discovered ${localEntries.length} local skill(s) under skills/`);
-
-  const externalSources = loadExternalSources();
-  console.log(`Loaded ${externalSources.length} external skill source(s) from skills.yaml`);
+  const sources = loadSources();
+  console.log(`Loaded ${sources.length} skill source(s) from skills.yaml`);
 
   const seen = new Map();
-  for (const entry of localEntries) {
-    seen.set(entry.name, `skills/${entry.name}/`);
-  }
-
-  const externalEntries = [];
+  const entries = [];
   const errors = [];
-  for (const source of externalSources) {
+  for (const source of sources) {
+    const tag = source.isSelf ? `(local) ${source.path}` : `${source.url}@${source.ref}`;
     try {
-      const entry = await fetchExternalSkill(source, fetchedAt);
+      const entry = await buildSkillEntry(source, fetchedAt);
       if (seen.has(entry.name)) {
-        throw new Error(
-          `duplicate name '${entry.name}' (also claimed by ${seen.get(entry.name)})`,
-        );
+        throw new Error(`duplicate name '${entry.name}' (also claimed by ${seen.get(entry.name)})`);
       }
-      seen.set(entry.name, `${source.url}@${source.ref}`);
-      externalEntries.push(entry);
-      console.log(`  ✓ ${entry.name}  ←  ${source.url}@${source.ref}`);
+      seen.set(entry.name, tag);
+      entries.push(entry);
+      console.log(`  ✓ ${entry.name}  ←  ${tag}`);
     } catch (err) {
       errors.push(err.message);
-      console.error(`  ✗ ${source.url}@${source.ref}`);
+      console.error(`  ✗ ${tag}`);
       console.error(`     ${err.message.replaceAll('\n', '\n     ')}`);
     }
   }
 
   if (errors.length > 0) {
-    throw new Error(`${errors.length} external skill(s) failed to aggregate; aborting catalog write`);
+    throw new Error(`${errors.length} skill(s) failed to aggregate; aborting catalog write`);
   }
 
-  const skills = [...localEntries, ...externalEntries].sort((a, b) =>
-    a.name.localeCompare(b.name),
-  );
+  const skills = entries.sort((a, b) => a.name.localeCompare(b.name));
 
   if (skills.length === 0) {
-    throw new Error('No skills discovered (neither local nor external); refusing to write empty catalog');
+    throw new Error('No skills discovered; refusing to write empty catalog');
   }
 
   const catalog = {
@@ -335,7 +295,17 @@ async function main() {
   const release = loadExistingRelease();
   if (release !== undefined) catalog.release = release;
 
-  writeFileSync(OUTPUT_FILE, JSON.stringify(catalog, null, 2) + '\n');
+  const serialized = JSON.stringify(catalog, null, 2) + '\n';
+  // Re-parse before writing: defends against any future code path that hands
+  // us a non-serializable value (e.g. BigInt, function, circular ref) and
+  // would otherwise replace a known-good catalog with an unreadable file.
+  try {
+    JSON.parse(serialized);
+  } catch (err) {
+    throw new Error(`Refusing to overwrite ${OUTPUT_FILE}: serialized catalog is not valid JSON: ${err.message}`);
+  }
+
+  writeFileSync(OUTPUT_FILE, serialized);
   console.log(`Wrote ${skills.length} skill(s) to ${OUTPUT_FILE}`);
 }
 

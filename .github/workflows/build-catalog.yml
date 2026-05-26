@@ -1,0 +1,40 @@
+---
+name: Build catalog
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'skills.yaml'
+      - 'skills/**'
+      - 'scripts/build-catalog.mjs'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/build-catalog.yml'
+  schedule:
+    - cron: '0 4 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6.0.2
+
+      - uses: actions/setup-node@v6.4.0
+        with:
+          node-version: '24'
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run build
+
+      - uses: stefanzweifel/git-auto-commit-action@v7.1.0
+        with:
+          commit_message: 'chore(catalog): Rebuild catalog.json [skip ci]'
+          file_pattern: catalog.json

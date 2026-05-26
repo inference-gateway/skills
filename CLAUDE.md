@@ -7,23 +7,22 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 A curated catalog of [Agent Skills](https://github.com/anthropics/skills/tree/main/spec)
 for the Inference Gateway ecosystem. There is no application code - content is the product.
 
-Three things live here, and **they must stay in sync**:
+Two things live here, and **they must stay in sync**:
 
 1. `catalog.json` - the **generated** output served at
    <https://registry.inference-gateway.com/skills/> and consumed by
    `infer skills search` / `infer skills install` in the
    [CLI](https://github.com/inference-gateway/cli). **Do not hand-edit.** It is
-   rebuilt by `scripts/build-catalog.mjs` from the two source-of-truth inputs
-   below.
-2. `skills/<name>/SKILL.md` + `skills/<name>/catalog.yaml` - bodies of skills
-   hosted in this repo. The folder name must match the SKILL.md frontmatter
-   `name:` exactly. The sidecar `catalog.yaml` carries the non-frontmatter
-   catalog fields (`vendor`, `tags`, `categories`, `homepage`, optional
-   `license` override).
-3. `skills.yaml` - source list of **externally-hosted** skills (entries of
-   `{url, ref, path?, vendor, license?, tags, categories, homepage}`). The
-   build script fetches each upstream `SKILL.md`, validates the frontmatter,
-   and merges the entries into `catalog.json` alongside the local ones.
+   rebuilt by `scripts/build-catalog.mjs` from the single source-of-truth
+   input below.
+2. `skills.yaml` - **every** skill (local + external) is one entry here:
+   `{url, ref?, path?, vendor, license?, tags, categories, homepage?}`. When
+   `url` points at this repo (`https://github.com/inference-gateway/skills`),
+   the build reads `path` from the local working tree so branch PRs build
+   correctly before merging to `main`; otherwise it fetches from upstream at
+   `<ref>/<path>`. Skill bodies for in-repo entries live under
+   `skills/<name>/SKILL.md` and the folder name must match the SKILL.md
+   frontmatter `name:` exactly.
 
 The catalog is versioned **as a whole** via the repo's git tag - consumers pin to
 a catalog version, not per-entry refs. Don't add per-entry refs to `catalog.json`.
@@ -47,32 +46,27 @@ The `Build catalog` workflow (`.github/workflows/build-catalog.yml`) runs
 UTC and on `workflow_dispatch`. It auto-commits with
 `chore(catalog): Rebuild catalog.json [skip ci]`.
 
-## Adding or editing a locally hosted skill
+## Adding or editing a skill
 
-Every PR that adds/edits a skill hosted here must include:
+Every PR that adds/edits a skill must include:
 
-- `skills/<name>/SKILL.md` with frontmatter `name` (matching the folder) and
-  `description` (1-1024 chars; must let a reader decide whether to invoke the
-  skill **without reading the body**). `license:` in the frontmatter is
-  recommended (mirrors the ADL Skill license enum); the build script falls back
-  to the sidecar if absent.
-- `skills/<name>/catalog.yaml` with `vendor`, `tags`, `categories`, optional
-  `homepage`, and optional `license` (only needed if the SKILL.md frontmatter
-  doesn't carry one or you want to override it).
+- An entry in `skills.yaml`. See the comment block at the top of that file
+  for the entry schema. For a skill whose body lives in this repo, point
+  `url` at `https://github.com/inference-gateway/skills` and set `path` to
+  `skills/<name>/SKILL.md`. For a third-party skill, point `url` at its repo
+  and pin a release `ref:` rather than `main` so upstream changes can't
+  break the catalog mid-cycle.
+- For in-repo entries: `skills/<name>/SKILL.md` with frontmatter `name`
+  (matching the folder) and `description` (1-1024 chars; must let a reader
+  decide whether to invoke the skill **without reading the body**).
+  `license:` in the frontmatter is recommended (mirrors the ADL Skill license
+  enum); the build script falls back to the skills.yaml entry if absent.
 
 You do **not** edit `catalog.json` by hand - the build script regenerates it.
 Run `npm run build` locally to preview the resulting entry.
 
 The `skill-creator` skill (`skills/skill-creator/SKILL.md`) documents the
 SKILL.md authoring contract in full - read it before adding new skills.
-
-## Adding an externally-hosted skill
-
-Open a PR adding a single entry to `skills.yaml`. The build script will fetch
-the upstream `SKILL.md`, validate its frontmatter, and merge the entry into
-`catalog.json`. See the comment block at the top of `skills.yaml` for the
-entry schema. Pin a release tag (`ref:`) rather than `main` for third-party
-skills so upstream changes can't break the catalog mid-cycle.
 
 ### Third-party derived skills
 
