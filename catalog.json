@@ -1,17 +1,19 @@
 {
   "version": 1,
-  "updated": "2026-05-24T14:15:03Z",
+  "updated": "2026-05-26T01:18:58.207Z",
   "skills": [
     {
-      "name": "skill-creator",
-      "description": "Author a new Agent Skill from a minimal SKILL.md template.",
-      "source": "https://github.com/inference-gateway/skills/tree/main/skills/skill-creator",
+      "name": "adl",
+      "description": "Author and maintain projects built with ADL (Agent Definition Language) - the YAML manifest format from `inference-gateway/adl` that `adl-cli` turns into a full A2A agent scaffold (Go/Rust/TypeScript). Use when working inside a generated agent project (presence of `agent.yaml` + `.adl-ignore`), when editing the manifest, when implementing custom tools and skills against the generated scaffold, or when planning the schema-first / domain modelling for a new agent.",
+      "source": "https://github.com/inference-gateway/skills/tree/main/skills/adl",
       "vendor": "inference-gateway",
       "license": "Apache-2.0",
       "tags": [
-        "meta",
-        "skills",
-        "authoring"
+        "inference-gateway",
+        "adl",
+        "agent",
+        "schema-driven",
+        "scaffolding"
       ],
       "categories": [
         "developer-tools"
@@ -20,7 +22,7 @@
     },
     {
       "name": "maintainer",
-      "description": "Guidance for maintaining the Inference Gateway ecosystem (main Go gateway, CLI, operator, SDKs, docs, schemas, ADL, registry, etc.). Use when working inside any repo in that GitHub org (locally or in a CI checkout), when changes ripple across repos (e.g., OpenAPI/schema changes that affect SDKs and docs), or when filing GitHub issues against ecosystem repos.",
+      "description": "Guidance for maintaining the Inference Gateway ecosystem - a polyrepo project under the `inference-gateway` GitHub organization (main Go gateway, CLI, operator, SDKs, docs, schemas, ADL, registry, etc.). Use when working inside any repo in that org (locally or in a GitHub Actions / CI checkout), when changes need to ripple across multiple repos (e.g., OpenAPI/schema changes that affect SDKs and docs), or when the user asks ecosystem-level questions.",
       "source": "https://github.com/inference-gateway/skills/tree/main/skills/maintainer",
       "vendor": "inference-gateway",
       "license": "Apache-2.0",
@@ -36,17 +38,15 @@
       "homepage": "https://github.com/inference-gateway/skills"
     },
     {
-      "name": "adl",
-      "description": "Author and maintain projects built with ADL (Agent Definition Language) - the YAML manifest format from inference-gateway/adl that adl-cli turns into a full A2A agent scaffold (Go/Rust/TypeScript). Use when working inside a generated agent project (presence of agent.yaml + .adl-ignore), when editing the manifest, when implementing custom tools and skills against the generated scaffold, or when planning the schema-first / domain modelling for a new agent.",
-      "source": "https://github.com/inference-gateway/skills/tree/main/skills/adl",
+      "name": "skill-creator",
+      "description": "Author a new Agent Skill from a minimal SKILL.md template. Use when the user wants to create a new skill, scaffold one from scratch, or learn the SKILL.md frontmatter and body conventions.",
+      "source": "https://github.com/inference-gateway/skills/tree/main/skills/skill-creator",
       "vendor": "inference-gateway",
       "license": "Apache-2.0",
       "tags": [
-        "inference-gateway",
-        "adl",
-        "agent",
-        "schema-driven",
-        "scaffolding"
+        "meta",
+        "skills",
+        "authoring"
       ],
       "categories": [
         "developer-tools"

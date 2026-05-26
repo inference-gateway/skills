@@ -9,13 +9,20 @@ for the Inference Gateway ecosystem. There is no application code - content is t
 
 Two things live here, and **they must stay in sync**:
 
-1. `catalog.json` - the source of truth consumed by
-   <https://registry.inference-gateway.com/skills/> and by `infer skills search` /
-   `infer skills install` in the [CLI](https://github.com/inference-gateway/cli).
-   Each entry can point at an upstream skill (e.g. in `anthropics/skills`) or at a
-   locally hosted body in `skills/<name>/`.
-2. `skills/<name>/SKILL.md` - bodies of skills hosted in this repo. The folder name
-   must match the SKILL.md frontmatter `name:` exactly.
+1. `catalog.json` - the **generated** output served at
+   <https://registry.inference-gateway.com/skills/> and consumed by
+   `infer skills search` / `infer skills install` in the
+   [CLI](https://github.com/inference-gateway/cli). **Do not hand-edit.** It is
+   rebuilt by `scripts/build-catalog.mjs` from the single source-of-truth
+   input below.
+2. `skills.yaml` - **every** skill (local + external) is one entry here:
+   `{url, ref?, path?, vendor, license?, tags, categories, homepage?}`. When
+   `url` points at this repo (`https://github.com/inference-gateway/skills`),
+   the build reads `path` from the local working tree so branch PRs build
+   correctly before merging to `main`; otherwise it fetches from upstream at
+   `<ref>/<path>`. Skill bodies for in-repo entries live under
+   `skills/<name>/SKILL.md` and the folder name must match the SKILL.md
+   frontmatter `name:` exactly.
 
 The catalog is versioned **as a whole** via the repo's git tag - consumers pin to
 a catalog version, not per-entry refs. Don't add per-entry refs to `catalog.json`.
@@ -25,21 +32,38 @@ a catalog version, not per-entry refs. Don't add per-entry refs to `catalog.json
 ```sh
 task lint        # markdownlint over all *.md (ignores node_modules)
 task lint:fix    # same, with --fix
+npm install      # one-time, before running the catalog build
+npm run build    # regenerate catalog.json from skills/ + skills.yaml
 ```
 
 CI (`.github/workflows/ci.yml`) runs the same lint with `markdownlint-cli@0.48.0`.
 Lint config is `.markdownlint.json` - `MD013` allows 180-char lines; `MD029`,
 `MD033`, `MD041` are disabled. Match these limits in new markdown.
 
-## Adding or editing a locally hosted skill
+The `Build catalog` workflow (`.github/workflows/build-catalog.yml`) runs
+`npm run build` on every push that touches `skills.yaml`, `skills/**`,
+`scripts/build-catalog.mjs`, or `package.json`, plus a daily cron at `0 4 * * *`
+UTC and on `workflow_dispatch`. It auto-commits with
+`chore(catalog): Rebuild catalog.json [skip ci]`.
 
-Every PR that adds/edits a skill hosted here must touch **both sides**:
+## Adding or editing a skill
 
-- A `catalog.json` entry with `name`, `description`, `source`, `vendor`,
-  `license`, `tags`, `categories`, optional `homepage`.
-- `skills/<name>/SKILL.md` with frontmatter `name` (matching the folder) and
-  `description` (1-1024 chars; must let a reader decide whether to invoke the
-  skill **without reading the body**).
+Every PR that adds/edits a skill must include:
+
+- An entry in `skills.yaml`. See the comment block at the top of that file
+  for the entry schema. For a skill whose body lives in this repo, point
+  `url` at `https://github.com/inference-gateway/skills` and set `path` to
+  `skills/<name>/SKILL.md`. For a third-party skill, point `url` at its repo
+  and pin a release `ref:` rather than `main` so upstream changes can't
+  break the catalog mid-cycle.
+- For in-repo entries: `skills/<name>/SKILL.md` with frontmatter `name`
+  (matching the folder) and `description` (1-1024 chars; must let a reader
+  decide whether to invoke the skill **without reading the body**).
+  `license:` in the frontmatter is recommended (mirrors the ADL Skill license
+  enum); the build script falls back to the skills.yaml entry if absent.
+
+You do **not** edit `catalog.json` by hand - the build script regenerates it.
+Run `npm run build` locally to preview the resulting entry.
 
 The `skill-creator` skill (`skills/skill-creator/SKILL.md`) documents the
 SKILL.md authoring contract in full - read it before adding new skills.
@@ -62,6 +86,8 @@ Commits and writes the following at release time:
 - `CHANGELOG.md` - do not hand-edit.
 - `catalog.json` - the `release` and `updated` fields are rewritten by the
   release `prepareCmd` (a `jq` invocation). Don't manually bump them in PRs.
+  The daily `Build catalog` workflow preserves the existing `release` field
+  between releases so it doesn't get wiped by rebuilds.
 
 Commit types that bump versions: `feat` (minor), `fix`/`refactor`/`perf`/`impr`
 (patch), plus `ci`/`docs`/`chore`/`style`/`test`/`build` (patch). `chore(release)`

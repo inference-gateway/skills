@@ -21,8 +21,8 @@ follows the [spec](https://github.com/anthropics/skills/tree/main/spec).
 1. **Pick a name.** Lowercase, hyphenated, 1–64 characters, matching
    `^[a-z0-9-]+$`. The folder name must match the frontmatter `name` field
    exactly.
-2. **Write a one-line description.** 1–1024 characters. Describe *what the
-   skill does* and *when to invoke it* in a single sentence. The runtime
+2. **Write a one-line description.** 1–1024 characters. Describe _what the
+   skill does_ and _when to invoke it_ in a single sentence. The runtime
    decides whether to surface the skill from this string alone - vague
    descriptions get skipped.
 3. **Create the folder and `SKILL.md`.** Place it under either
@@ -34,7 +34,7 @@ follows the [spec](https://github.com/anthropics/skills/tree/main/spec).
    no marketing copy.
 5. **Validate before committing.** The folder name must match the frontmatter
    `name`. The description must let a reader decide whether to use the skill
-   *without reading the body*.
+   _without reading the body_.
 
 ## SKILL.md template
 
@@ -54,6 +54,7 @@ Use this skill when <trigger condition>.
 2. ...
 
 ## Notes
+
 - ...
 ```
 

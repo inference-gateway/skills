@@ -30,36 +30,36 @@ else and will regenerate it on demand.
 
 **The contract has two halves you must keep straight:**
 
-| Concept | Where it lives | Who owns it | Regenerated on `adl generate`? |
-| --- | --- | --- | --- |
-| Manifest (`agent.yaml`) | repo root | you | no - source of truth |
-| Scaffolding (`main.go`, `config/`, `internal/<service>/`, `Dockerfile`, CI, ...) | various | the generator | yes |
-| Custom tool bodies (`tools/<name>.{go,rs,ts}`) | `tools/` | you, after a TODO scaffold | no - protected by `.adl-ignore` |
-| Custom service impls (`internal/<service>/*.go`) | `internal/` | you, after a TODO scaffold | no - protected by `.adl-ignore` |
-| Skills (`skills/<id>/SKILL.md`) | `skills/` | you (bare) or upstream (sourced) | no - whole dir protected |
+| Concept                                                                          | Where it lives | Who owns it                      | Regenerated on `adl generate`?  |
+| -------------------------------------------------------------------------------- | -------------- | -------------------------------- | ------------------------------- |
+| Manifest (`agent.yaml`)                                                          | repo root      | you                              | no - source of truth            |
+| Scaffolding (`main.go`, `config/`, `internal/<service>/`, `Dockerfile`, CI, ...) | various        | the generator                    | yes                             |
+| Custom tool bodies (`tools/<name>.{go,rs,ts}`)                                   | `tools/`       | you, after a TODO scaffold       | no - protected by `.adl-ignore` |
+| Custom service impls (`internal/<service>/*.go`)                                 | `internal/`    | you, after a TODO scaffold       | no - protected by `.adl-ignore` |
+| Skills (`skills/<id>/SKILL.md`)                                                  | `skills/`      | you (bare) or upstream (sourced) | no - whole dir protected        |
 
 If you forget which half a file belongs to, `cat .adl-ignore` - anything
 matched there survives `adl generate --overwrite`.
 
 **Spec at a glance.** Every `spec.*` top-level field the v1 schema defines:
 
-| `spec.*` field | Required? | Purpose |
-| --- | --- | --- |
-| `capabilities` | yes | A2A feature flags - `streaming`, `pushNotifications`, `stateTransitionHistory` (all three booleans) |
-| `server` | yes | `port` (1-65535), optional `scheme`, `debug`, `auth.enabled` |
-| `language` | yes | At least one of `go`, `typescript`, `rust` (each with its own required pair, e.g. `module`+`version`) |
-| `agent` | no | LLM provider/model/systemPrompt/maxTokens/temperature |
-| `card` | no | Static A2A agent-card metadata served at `.well-known/agent-card.json` |
-| `services` | no | Domain services declared as ports (`type`, `interface`, `factory`, `description`) |
-| `config` | no | Arbitrary per-section config maps; one section per service (env-mapped) |
-| `tools` | no | Function-call entrypoints - reserved built-in ids and user tools |
-| `skills` | no | Markdown playbooks - registry / GitHub `source:` / `bare: true` |
-| `acronyms` | no | String list the generator preserves in generated identifier casing |
-| `artifacts` | no | `enabled: true` to generate an artifacts server (filesystem or MinIO backend) |
-| `hooks` | no | `post: [...]` commands the CLI runs after each `adl generate` |
-| `scm` | no | `provider`, `url`, `github_app`, `issue_templates`, `dependabot`, `ci`, `cd` |
-| `development` | no | `sandbox.{flox,devcontainer,dockerCompose}` + `ai.{claudecode,codex,gemini,opencode,infer}` |
-| `deployment` | no | `type: kubernetes \| cloudrun` plus the matching block |
+| `spec.*` field | Required? | Purpose                                                                                               |
+| -------------- | --------- | ----------------------------------------------------------------------------------------------------- |
+| `capabilities` | yes       | A2A feature flags - `streaming`, `pushNotifications`, `stateTransitionHistory` (all three booleans)   |
+| `server`       | yes       | `port` (1-65535), optional `scheme`, `debug`, `auth.enabled`                                          |
+| `language`     | yes       | At least one of `go`, `typescript`, `rust` (each with its own required pair, e.g. `module`+`version`) |
+| `agent`        | no        | LLM provider/model/systemPrompt/maxTokens/temperature                                                 |
+| `card`         | no        | Static A2A agent-card metadata served at `.well-known/agent-card.json`                                |
+| `services`     | no        | Domain services declared as ports (`type`, `interface`, `factory`, `description`)                     |
+| `config`       | no        | Arbitrary per-section config maps; one section per service (env-mapped)                               |
+| `tools`        | no        | Function-call entrypoints - reserved built-in ids and user tools                                      |
+| `skills`       | no        | Markdown playbooks - registry / GitHub `source:` / `bare: true`                                       |
+| `acronyms`     | no        | String list the generator preserves in generated identifier casing                                    |
+| `artifacts`    | no        | `enabled: true` to generate an artifacts server (filesystem or MinIO backend)                         |
+| `hooks`        | no        | `post: [...]` commands the CLI runs after each `adl generate`                                         |
+| `scm`          | no        | `provider`, `url`, `github_app`, `issue_templates`, `dependabot`, `ci`, `cd`                          |
+| `development`  | no        | `sandbox.{flox,devcontainer,dockerCompose}` + `ai.{claudecode,codex,gemini,opencode,infer}`           |
+| `deployment`   | no        | `type: kubernetes \| cloudrun` plus the matching block                                                |
 
 The sections below cover each in turn. Anything not in this table is not in
 v1 - if you see it in an existing manifest, treat it as a CLI extension and
@@ -84,7 +84,7 @@ work so the manifest leads and the code follows.
      a `factory`, and a description. One service per responsibility - don't
      conflate `database` and `cache`.
    - Enumerate **config sections** (`spec.config.*`) as value objects. Use
-     dotted-name injection (`config.database`) to give a tool *only* the
+     dotted-name injection (`config.database`) to give a tool _only_ the
      subsection it needs.
    - Enumerate **tools** (`spec.tools[]`) as commands - the verbs the model
      can call. Each one declares its JSON Schema (`schema:`) and the services
@@ -119,8 +119,8 @@ the validator rejects the manifest if any is missing:
 
 ```yaml
 capabilities:
-  streaming: true              # SSE-based streaming responses
-  pushNotifications: false     # webhook callbacks on long-running tasks
+  streaming: true # SSE-based streaming responses
+  pushNotifications: false # webhook callbacks on long-running tasks
   stateTransitionHistory: true # record task state transitions for replay
 ```
 
@@ -175,11 +175,11 @@ server:
 **`spec.language` (required).** At least one of three children; the
 generator emits the corresponding scaffold. Required pairs per language:
 
-| Language | Required fields | Optional |
-| --- | --- | --- |
-| `go` | `module`, `version` | - |
-| `typescript` | `packageName`, `nodeVersion` | - |
-| `rust` | `packageName`, `version`, `edition` | `features[]` |
+| Language     | Required fields                     | Optional     |
+| ------------ | ----------------------------------- | ------------ |
+| `go`         | `module`, `version`                 | -            |
+| `typescript` | `packageName`, `nodeVersion`        | -            |
+| `rust`       | `packageName`, `version`, `edition` | `features[]` |
 
 ```yaml
 language:
@@ -199,7 +199,7 @@ language:
   go:
     module: github.com/example/my-agent
     version: "1.26.2"
-    vendor:                                      # CLI extension
+    vendor: # CLI extension
       deps:
         - github.com/stretchr/testify@v1.10.0
       devdeps:
@@ -214,15 +214,15 @@ schema-validated fields as load-bearing and extensions as best-effort.
 ADL distinguishes two complementary surfaces, and conflating them produces
 unmaintainable agents. Apply the rule first, then write the entry.
 
-| Use a **tool** (`spec.tools[]`) when | Use a **skill** (`spec.skills[]`) when |
-| --- | --- |
-| The agent must invoke a deterministic operation (DB query, HTTP call, file write) | The agent must learn a workflow, policy, or response pattern |
-| Inputs and outputs are structured (JSON Schema fits) | The instructions are prose |
-| Implemented in code | Authored as markdown |
-| Registered with the toolbox at startup | Loaded into the system prompt at startup via the `AVAILABLE SKILLS:` manifest |
+| Use a **tool** (`spec.tools[]`) when                                              | Use a **skill** (`spec.skills[]`) when                                        |
+| --------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| The agent must invoke a deterministic operation (DB query, HTTP call, file write) | The agent must learn a workflow, policy, or response pattern                  |
+| Inputs and outputs are structured (JSON Schema fits)                              | The instructions are prose                                                    |
+| Implemented in code                                                               | Authored as markdown                                                          |
+| Registered with the toolbox at startup                                            | Loaded into the system prompt at startup via the `AVAILABLE SKILLS:` manifest |
 
 A skill that needs to read files (e.g. its own `SKILL.md` body, or bundled
-templates) requires `- id: read` in `spec.tools` *and*
+templates) requires `- id: read` in `spec.tools` _and_
 `spec.config.tools.read.enabled: true`. The validator enforces this; don't
 disable it.
 
@@ -233,13 +233,13 @@ implementations. They ship with their own unit tests (see
 `builtin/*_test.go.tmpl` in the CLI templates), so you do **not** need to
 write tests for them. You activate them - that's all:
 
-| Reserved id | Purpose | Activation namespace |
-| --- | --- | --- |
-| `read` | Read a file (`file_path`, optional `offset`/`limit`) | `spec.config.tools.read` |
-| `bash` | Execute a whitelisted shell command with a timeout | `spec.config.tools.bash` |
-| `write` | Write content to a file (creates parent dirs) | `spec.config.tools.write` |
-| `edit` | Replace a unique `old_string` with `new_string` in a file | `spec.config.tools.edit` |
-| `fetch` | `GET`/`HEAD` an http(s) URL (host whitelist, byte cap) | `spec.config.tools.fetch` |
+| Reserved id | Purpose                                                   | Activation namespace      |
+| ----------- | --------------------------------------------------------- | ------------------------- |
+| `read`      | Read a file (`file_path`, optional `offset`/`limit`)      | `spec.config.tools.read`  |
+| `bash`      | Execute a whitelisted shell command with a timeout        | `spec.config.tools.bash`  |
+| `write`     | Write content to a file (creates parent dirs)             | `spec.config.tools.write` |
+| `edit`      | Replace a unique `old_string` with `new_string` in a file | `spec.config.tools.edit`  |
+| `fetch`     | `GET`/`HEAD` an http(s) URL (host whitelist, byte cap)    | `spec.config.tools.fetch` |
 
 All five default to `enabled: false`. Opt in by listing the id alone (no
 `name`, `description`, or `schema` - the generator owns those) and setting
@@ -254,12 +254,12 @@ default (disabled)**. The kill-switch envs (`A2A_BASH_DISABLED=1`,
 Each built-in accepts its own typed config keys under
 `spec.config.tools.<id>`. Anything not on this list fails validation:
 
-| Tool | Config keys |
-| --- | --- |
-| `read` | `enabled`, `max_lines` (default file slice), `allowed_roots[]` (empty = project-wide) |
-| `bash` | `enabled`, `whitelist[]` (allowed commands), `timeout_seconds` |
-| `write` | `enabled` |
-| `edit` | `enabled` |
+| Tool    | Config keys                                                                                                                                       |
+| ------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `read`  | `enabled`, `max_lines` (default file slice), `allowed_roots[]` (empty = project-wide)                                                             |
+| `bash`  | `enabled`, `whitelist[]` (allowed commands), `timeout_seconds`                                                                                    |
+| `write` | `enabled`                                                                                                                                         |
+| `edit`  | `enabled`                                                                                                                                         |
 | `fetch` | `enabled`, `allowed_domains[]` (entries starting with `.` match any subdomain), `max_bytes`, `timeout_seconds`, `allow_downloads`, `download_dir` |
 
 A representative configuration that opts in the three tools with the
@@ -279,9 +279,9 @@ config:
       enabled: true
       allowed_domains:
         - pkg.go.dev
-        - .rust-lang.org           # any subdomain of rust-lang.org
+        - .rust-lang.org # any subdomain of rust-lang.org
         - raw.githubusercontent.com
-      max_bytes: 5242880           # 5 MiB
+      max_bytes: 5242880 # 5 MiB
       timeout_seconds: 20
       allow_downloads: true
       download_dir: /tmp/adl-fetch-cache
@@ -316,10 +316,10 @@ Injection patterns you can use in `inject:`:
 
 ```yaml
 inject:
-  - logger              # always available, *zap.Logger (Go)
-  - config              # the whole *config.Config
-  - config.database     # only *config.DatabaseConfig - principle of least privilege
-  - cache               # any name declared in spec.services
+  - logger # always available, *zap.Logger (Go)
+  - config # the whole *config.Config
+  - config.database # only *config.DatabaseConfig - principle of least privilege
+  - cache # any name declared in spec.services
 ```
 
 Always prefer `config.<section>` over `config` - it keeps the tool's blast
@@ -334,7 +334,7 @@ common gap in ADL projects.
 
 Verification step for every PR that adds or modifies `spec.tools[]`:
 
-1. For each entry whose `id` is *not* in the reserved set above, confirm a
+1. For each entry whose `id` is _not_ in the reserved set above, confirm a
    sibling test file exists - `tools/<name>_test.go` (Go), `tools/<name>.rs`
    tests block (Rust), `tools/<name>.test.ts` (TypeScript) - and the file is
    listed in `.adl-ignore` so regeneration won't clobber it.
@@ -399,7 +399,7 @@ catch a misread `args["query"].(string)` or a swallowed service error.
 ## The `.adl-ignore` contract
 
 `adl-cli` writes this file on first generation. It works like `.gitignore`
-but applies to the *generator* - anything matched is preserved across
+but applies to the _generator_ - anything matched is preserved across
 `adl generate --overwrite`. The generator automatically adds:
 
 - every custom tool file (`tools/<name>.<ext>`),
@@ -433,12 +433,12 @@ that takes `(*zap.Logger, *config.Config)`.
 `type` is a closed enum - pick the one that best names the role so the
 generator can emit idiomatic scaffolding:
 
-| `type` | Use it for |
-| --- | --- |
-| `service` | Domain logic / orchestration (default choice when in doubt) |
-| `repository` | Persistence and data-access ports - DBs, object stores |
-| `client` | Outbound HTTP / gRPC / RPC clients to another system |
-| `middleware` | Request-pipeline behaviour - auth, logging, rate limits |
+| `type`       | Use it for                                                  |
+| ------------ | ----------------------------------------------------------- |
+| `service`    | Domain logic / orchestration (default choice when in doubt) |
+| `repository` | Persistence and data-access ports - DBs, object stores      |
+| `client`     | Outbound HTTP / gRPC / RPC clients to another system        |
+| `middleware` | Request-pipeline behaviour - auth, logging, rate limits     |
 
 `interface` and `factory` must match `^[a-zA-Z][a-zA-Z0-9_]*$` - they
 become real identifiers in the generated code. Three rules keep this
@@ -458,30 +458,30 @@ maintainable:
 
 `spec.skills[]` accepts three entry shapes, resolved by `adl-cli`:
 
-| Shape | Behaviour |
-| --- | --- |
-| `id: <name>` (and optional `version: <semver>`) | Fetched from `https://registry.inference-gateway.com/skills/`. Override with `ADL_SKILLS_REGISTRY`. |
-| `id: <name>` + `source: <shorthand-or-URL>` | The whole GitHub directory (SKILL.md + any bundled assets) is pulled into `skills/<id>/`. |
-| `id: <name>` + `bare: true` (+ `name`, `description`, `tags`, optional `license`) | Scaffolded locally as a TODO. Author it by hand. |
+| Shape                                                                             | Behaviour                                                                                           |
+| --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| `id: <name>` (and optional `version: <semver>`)                                   | Fetched from `https://registry.inference-gateway.com/skills/`. Override with `ADL_SKILLS_REGISTRY`. |
+| `id: <name>` + `source: <shorthand-or-URL>`                                       | The whole GitHub directory (SKILL.md + any bundled assets) is pulled into `skills/<id>/`.           |
+| `id: <name>` + `bare: true` (+ `name`, `description`, `tags`, optional `license`) | Scaffolded locally as a TODO. Author it by hand.                                                    |
 
 `source:` shorthand:
 
 ```yaml
 - id: skill-creator
-  source: skill-creator              # inference-gateway/skills, main
+  source: skill-creator # inference-gateway/skills, main
 - id: skill-creator
-  source: skill-creator@v1.0         # pinned tag
+  source: skill-creator@v1.0 # pinned tag
 - id: pdf
-  source: anthropics/skills/pdf      # different repo
+  source: anthropics/skills/pdf # different repo
 - id: pdf
-  source: anthropics/skills/pdf@abc1234   # pinned commit SHA
+  source: anthropics/skills/pdf@abc1234 # pinned commit SHA
 - id: custom
   source: https://github.com/my-org/my-repo/tree/release/path/to/skill
 ```
 
 At runtime, the generated agent walks first-level subdirectories under
 `skills/`, parses each `<id>/SKILL.md`'s frontmatter, and appends an
-`AVAILABLE SKILLS:` block to the system prompt - the *bodies* are not
+`AVAILABLE SKILLS:` block to the system prompt - the _bodies_ are not
 inlined. The model loads them on demand via the `read` tool, so a
 skills-using agent must opt `read` in (see "Reserved built-in tools").
 
@@ -493,17 +493,17 @@ expressions like `MIT OR Apache-2.0` are not currently accepted.
 
 ## Local development: sandbox and AI assistants
 
-`spec.development` configures the experience of working *on* the agent
+`spec.development` configures the experience of working _on_ the agent
 locally - reproducible dev environments and AI-assistant onboarding files.
 Two independent subsections, both optional.
 
 **`spec.development.sandbox`.** Three alternative packagings - pick any
 combination; each declares its own `enabled` boolean. Generated artefacts:
 
-| Sub-block | `enabled: true` generates |
-| --- | --- |
-| `flox` | `.flox/env/manifest.toml` (Flox/Nix-backed reproducible env) |
-| `devcontainer` | `.devcontainer/devcontainer.json` (VS Code Dev Containers) |
+| Sub-block       | `enabled: true` generates                                                                      |
+| --------------- | ---------------------------------------------------------------------------------------------- |
+| `flox`          | `.flox/env/manifest.toml` (Flox/Nix-backed reproducible env)                                   |
+| `devcontainer`  | `.devcontainer/devcontainer.json` (VS Code Dev Containers)                                     |
 | `dockerCompose` | `docker-compose.yaml` (with the artifacts server wired in when `spec.artifacts.enabled: true`) |
 
 **`spec.development.ai`.** Per-agent toggles for the coding assistants the
@@ -512,13 +512,13 @@ The CLI generates each agent's onboarding file the first time it's enabled,
 and keeps it in sync on subsequent `adl generate --overwrite` runs unless
 you list it in `.adl-ignore`:
 
-| Sub-block | Generated file |
-| --- | --- |
-| `claudecode` | `CLAUDE.md` (Anthropic Claude Code) |
-| `gemini` | `GEMINI.md` (Google Gemini) |
-| `codex` | shared `AGENTS.md` (OpenAI Codex) |
-| `opencode` | shared `AGENTS.md` |
-| `infer` | shared `AGENTS.md` (Inference Gateway `infer`) |
+| Sub-block    | Generated file                                 |
+| ------------ | ---------------------------------------------- |
+| `claudecode` | `CLAUDE.md` (Anthropic Claude Code)            |
+| `gemini`     | `GEMINI.md` (Google Gemini)                    |
+| `codex`      | shared `AGENTS.md` (OpenAI Codex)              |
+| `opencode`   | shared `AGENTS.md`                             |
+| `infer`      | shared `AGENTS.md` (Inference Gateway `infer`) |
 
 A small example combining sandbox + AI toggles:
 
@@ -550,15 +550,15 @@ the code lives, how it ships, and where it runs.
 
 **`spec.scm`.** All fields optional; the provider enum is closed:
 
-| Field | Effect |
-| --- | --- |
-| `provider` | `github` \| `gitlab` \| `bitbucket` - selects the workflow templates |
-| `url` | Repository URL (used in generated `README.md`, agent card, etc.) |
-| `github_app` | Generate a GitHub App / token configuration in CI |
-| `issue_templates` | Write `.github/ISSUE_TEMPLATE/*.md` |
-| `dependabot` | Write `.github/dependabot.yml` |
-| `ci` | Write `.github/workflows/ci.yml` |
-| `cd` | Write `.github/workflows/cd.yml` and `.releaserc.yaml` (semantic-release) |
+| Field             | Effect                                                                    |
+| ----------------- | ------------------------------------------------------------------------- |
+| `provider`        | `github` \| `gitlab` \| `bitbucket` - selects the workflow templates      |
+| `url`             | Repository URL (used in generated `README.md`, agent card, etc.)          |
+| `github_app`      | Generate a GitHub App / token configuration in CI                         |
+| `issue_templates` | Write `.github/ISSUE_TEMPLATE/*.md`                                       |
+| `dependabot`      | Write `.github/dependabot.yml`                                            |
+| `ci`              | Write `.github/workflows/ci.yml`                                          |
+| `cd`              | Write `.github/workflows/cd.yml` and `.releaserc.yaml` (semantic-release) |
 
 **`spec.deployment`.** Choose `type: kubernetes` or `type: cloudrun`; the
 matching sub-block carries the detail. Both share an `image` shape with
@@ -697,7 +697,7 @@ restating it.
 
 ## What NOT to do
 
-- Don't hand-edit generated files that are *not* in `.adl-ignore` - they're
+- Don't hand-edit generated files that are _not_ in `.adl-ignore` - they're
   overwritten on the next `adl generate --overwrite`. If you need them
   custom, add them to `.adl-ignore` (and accept that you've forked them
   from the generator).
