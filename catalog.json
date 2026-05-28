@@ -22,14 +22,13 @@
     },
     {
       "name": "maintainer",
-      "description": "Guidance for maintaining the Inference Gateway ecosystem - a polyrepo project under the `inference-gateway` GitHub organization (main Go gateway, CLI, operator, SDKs, docs, schemas, ADL, registry, etc.). Use when working inside any repo in that org (locally or in a GitHub Actions / CI checkout), when changes need to ripple across multiple repos (e.g., OpenAPI/schema changes that affect SDKs and docs), or when the user asks ecosystem-level questions.",
+      "description": "Maintain the `inference-gateway` GitHub org. Use inside any org repo, in local or CI checkouts, for cross-repo changes such as OpenAPI/schema updates, releases, docs follow-up, GitHub issues, or ecosystem-level questions.",
       "source": "https://github.com/inference-gateway/skills/tree/main/skills/maintainer",
       "vendor": "inference-gateway",
       "license": "Apache-2.0",
       "tags": [
         "inference-gateway",
         "maintainer",
-        "polyrepo",
         "ecosystem"
       ],
       "categories": [

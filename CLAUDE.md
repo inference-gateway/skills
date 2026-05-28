@@ -98,7 +98,7 @@ only - releases are manual, not on every merge to `main`.
 
 ## Ecosystem awareness
 
-This is one repo in the `inference-gateway/*` polyrepo. For cross-repo concerns
+This is one repo in the `inference-gateway/*`. For cross-repo concerns
 (release flow, issue templates, the docs-ticket rule for `feat:`/`refactor:`
 changes, etc.), defer to the `maintainer` skill (`skills/maintainer/SKILL.md`) -
 it encodes the org-wide playbook rather than restating it here.

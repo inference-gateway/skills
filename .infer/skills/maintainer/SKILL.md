@@ -1,7 +1,7 @@
 ---
 name: maintainer
 description: >
-  Guidance for maintaining the Inference Gateway ecosystem - a polyrepo project under the `inference-gateway` GitHub
+  Guidance for maintaining the Inference Gateway ecosystem - a project under the `inference-gateway` GitHub
   organization (main Go gateway, CLI, operator, SDKs, docs, schemas, ADL, registry, etc.). Use when working inside any
   repo in that org (locally or in a GitHub Actions / CI checkout), when changes need to ripple across multiple repos
   (e.g., OpenAPI/schema changes that affect SDKs and docs), or when the user asks ecosystem-level questions.
@@ -16,7 +16,7 @@ developer checkout and in a CI runner (e.g., GitHub Actions) where typically onl
 
 ## Ecosystem map
 
-The `inference-gateway` GitHub organization is a polyrepo. Each repository is separately versioned and separately released.
+Each repository is separately versioned and separately released.
 Refer to repos by their `inference-gateway/<repo>` GitHub slug rather than any local path.
 
 | Repo (`inference-gateway/…`) | Purpose                                                                                                           |

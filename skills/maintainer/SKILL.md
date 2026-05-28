@@ -1,207 +1,58 @@
 ---
 name: maintainer
 description: >
-  Guidance for maintaining the Inference Gateway ecosystem - a polyrepo project under the `inference-gateway` GitHub
-  organization (main Go gateway, CLI, operator, SDKs, docs, schemas, ADL, registry, etc.). Use when working inside any
-  repo in that org (locally or in a GitHub Actions / CI checkout), when changes need to ripple across multiple repos
-  (e.g., OpenAPI/schema changes that affect SDKs and docs), or when the user asks ecosystem-level questions.
+  Maintain the `inference-gateway` GitHub org. Use inside any org repo, in local or CI checkouts, for cross-repo
+  changes such as OpenAPI/schema updates, releases, docs follow-up, GitHub issues, or ecosystem-level questions.
 license: Apache-2.0
 ---
 
 # Inference Gateway Maintainer
 
-Use this skill when working inside any repository under the `inference-gateway` GitHub organization, or when the user asks
-about cross-repo concerns in the Inference Gateway ecosystem. The guidance below is written to apply equally in a local
-developer checkout and in a CI runner (e.g., GitHub Actions) where typically only one repo is checked into the workspace.
+Use this skill for ecosystem maintenance across `inference-gateway/*` repos. Keep the current repo's local instructions
+authoritative, and load references only when the task needs them.
 
-## Ecosystem map
+## Start here
 
-The `inference-gateway` GitHub organization is a polyrepo. Each repository is separately versioned and separately released.
-Refer to repos by their `inference-gateway/<repo>` GitHub slug rather than any local path.
+1. Read the current repo's `CLAUDE.md` or `AGENTS.md` before changing files.
+2. Identify the current repo from `$GITHUB_REPOSITORY`, `gh repo view --json nameWithOwner -q .nameWithOwner`, or
+   `git remote get-url origin`.
+3. Treat the working directory as the only checked-out repo. Use `gh` to inspect other org repos unless the user confirms
+   sibling clones exist.
+4. Use the repo's `Taskfile.yml` when present. Run `task --list` before guessing commands.
+5. Do not hand-edit generated files. Change the generator input (`openapi.yaml`, schemas, templates) and regenerate only
+   with explicit confirmation when generation has broad impact.
 
-| Repo (`inference-gateway/…`) | Purpose                                                                                                           |
-| ---------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| `inference-gateway`          | Main Go HTTP gateway. Source of truth for provider configs via `openapi.yaml`.                                    |
-| `cli`                        | Command-line client (`infer`).                                                                                    |
-| `operator`                   | Kubernetes operator.                                                                                              |
-| `sdks`                       | Multi-language SDKs (generated from `schemas`).                                                                   |
-| `schemas`                    | Shared OpenAPI/JSON schemas consumed by SDKs and docs.                                                            |
-| `docs`                       | Next.js + MDX documentation site.                                                                                 |
-| `adl`, `adl-cli`             | Agent Definition Language and its CLI.                                                                            |
-| `a2a-debugger`               | Agent-to-agent tooling.                                                                                           |
-| `*-agent`                    | Agent-to-agent agents.                                                                                            |
-| `awesome-a2a`                | Curated awesome-list for A2A.                                                                                     |
-| `registry`                   | Component / agent registry.                                                                                       |
-| `infer-action`               | GitHub Action wrapper.                                                                                            |
-| `tools`                      | Shared tooling.                                                                                                   |
-| `skills`                     | Public Agent Skills catalog (the open-source catalog repo, distinct from any local Claude Code skills directory). |
-| `.github`                    | Org-level community health repo - holds default issue templates and shared workflows.                             |
+## Load references
 
-Each repo has its own `CLAUDE.md` and/or `AGENTS.md` - read those for repo-specific guidance before making changes. Don't assume conventions from one repo apply to another.
+- Read [references/ecosystem.md](references/ecosystem.md) when you need the repo map, org-wide conventions, CI/GitHub
+  Actions behavior, cross-repo read commands, or the full "do not do" list.
+- Read [references/github-issues.md](references/github-issues.md) when asked to file or draft issues, choose issue
+  templates, set labels/types, or handle drift/sync issue titles.
 
-## Determining where you are
+## Cross-repo impact
 
-- In CI, the current repository is in `$GITHUB_REPOSITORY` (format `owner/repo`). The checkout is at `$GITHUB_WORKSPACE`.
-- Locally, use `gh repo view --json nameWithOwner -q .nameWithOwner` from the repo root, or `git remote get-url origin`.
-- Treat the working directory as "the current repo" - do not assume sibling repositories are checked out alongside it.
-  To inspect another repo in the org, use `gh` (see "Reading from other repos" below).
+Before shipping, surface affected repos explicitly when a change can ripple:
 
-## Steps when starting work in a repo
+- Main gateway `openapi.yaml` changes may affect `sdks`, `docs`, `cli`, and `operator`.
+- `schemas` changes may affect `sdks` and `docs`.
+- Provider additions usually need docs under `inference-gateway/docs` and may need examples.
+- Gateway releases may require `operator`, Helm, image tag, and example manifest updates.
+- New config env vars may require regenerated configuration docs, Helm values, and example `.env` files.
 
-1. **Read the current repo's `CLAUDE.md` first** (and `AGENTS.md` in the main gateway). Each repo carries its own commands, conventions, and gotchas.
-2. **Identify whether your change crosses repo boundaries.** Common triggers:
-   - Editing `inference-gateway/inference-gateway`'s `openapi.yaml` → likely affects `inference-gateway/sdks`, `inference-gateway/docs`, `inference-gateway/cli`, `inference-gateway/operator`.
-   - Editing `inference-gateway/schemas` → affects `inference-gateway/sdks`, `inference-gateway/docs`.
-   - Adding a provider → also touches `inference-gateway/docs` (`markdown/`), and possibly examples.
-   - Releasing the main gateway → may require version bumps in `inference-gateway/operator`, helm chart references, and example manifests.
-3. **Respect generated files.** Files marked `// Code generated from OpenAPI schema. DO NOT EDIT.` are regenerated by
-   `task generate` in the main gateway. Don't hand-edit them; modify `openapi.yaml` instead and rerun generation.
-4. **Use the repo's task runner.** Most repos use `Taskfile.yml`. Run `task --list` to discover targets rather than guessing commands.
+Do not fan out edits silently. List impacted repos in the response, PR body, issue comment, or job summary.
 
-## Reading from other repos
+## Docs follow-up rule
 
-When CI only has the current repo checked out (and you need to consult another repo in the org), prefer `gh` over assuming a local clone:
+Every `feat:` or public-surface `refactor:` outside `inference-gateway/docs` needs a matching `[DOCS]` issue for
+`inference-gateway/docs`, created with the source PR rather than later.
 
-- Fetch a single file: `gh api repos/inference-gateway/<repo>/contents/<path> -H 'Accept: application/vnd.github.raw'`
-- List directory contents: `gh api repos/inference-gateway/<repo>/contents/<dir>`
-- Read on a specific ref: append `?ref=<branch-or-sha>`
-- Clone read-only into a temp dir if you need multiple files: `gh repo clone inference-gateway/<repo> -- --depth=1`
+- Default to preparing a docs ticket draft: title, body, affected pages, and source PR/issue link.
+- Purely internal refactors may skip the docs issue only if the PR body states `no docs ticket: internal-only refactor`.
+- Do not file cross-repo issues automatically unless the user explicitly asks.
+- For exact issue template handling, read [references/github-issues.md](references/github-issues.md).
 
-These commands work identically locally and inside a GitHub Actions job (as long as `GH_TOKEN` / `GITHUB_TOKEN` is exported with `repo` scope on the relevant repos).
+## Maintainer defaults
 
-## House conventions (apply across the org)
-
-- **Commit style:** Conventional Commits (`feat:`, `fix:`, `chore:`, `docs:`, `test:`, `refactor:`, optionally scoped
-  like `chore(deps):`). Semantic-release reads these to compute versions.
-- **Releases:** semantic-release + goreleaser (where applicable). Don't hand-edit `CHANGELOG.md` - it's generated.
-- **Go style:** early returns over nesting; switch over if/else chains; lowercase log messages; code to interfaces for mockability; table-driven tests with `t.Run`.
-- **Mocks:** generated via `mockgen` into `tests/mocks/` (main gateway); driven by `//go:generate` directives; refresh with `go generate ./...` (rolled into `task generate`).
-- **Pre-commit hook:** `task pre-commit:install` in the main gateway. If skipped, run
-  `task generate && task format && task lint && task build && task test` before pushing - CI mirrors this.
-- **Vision / multimodal:** disabled by default (`ENABLE_VISION=false`); enable explicitly when testing vision flows.
-
-## Feature and refactor workflow
-
-Every `feat:` or `refactor:` landing in any ecosystem repo (except `inference-gateway/docs` itself) requires a corresponding
-`[DOCS]` ticket filed against `inference-gateway/docs` - created at the same time as the source PR, not "later." Default
-to filing; the burden is on the author to justify _not_ filing one. Shipped features without docs follow-up silently rot
-the documentation site and break newcomer onboarding.
-
-| Source change                                                                                                | Docs ticket scope                                                                                                                         |
-| ------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| `feat:` - any user-facing addition (endpoint, flag, env var, config, provider, SDK method, agent capability) | New `[DOCS]` issue: describe the feature, the user-facing surface, and any code samples to add.                                           |
-| `refactor:` - public API or user-visible behavior change                                                     | `[DOCS]` issue: list affected pages and what must change.                                                                                 |
-| `refactor:` - purely internal (no public-surface change)                                                     | Skipping is allowed, but the PR body must state "no docs ticket: internal-only refactor" so the absence is intentional, not an oversight. |
-
-Use the `documentation_request.md` template (see "Reporting GitHub issues" below): title prefix `[DOCS]`, label
-`documentation`, type `documentation`. Always link the docs ticket back to the originating PR/issue so it carries enough
-context to act on without re-discovering it.
-
-Filing the docs ticket is a maintainer-owned task, not something to automate from a downstream CI run. When you (the
-assistant) identify that a PR or commit qualifies under this rule, surface a prepared ticket draft (title + body) in your
-response so the maintainer can file it; do not file cross-repo issues automatically. Do not silently skip the docs ticket -
-if you think it isn't needed, say so explicitly so the maintainer can confirm.
-
-## Cross-repo change checklist
-
-When a change in one repo logically requires updates in another, surface this to the user (or in the PR description, when running in CI) explicitly before shipping:
-
-- [ ] Provider added/changed in `openapi.yaml` → docs page in `inference-gateway/docs` (`markdown/`)?
-- [ ] New config env var → `Configurations.md` regenerated? Helm `values.yaml` updated? `examples/docker-compose/*/.env.example` regenerated?
-- [ ] Schema change in `inference-gateway/schemas` → SDK regeneration triggered in `inference-gateway/sdks`?
-- [ ] Main gateway release → `inference-gateway/operator` / helm chart pointing at the new image tag?
-
-Don't fan out edits silently; list the impacted repos so the reviewer can confirm scope. When running in CI without an
-interactive user, capture the list in the PR body or as an issue comment rather than silently expanding the diff.
-
-## Reporting GitHub issues
-
-When asked to file a GitHub issue against any repo in the ecosystem, **always check the org-default issue templates first**. They live in the org-level community-health repo:
-
-- Repo: `inference-gateway/.github`
-- Path inside that repo: `.github/ISSUE_TEMPLATE/`
-
-Fetch them with:
-
-```sh
-gh api repos/inference-gateway/.github/contents/.github/ISSUE_TEMPLATE
-gh api repos/inference-gateway/.github/contents/.github/ISSUE_TEMPLATE/bug_report.md \
-  -H 'Accept: application/vnd.github.raw'
-```
-
-These templates apply to any downstream repo that doesn't ship local ones. A downstream repo may override them in its own
-`.github/ISSUE_TEMPLATE/` - check the target repo first with
-`gh api repos/inference-gateway/<repo>/contents/.github/ISSUE_TEMPLATE` and fall back to the org defaults only if no
-override exists.
-
-The four canonical templates and their stable title prefixes / labels / types:
-
-| Template                   | Title prefix      | Labels          | Type            |
-| -------------------------- | ----------------- | --------------- | --------------- |
-| `bug_report.md`            | `[BUG]`           | `bug`           | `bug`           |
-| `feature_request.md`       | `[FEATURE]`       | `enhancement`   | `feature`       |
-| `documentation_request.md` | `[DOCS]`          | `documentation` | `documentation` |
-| `refactor_request.md`      | `[TASK] Refactor` | `refactor`      | `task`          |
-
-### Procedure
-
-1. **Read the relevant template file** (via `gh api … --raw` or from the local checkout if it's the current repo) to get
-   the exact section structure (Summary, Steps to Reproduce, Acceptance Criteria, etc.). Don't paraphrase from memory -
-   sections evolve.
-2. **Check the target repo for local overrides** at `repos/inference-gateway/<repo>/contents/.github/ISSUE_TEMPLATE`. If present, prefer the local template over the org default.
-3. **Match the title prefix exactly** - sync orchestrators (`sync-sdks.yml`, `sync-adks.yml` in
-   `inference-gateway/.github`) rely on byte-exact title matching for idempotency. Don't improvise.
-4. **Fill in every section** the template defines. Use the existing HTML comment placeholders (`<!-- ... -->`) as prompts; don't leave them in the final body.
-5. **Set labels via `gh issue create --label`.** The `labels:` frontmatter in the template only applies when issues are filed through the GitHub UI.
-6. **Set the Issue Type via GraphQL.** `gh issue create/edit` has no `--type` flag; the template's `type:` frontmatter
-   is UI-only. After creating, call the `updateIssueIssueType` mutation. If the org doesn't have that type defined yet,
-   warn and continue - don't fail.
-7. **No `@claude` mention** anywhere in titles, bodies, or comments - that would re-trigger downstream Claude automation.
-8. **`docs` target is ASCII-only.** No em dash (`-`, U+2014) or en dash (`–`, U+2013) in titles, bodies, comments, or
-   footers when filing against `inference-gateway/docs`. Use ASCII hyphen `-` (U+002D).
-
-### Drift-issue titles (do not improvise)
-
-When filing drift issues from sync workflows, use these exact stable titles - orchestrators search by byte-exact title to avoid duplicates:
-
-- `[FEATURE] Implement missing OpenAPI operations`
-- `[TASK] Refactor regenerate models from latest spec`
-- `[FEATURE] Add usage examples for missing operations`
-- `[TASK] Refactor sync vendored openapi.yaml with schemas`
-- `[DOCS] Document missing operations and schemas`
-- `[FEATURE] Implement missing A2A JSON-RPC methods`
-- `[TASK] Refactor regenerate A2A types from latest schema`
-- `[DOCS] Add usage examples for missing A2A methods`
-- `[TASK] Refactor sync vendored schema.yaml with schemas`
-- `[TASK] Add tests for missing operations / methods`
-
-Required labels: `sdk-drift` on `kind: sdk|docs` repos, `adk-drift` on `kind: adk` repos. These labels must already exist on the target - orchestrators don't create them.
-
-## CI / GitHub Actions notes
-
-When this skill runs inside a GitHub Actions job:
-
-- `$GITHUB_REPOSITORY`, `$GITHUB_REF`, `$GITHUB_SHA`, `$GITHUB_WORKSPACE`, and `$GITHUB_EVENT_PATH` describe the current invocation - prefer them over inferring context.
-- Authenticate `gh` with `GH_TOKEN=${{ secrets.GITHUB_TOKEN }}` (or a PAT with cross-repo scope when reaching into other repos in the org).
-- The default `GITHUB_TOKEN` is scoped to the current repo only. Cross-repo writes (filing issues / PRs in another org repo) require a token with access to the target.
-- Don't `cd` to absolute paths; everything should be relative to `$GITHUB_WORKSPACE` (or `.`).
-- Output for the human reviewer goes into the PR / issue body, the job summary (`$GITHUB_STEP_SUMMARY`), or a comment - not stdout that nobody will read.
-- Treat the CI environment as ephemeral - don't depend on sibling repos being checked out, don't write outside the
-  workspace, and don't rely on developer-machine tools (Docker Desktop, IDE plugins, etc.).
-
-## What NOT to do
-
-- Don't run `task generate`, push, force-push, or cut releases without explicit confirmation (or, in CI, without an
-  explicit job/step authorized to do so) - these are high-blast-radius actions across the ecosystem.
-- Don't hand-edit generated files. If output looks wrong, fix the generator input (`openapi.yaml`, schema, template).
-- Don't assume one repo's `CLAUDE.md` applies to another. Re-read per repo.
-- Don't conflate the public skills catalog repo (`inference-gateway/skills`, open-source, Apache-2.0, follows the Agent Skills
-  spec) with any private Claude Code skills directory on a developer machine.
-- Don't bypass hooks (`--no-verify`, `--no-gpg-sign`) unless the user explicitly asks.
-- Don't assume sibling repos exist on disk - reach for `gh` to read them.
-
-## Notes
-
-- The user (<eden.reich@gmail.com>) is the primary maintainer across these repos. Default to terse, technical responses without re-explaining ecosystem basics.
-- When unsure which repo owns a concern, search across the org with `gh search code --owner inference-gateway '<term>'`
-  rather than guessing - many concepts (providers, schemas, tools) appear in multiple repos but only one is authoritative.
+- Use Conventional Commits: `feat:`, `fix:`, `docs:`, `chore:`, `test:`, `refactor:`, optionally scoped.
+- Do not hand-edit generated `CHANGELOG.md`, release metadata, or generated code.
+- Do not run push, force-push, cut releases, or bypass hooks without explicit confirmation.
