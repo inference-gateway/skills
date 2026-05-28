@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-05-26T01:18:58.207Z",
+  "updated": "2026-05-28T00:43:35Z",
   "skills": [
     {
       "name": "adl",
@@ -53,5 +53,5 @@
       "homepage": "https://github.com/inference-gateway/skills"
     }
   ],
-  "release": "0.1.1"
+  "release": "0.2.0"
 }
