@@ -20,12 +20,12 @@ gh api repos/inference-gateway/.github/contents/.github/ISSUE_TEMPLATE/bug_repor
 
 Canonical org-default templates:
 
-| Template | Title prefix | Labels | Type |
-| --- | --- | --- | --- |
-| `bug_report.md` | `[BUG]` | `bug` | `bug` |
-| `feature_request.md` | `[FEATURE]` | `enhancement` | `feature` |
-| `documentation_request.md` | `[DOCS]` | `documentation` | `documentation` |
-| `refactor_request.md` | `[TASK] Refactor` | `refactor` | `task` |
+| Template                   | Title prefix      | Labels          | Type            |
+| -------------------------- | ----------------- | --------------- | --------------- |
+| `bug_report.md`            | `[BUG]`           | `bug`           | `bug`           |
+| `feature_request.md`       | `[FEATURE]`       | `enhancement`   | `feature`       |
+| `documentation_request.md` | `[DOCS]`          | `documentation` | `documentation` |
+| `refactor_request.md`      | `[TASK] Refactor` | `refactor`      | `task`          |
 
 ## Filing Procedure
 

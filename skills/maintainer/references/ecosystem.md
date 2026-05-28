@@ -7,23 +7,23 @@ Use this reference for repo ownership, CI behavior, cross-repo reads, and org-wi
 The `inference-gateway` GitHub organization. Each repository is separately versioned and released. Refer to
 repos by their `inference-gateway/<repo>` GitHub slug rather than local paths.
 
-| Repo (`inference-gateway/...`) | Purpose |
-| --- | --- |
-| `inference-gateway` | Main Go HTTP gateway. Source of truth for provider configs via `openapi.yaml`. |
-| `cli` | Command-line client (`infer`). |
-| `operator` | Kubernetes operator. |
-| `sdks` | Multi-language SDKs generated from `schemas`. |
-| `schemas` | Shared OpenAPI/JSON schemas consumed by SDKs and docs. |
-| `docs` | Next.js + MDX documentation site. |
-| `adl`, `adl-cli` | Agent Definition Language and its CLI. |
-| `a2a-debugger` | Agent-to-agent tooling. |
-| `*-agent` | Agent-to-agent agents. |
-| `awesome-a2a` | Curated awesome-list for A2A. |
-| `registry` | Component / agent registry. |
-| `infer-action` | GitHub Action wrapper. |
-| `tools` | Shared tooling. |
-| `skills` | Public Agent Skills catalog, distinct from private/local skills directories. |
-| `.github` | Org-level community health repo with default issue templates and shared workflows. |
+| Repo (`inference-gateway/...`) | Purpose                                                                            |
+| ------------------------------ | ---------------------------------------------------------------------------------- |
+| `inference-gateway`            | Main Go HTTP gateway. Source of truth for provider configs via `openapi.yaml`.     |
+| `cli`                          | Command-line client (`infer`).                                                     |
+| `operator`                     | Kubernetes operator.                                                               |
+| `sdks`                         | Multi-language SDKs generated from `schemas`.                                      |
+| `schemas`                      | Shared OpenAPI/JSON schemas consumed by SDKs and docs.                             |
+| `docs`                         | Next.js + MDX documentation site.                                                  |
+| `adl`, `adl-cli`               | Agent Definition Language and its CLI.                                             |
+| `a2a-debugger`                 | Agent-to-agent tooling.                                                            |
+| `*-agent`                      | Agent-to-agent agents.                                                             |
+| `awesome-a2a`                  | Curated awesome-list for A2A.                                                      |
+| `registry`                     | Component / agent registry.                                                        |
+| `infer-action`                 | GitHub Action wrapper.                                                             |
+| `tools`                        | Shared tooling.                                                                    |
+| `skills`                       | Public Agent Skills catalog, distinct from private/local skills directories.       |
+| `.github`                      | Org-level community health repo with default issue templates and shared workflows. |
 
 Every repo may have its own `CLAUDE.md` or `AGENTS.md`; read local instructions before assuming conventions.
 
