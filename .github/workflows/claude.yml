@@ -3,16 +3,10 @@ name: Claude Code
 
 # Thin caller for the org-wide reusable @claude workflow.
 # Source of truth: inference-gateway/.github/.github/workflows/claude.yml
-# The on: triggers and the @claude gate stay here (event triggers cannot live
-# in a reusable workflow). Everything else is centralized.
+# Inputs are managed centrally in inference-gateway/.github/repos.yaml (claude_targets).
+# Do not hand-edit setup here; change the reusable workflow or repos.yaml instead.
 
 on:
-  workflow_dispatch:
-    inputs:
-      prompt:
-        description: 'Task for Claude to work on'
-        required: true
-        type: string
   issue_comment:
     types:
       - created
@@ -30,7 +24,6 @@ on:
 jobs:
   claude:
     if: |
-      github.event_name == 'workflow_dispatch' ||
       (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude')) ||
       (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@claude')) ||
       (github.event_name == 'pull_request_review' && contains(github.event.review.body, '@claude')) ||
@@ -42,9 +35,8 @@ jobs:
       issues: write
       id-token: write
       actions: read
-    uses: inference-gateway/.github/.github/workflows/claude.yml@main
+    uses: inference-gateway/.github/.github/workflows/claude.yml@v0.2.1
     with:
-      language: none
+      language: "none"
       node: true
-      prompt: ${{ inputs.prompt }}
     secrets: inherit
