@@ -10,7 +10,7 @@ history in `CHANGELOG.md`.
 ## Build, Test, and Development Commands
 
 - `task` - lists available Taskfile commands.
-- `task lint` - runs `markdownlint '**/*.md' --ignore node_modules`.
+- `task lint` - runs `markdownlint '**/*.md'` (ignore globs come from `.markdownlintignore`).
 - `task lint:fix` - applies safe Markdown lint fixes.
 
 There is no application build step. Content validation is primarily Markdown linting plus review of `catalog.json` and `SKILL.md` consistency.

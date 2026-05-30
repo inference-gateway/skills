@@ -43,8 +43,8 @@ Lint config is `.markdownlint.json` - `MD013` allows 180-char lines; `MD029`,
 The `Build catalog` workflow (`.github/workflows/build-catalog.yml`) runs
 `npm run build` on every push that touches `skills.yaml`, `skills/**`,
 `scripts/build-catalog.mjs`, or `package.json`, plus a daily cron at `0 4 * * *`
-UTC and on `workflow_dispatch`. It auto-commits with
-`chore(catalog): Rebuild catalog.json [skip ci]`.
+UTC and on `workflow_dispatch`. It opens an automated pull request (branch
+`chore/rebuild-catalog`) titled `chore(catalog): Rebuild catalog.json`.
 
 ## Adding or editing a skill
 
