@@ -7,6 +7,12 @@ name: Claude Code
 # in a reusable workflow). Everything else is centralized.
 
 on:
+  workflow_dispatch:
+    inputs:
+      prompt:
+        description: 'Task for Claude to work on'
+        required: true
+        type: string
   issue_comment:
     types:
       - created
@@ -24,6 +30,7 @@ on:
 jobs:
   claude:
     if: |
+      github.event_name == 'workflow_dispatch' ||
       (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude')) ||
       (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@claude')) ||
       (github.event_name == 'pull_request_review' && contains(github.event.review.body, '@claude')) ||
@@ -35,8 +42,9 @@ jobs:
       issues: write
       id-token: write
       actions: read
-    uses: inference-gateway/.github/.github/workflows/claude.yml@v0.1.0
+    uses: inference-gateway/.github/.github/workflows/claude.yml@main
     with:
       language: none
       node: true
+      prompt: ${{ inputs.prompt }}
     secrets: inherit
