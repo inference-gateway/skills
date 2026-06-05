@@ -2,6 +2,44 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.1](https://github.com/inference-gateway/skills/compare/v0.2.0...v0.2.1) (2026-06-05)
+
+### ♻️ Improvements
+
+* remove local skill config ([3c630cb](https://github.com/inference-gateway/skills/commit/3c630cb289a65480f7d08e6539976e7c0c4946dc))
+
+### 🐛 Bug Fixes
+
+* **ci:** add generated files to markdownlint ignore file ([6ef1432](https://github.com/inference-gateway/skills/commit/6ef143215081659f5aeb1f217e87598fa574eaf1))
+
+### 👷 CI
+
+* centralize claude.yml via reusable workflow ([#11](https://github.com/inference-gateway/skills/issues/11)) ([1590bfe](https://github.com/inference-gateway/skills/commit/1590bfe681cab51e9b0e2274080b7ebda34e8888))
+* centralize claude.yml via reusable workflow ([#12](https://github.com/inference-gateway/skills/issues/12)) ([925f2eb](https://github.com/inference-gateway/skills/commit/925f2eb0c88a7724f1455c8d541e94563cf168aa))
+* centralize claude.yml via reusable workflow ([#13](https://github.com/inference-gateway/skills/issues/13)) ([b5d98ce](https://github.com/inference-gateway/skills/commit/b5d98ce4c3c1fcc673de5457b7e02b1aa7a30432))
+* centralize claude.yml via reusable workflow ([#20](https://github.com/inference-gateway/skills/issues/20)) ([79343b0](https://github.com/inference-gateway/skills/commit/79343b083c497bafb813739bf504e2e1e93f9926))
+* centralize infer.yml + bump infer CLI and sync .infer config ([#16](https://github.com/inference-gateway/skills/issues/16)) ([ca70958](https://github.com/inference-gateway/skills/commit/ca70958b43a643dd2cafcde2aecabf8c2976cc97))
+* centralize infer.yml + sync .infer config ([#15](https://github.com/inference-gateway/skills/issues/15)) ([ff7ff65](https://github.com/inference-gateway/skills/commit/ff7ff653c7322d40f69a77182c1761412e8f2e0a))
+* centralize infer.yml via reusable workflow ([#14](https://github.com/inference-gateway/skills/issues/14)) ([5fe9fb4](https://github.com/inference-gateway/skills/commit/5fe9fb41e94907b4bf651b2991486450415d647a))
+* **claude:** add docs and refactor branch prefixes ([213ab5e](https://github.com/inference-gateway/skills/commit/213ab5eee602581578152a2b03d34db313e53e0a))
+* **claude:** download all maintainer skill assets ([e09114e](https://github.com/inference-gateway/skills/commit/e09114e3a6cca287191b779ce0a1a5e23761f829))
+* **claude:** standardize workflow + task-based branch prefix ([#8](https://github.com/inference-gateway/skills/issues/8)) ([841528b](https://github.com/inference-gateway/skills/commit/841528baf632e866f2a99d7b02b2f62e1a91d843))
+* **infer:** centralize infer.yml + bump infer CLI and sync .infer config ([#17](https://github.com/inference-gateway/skills/issues/17)) ([684b6d8](https://github.com/inference-gateway/skills/commit/684b6d87293a29c681e0f64b8e4a331a0bec85a2))
+* use org reusable Claude Code workflow ([#9](https://github.com/inference-gateway/skills/issues/9)) ([3162e0c](https://github.com/inference-gateway/skills/commit/3162e0c54f2322d33edd0c798c3b3887ee953f06))
+
+### 📚 Documentation
+
+* add roadmap and issue tracking details ([7894adf](https://github.com/inference-gateway/skills/commit/7894adffc480b0be6c5989cd9a99a74e63917396))
+* fix build-catalog and lint command descriptions ([#10](https://github.com/inference-gateway/skills/issues/10)) ([291fcdd](https://github.com/inference-gateway/skills/commit/291fcdd6d2fc0ac16db056fc87f15a68fcc26112))
+
+### 🔧 Miscellaneous
+
+* **deps:** bump actions/create-github-app-token ([#7](https://github.com/inference-gateway/skills/issues/7)) ([80f1605](https://github.com/inference-gateway/skills/commit/80f16055c1117ac503cb4030d66e250e228f58a0))
+* **deps:** bump claude-code 2.1.148 -> 2.1.158 ([#19](https://github.com/inference-gateway/skills/issues/19)) ([f47976a](https://github.com/inference-gateway/skills/commit/f47976ad3f55ab15a6c8172b0455e37492df8595))
+* **deps:** bump infer CLI v0.117.0 -> v0.117.1, infer-action v0.9.1 -> v0.11.1 ([#18](https://github.com/inference-gateway/skills/issues/18)) ([58ff485](https://github.com/inference-gateway/skills/commit/58ff485d8a8055767dbadfe2dd60b49d8adb1a43))
+* **deps:** bump infer-action v0.11.1 -> v0.11.2 ([#22](https://github.com/inference-gateway/skills/issues/22)) ([04d978e](https://github.com/inference-gateway/skills/commit/04d978e32d7db33dd1b440dc22f0b78104eb5160))
+* **deps:** bump the github-actions group across 1 directory with 2 updates ([#23](https://github.com/inference-gateway/skills/issues/23)) ([5148b5d](https://github.com/inference-gateway/skills/commit/5148b5da1903c8866d28ad1c3bf6d6db9d567429))
+
 ## [0.2.0](https://github.com/inference-gateway/skills/compare/v0.1.1...v0.2.0) (2026-05-28)
 
 ### ✨ Features
