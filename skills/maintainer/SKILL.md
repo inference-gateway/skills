@@ -27,14 +27,14 @@ authoritative, and load references only when the task needs them.
 - Read [references/ecosystem.md](references/ecosystem.md) when you need the repo map, org-wide conventions, CI/GitHub
   Actions behavior, cross-repo read commands, or the full "do not do" list.
 - Read [references/github-issues.md](references/github-issues.md) when asked to file or draft issues, choose issue
-  templates, set labels/types, or handle drift/sync issue titles.
+  templates, set labels/types, add issues to the Roadmap 2026 board and update Status, or handle drift/sync issue titles.
 
 ## Cross-repo impact
 
 Before shipping, surface affected repos explicitly when a change can ripple:
 
-- Main gateway `openapi.yaml` changes may affect `sdks`, `docs`, `cli`, and `operator`.
-- `schemas` changes may affect `sdks` and `docs`.
+- `schemas` is the source of truth for `openapi.yaml` and the shared schemas; changes there may affect the gateway, the SDKs, `docs`, `cli`, and `operator`.
+- The gateway vendors `openapi.yaml` from `schemas` - keep the vendored copy in sync; don't edit it as the origin.
 - Provider additions usually need docs under `inference-gateway/docs` and may need examples.
 - Gateway releases may require `operator`, Helm, image tag, and example manifest updates.
 - New config env vars may require regenerated configuration docs, Helm values, and example `.env` files.
@@ -50,6 +50,13 @@ Every `feat:` or public-surface `refactor:` outside `inference-gateway/docs` nee
 - Purely internal refactors may skip the docs issue only if the PR body states `no docs ticket: internal-only refactor`.
 - Do not file cross-repo issues automatically unless the user explicitly asks.
 - For exact issue template handling, read [references/github-issues.md](references/github-issues.md).
+
+## Issue tracking
+
+Every issue you actually file is tracked work, not a fire-and-forget note. Give it the right **label** and **type**, add it
+to the **Roadmap 2026** board (org project #7), and keep its **Status** current as you go: `Todo` at filing, `In progress`
+when you start the work, `QA` in review, `Done` when it lands. Exact commands and the project/type ids live in
+[references/github-issues.md](references/github-issues.md).
 
 ## Maintainer defaults
 

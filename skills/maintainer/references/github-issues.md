@@ -20,28 +20,116 @@ gh api repos/inference-gateway/.github/contents/.github/ISSUE_TEMPLATE/bug_repor
 
 Canonical org-default templates:
 
-| Template                   | Title prefix      | Labels          | Type            |
-| -------------------------- | ----------------- | --------------- | --------------- |
-| `bug_report.md`            | `[BUG]`           | `bug`           | `bug`           |
-| `feature_request.md`       | `[FEATURE]`       | `enhancement`   | `feature`       |
-| `documentation_request.md` | `[DOCS]`          | `documentation` | `documentation` |
-| `refactor_request.md`      | `[TASK] Refactor` | `refactor`      | `task`          |
+| Template                   | Title prefix      | Label           | Type      |
+| -------------------------- | ----------------- | --------------- | --------- |
+| `bug_report.md`            | `[BUG]`           | `bug`           | `Bug`     |
+| `feature_request.md`       | `[FEATURE]`       | `enhancement`   | `Feature` |
+| `documentation_request.md` | `[DOCS]`          | `documentation` | `Task`    |
+| `refactor_request.md`      | `[TASK] Refactor` | `refactor`      | `Task`    |
+
+The org defines only three issue types - `Bug`, `Feature`, `Task`. There is **no** `Documentation` type, so docs tickets
+are typed `Task` and rely on the `documentation` label to stand out. Type is set by id (see the id tables under
+[Roadmap 2026 board + Status lifecycle](#roadmap-2026-board--status-lifecycle)), not by name.
 
 ## Filing Procedure
 
-1. Read the relevant template file to get the exact current sections. Do not paraphrase from memory.
-2. Fill every section the template defines. Use HTML comments as prompts, but remove them from the final body.
-3. Match the stable title prefix exactly. Sync orchestrators rely on byte-exact matching.
-4. Set labels with `gh issue create --label`; template frontmatter applies only in the GitHub UI.
-5. Set Issue Type with GraphQL `updateIssueIssueType`. `gh issue create/edit` has no `--type` flag.
-6. If the org lacks the requested issue type, warn and continue.
-7. Do not include `@claude` in titles, bodies, or comments.
-8. For `inference-gateway/docs`, keep titles, bodies, comments, and footers ASCII-only. Use `-`, not en dash or em dash.
+An issue with no type, no label, and no place on the board is invisible to everyone who triages by type, by label, or off
+the Roadmap - which defeats the point of filing it. So whenever you **actually create** an issue (a draft is just prepared
+text, it doesn't count yet), give it all four pieces of metadata before you move on:
+
+1. **Label** - set at create time with `gh issue create --label`. The template's `labels:` frontmatter only takes effect
+   in the GitHub UI; it does nothing when you file through the API.
+2. **Type** - set right after, via GraphQL. `gh issue create/edit` has no `--type` flag and the template's `type:`
+   frontmatter is UI-only. If the org doesn't define the type you need, warn and continue - don't fail the filing over it.
+3. **Roadmap 2026 membership** - add the issue to org project #7 so it surfaces as planned work, not just a stray issue.
+4. **Status = Todo** - the board won't set this for you, and an item with no Status reads as "not really tracked."
+
+Then the rules that keep sync orchestrators and the docs site happy: read the template first and fill every section (don't
+paraphrase from memory - sections evolve), match the stable title prefix byte-exact, never write `@claude` anywhere (it
+re-triggers downstream automation), and keep titles/bodies/comments ASCII when the target is `inference-gateway/docs` (use
+`-`, not en/em dashes).
+
+End to end, filing a feature issue against `<repo>` is four commands - create, type, add-to-board, set-status:
+
+```sh
+# 1. Create with the right label; capture the URL it prints.
+URL=$(gh issue create --repo inference-gateway/<repo> \
+  --title "[FEATURE] ..." --body-file body.md --label enhancement)
+
+# 2. Set the issue type (Feature here) via GraphQL - resolve the issue node id first.
+ISSUE_ID=$(gh issue view "$URL" --json id -q .id)
+gh api graphql \
+  -f query='mutation($id:ID!,$t:ID!){updateIssueIssueType(input:{issueId:$id,issueTypeId:$t}){issue{number issueType{name}}}}' \
+  -f id="$ISSUE_ID" -f t="IT_kwDOC6ve6c4Bf3qi"
+
+# 3. Add it to Roadmap 2026 (project #7); capture the project-item id.
+ITEM_ID=$(gh project item-add 7 --owner inference-gateway --url "$URL" --format json -q .id)
+
+# 4. Set Status = Todo.
+gh project item-edit --id "$ITEM_ID" \
+  --project-id PVT_kwDOC6ve6c4BNnSt \
+  --field-id   PVTSSF_lADOC6ve6c4BNnStzg8jqxU \
+  --single-select-option-id f75ad846
+```
+
+Swap the label (step 1) and the type id (step 2) to match the issue kind - see the template table above for the label and
+the id tables below for the type. The snippets use `gh`'s built-in `-q`/`--format json`, so no external `jq` is needed.
+
+## Roadmap 2026 board + Status lifecycle
+
+Every filed issue belongs on the org Roadmap board - project **#7**,
+<https://github.com/orgs/inference-gateway/projects/7> - so planned work lives in one place. The ids below are org-stable;
+hard-code them and only re-derive if a command rejects one (project or types recreated).
+
+Issue type ids (`-f t=` in the type mutation):
+
+| Issue type | id                    |
+| ---------- | --------------------- |
+| `Bug`      | `IT_kwDOC6ve6c4Bf3qh` |
+| `Feature`  | `IT_kwDOC6ve6c4Bf3qi` |
+| `Task`     | `IT_kwDOC6ve6c4Bf3qg` |
+
+Roadmap 2026 Status field - project id `PVT_kwDOC6ve6c4BNnSt`, Status field id `PVTSSF_lADOC6ve6c4BNnStzg8jqxU`:
+
+| Status        | `--single-select-option-id` |
+| ------------- | --------------------------- |
+| `Todo`        | `f75ad846`                  |
+| `In progress` | `47fc9ee4`                  |
+| `QA`          | `0a18abd7`                  |
+| `Done`        | `98236657`                  |
+
+**Status lifecycle.** The agent that files an issue is rarely the one that finishes it, so move Status the moment your own
+work actually crosses each line - don't pre-set a state you haven't reached:
+
+- **Todo** - at filing (step 4 above).
+- **In progress** - when you start implementing what the issue describes.
+- **QA** - when the implementing PR is open / under review.
+- **Done** - when that PR merges or the issue closes.
+
+To move an issue that is already on the board, resolve its project-item id from the issue URL, then edit the Status field:
+
+```sh
+ITEM_ID=$(gh project item-list 7 --owner inference-gateway --format json -L 1000 \
+  -q '.items[] | select(.content.url=="<issue-url>") | .id')
+gh project item-edit --id "$ITEM_ID" \
+  --project-id PVT_kwDOC6ve6c4BNnSt \
+  --field-id   PVTSSF_lADOC6ve6c4BNnStzg8jqxU \
+  --single-select-option-id 47fc9ee4   # In progress
+```
+
+If an id is ever rejected, re-derive the current values:
+
+```sh
+gh project view 7       --owner inference-gateway --format json -q .id          # project id
+gh project field-list 7 --owner inference-gateway --format json \
+  -q '.fields[] | select(.name=="Status")'                                      # Status field id + option ids
+gh api graphql -f query='{organization(login:"inference-gateway"){issueTypes(first:20){nodes{id name}}}}'  # type ids
+```
 
 ## Docs Tickets
 
 For `feat:` or public-surface `refactor:` changes outside `inference-gateway/docs`, prepare a `[DOCS]` issue against
-`inference-gateway/docs` using `documentation_request.md`.
+`inference-gateway/docs` using `documentation_request.md` (label `documentation`, type `Task`).
 
 The draft must include:
 
@@ -73,3 +161,7 @@ Required labels:
 - `adk-drift` on `kind: adk` repos.
 
 These labels must already exist on the target; orchestrators do not create them.
+
+Drift issues are filed automatically, so they are the ones most likely to slip through untracked. Run the full
+create -> type -> Roadmap 2026 -> Status=Todo sequence for each, exactly as in [Filing Procedure](#filing-procedure). The
+`sdk-drift` / `adk-drift` label is added **on top of** the template label, not instead of it.

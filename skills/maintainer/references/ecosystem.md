@@ -5,25 +5,27 @@ Use this reference for repo ownership, CI behavior, cross-repo reads, and org-wi
 ## Repo Map
 
 The `inference-gateway` GitHub organization. Each repository is separately versioned and released. Refer to
-repos by their `inference-gateway/<repo>` GitHub slug rather than local paths.
+repos by their `inference-gateway/<repo>` GitHub slug rather than local paths. Public repos only; private repos are intentionally omitted.
 
-| Repo (`inference-gateway/...`) | Purpose                                                                            |
-| ------------------------------ | ---------------------------------------------------------------------------------- |
-| `inference-gateway`            | Main Go HTTP gateway. Source of truth for provider configs via `openapi.yaml`.     |
-| `cli`                          | Command-line client (`infer`).                                                     |
-| `operator`                     | Kubernetes operator.                                                               |
-| `sdks`                         | Multi-language SDKs generated from `schemas`.                                      |
-| `schemas`                      | Shared OpenAPI/JSON schemas consumed by SDKs and docs.                             |
-| `docs`                         | Next.js + MDX documentation site.                                                  |
-| `adl`, `adl-cli`               | Agent Definition Language and its CLI.                                             |
-| `a2a-debugger`                 | Agent-to-agent tooling.                                                            |
-| `*-agent`                      | Agent-to-agent agents.                                                             |
-| `awesome-a2a`                  | Curated awesome-list for A2A.                                                      |
-| `registry`                     | Component / agent registry.                                                        |
-| `infer-action`                 | GitHub Action wrapper.                                                             |
-| `tools`                        | Shared tooling.                                                                    |
-| `skills`                       | Public Agent Skills catalog, distinct from private/local skills directories.       |
-| `.github`                      | Org-level community health repo with default issue templates and shared workflows. |
+| Repo (`inference-gateway/...`)                    | Purpose                                                                                                                                    |
+| ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| `inference-gateway`                               | Main Go HTTP gateway. Vendors `openapi.yaml` from `schemas` for Go code generation.                                                        |
+| `cli`                                             | Git-first CLI coding agent (`infer`).                                                                                                      |
+| `operator`                                        | Kubernetes operator for the gateway's lifecycle, config, and scaling.                                                                      |
+| `schemas`                                         | Source of truth for `openapi.yaml` and the shared MCP/A2A/JSON schemas; consumed by the gateway, SDKs, and docs.                           |
+| `sdk`, `python-sdk`, `rust-sdk`, `typescript-sdk` | Client SDKs (Go, Python, Rust, TypeScript), generated from `schemas`.                                                                      |
+| `adk`, `rust-adk`, `typescript-adk`               | Agent Development Kits for building A2A-compatible agents (Go, Rust, TypeScript).                                                          |
+| `adl`, `adl-cli`                                  | Agent Definition Language (declarative agent manifests) and its scaffolding CLI.                                                           |
+| `agents`                                          | Catalog of A2A agent servers.                                                                                                              |
+| `*-agent`                                         | Individual A2A agent servers: `browser-agent`, `documentation-agent`, `google-calendar-agent`, `grafana-agent`, `mock-agent`, `n8n-agent`. |
+| `a2a-debugger`                                    | A2A agent troubleshooting tool.                                                                                                            |
+| `awesome-a2a`                                     | Curated list of tested A2A-compatible agents.                                                                                              |
+| `registry`                                        | Website hosting A2A agents built with the ADK.                                                                                             |
+| `docs`                                            | Next.js + MDX documentation site.                                                                                                          |
+| `infer-action`                                    | GitHub Action wrapper for the `infer` CLI.                                                                                                 |
+| `tools`                                           | Shared tooling (e.g., codegen) used across repos.                                                                                          |
+| `skills`                                          | Public Agent Skills catalog, distinct from private/local skills directories.                                                               |
+| `.github`                                         | Org-level community health repo with default issue templates and shared workflows.                                                         |
 
 Every repo may have its own `CLAUDE.md` or `AGENTS.md`; read local instructions before assuming conventions.
 
@@ -48,9 +50,9 @@ These work locally and in GitHub Actions when `GH_TOKEN` or `GITHUB_TOKEN` has a
 
 ## Cross-Repo Checklist
 
-- Provider added/changed in `openapi.yaml` -> docs page in `inference-gateway/docs` (`markdown/`)?
+- Provider/API change in `schemas` `openapi.yaml` -> re-vendor to the gateway and add/update the docs page in `inference-gateway/docs` (`markdown/`)?
 - New config env var -> regenerated `Configurations.md`, Helm `values.yaml`, and `examples/docker-compose/*/.env.example`?
-- Schema change in `schemas` -> SDK regeneration in `sdks`?
+- Schema change in `schemas` -> regenerate the SDKs (`sdk`, `python-sdk`, `rust-sdk`, `typescript-sdk`)?
 - Main gateway release -> `operator` and Helm chart point at the new image tag?
 
 When running in CI without an interactive user, put this scope note in the PR body, job summary, or issue comment.
