@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.2](https://github.com/inference-gateway/skills/compare/v0.2.1...v0.2.2) (2026-06-08)
+
+### 🐛 Bug Fixes
+
+* **maintainer:** emit issue-Type mutation as a single CI-safe line ([#30](https://github.com/inference-gateway/skills/issues/30)) ([57e9c8b](https://github.com/inference-gateway/skills/commit/57e9c8bde16bc4ec27c1c7a60e3ea239046c3a8e))
+
+### 🔧 Miscellaneous
+
+* **deps:** bump claude-code 2.1.158 -> 2.1.161 ([#28](https://github.com/inference-gateway/skills/issues/28)) ([fcacaed](https://github.com/inference-gateway/skills/commit/fcacaed26d86a054d4bbad2b6c3b886ec8ef51cf))
+* **deps:** bump codex 0.133.0 -> 0.135.0 ([#24](https://github.com/inference-gateway/skills/issues/24)) ([8102eef](https://github.com/inference-gateway/skills/commit/8102eef5d330b39b304a1846c156608ed6db76f5))
+* **deps:** bump infer CLI v0.117.1 -> v0.119.0, infer-action v0.11.2 -> v0.11.4 ([#25](https://github.com/inference-gateway/skills/issues/25)) ([041d067](https://github.com/inference-gateway/skills/commit/041d0674febceaa877876e38d258e7ee399900ff))
+* **deps:** bump infer CLI v0.119.0 -> v0.120.0, infer-action v0.11.4 -> v0.11.6 ([#26](https://github.com/inference-gateway/skills/issues/26)) ([b17c46a](https://github.com/inference-gateway/skills/commit/b17c46a28a524732ecb5cdf095fa3a7fd4fba424))
+* **deps:** bump infer CLI v0.120.0 -> v0.120.1, infer-action v0.11.6 -> v0.11.7 ([#27](https://github.com/inference-gateway/skills/issues/27)) ([ef10d24](https://github.com/inference-gateway/skills/commit/ef10d240097d58ad89a48e91914e81b6e0b0fba8))
+* **deps:** bump infer CLI v0.120.1 -> v0.121.0 ([#29](https://github.com/inference-gateway/skills/issues/29)) ([4fd43c7](https://github.com/inference-gateway/skills/commit/4fd43c7f97b42ab08fba23f6b3e2b79e1970da36))
+
 ## [0.2.1](https://github.com/inference-gateway/skills/compare/v0.2.0...v0.2.1) (2026-06-05)
 
 ### ♻️ Improvements
