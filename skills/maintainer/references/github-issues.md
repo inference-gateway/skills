@@ -39,8 +39,10 @@ text, it doesn't count yet), give it all four pieces of metadata before you move
 
 1. **Label** - set at create time with `gh issue create --label`. The template's `labels:` frontmatter only takes effect
    in the GitHub UI; it does nothing when you file through the API.
-2. **Type** - set right after, via GraphQL. `gh issue create/edit` has no `--type` flag and the template's `type:`
-   frontmatter is UI-only. If the org doesn't define the type you need, warn and continue - don't fail the filing over it.
+2. **Type** - set right after, via one GraphQL mutation (released `gh` still has no `--type` flag; the template's
+   `type:` frontmatter is UI-only). In the bot CI shells the allow-list permits **only** that exact
+   `updateIssueIssueType` mutation, sent as a single line - copy step 2 below byte-for-byte. If the org doesn't
+   define the type you need, warn and continue - don't fail the filing over it.
 3. **Roadmap 2026 membership** - add the issue to org project #7 so it surfaces as planned work, not just a stray issue.
 4. **Status = Todo** - the board won't set this for you, and an item with no Status reads as "not really tracked."
 
@@ -56,11 +58,10 @@ End to end, filing a feature issue against `<repo>` is four commands - create, t
 URL=$(gh issue create --repo inference-gateway/<repo> \
   --title "[FEATURE] ..." --body-file body.md --label enhancement)
 
-# 2. Set the issue type (Feature here) via GraphQL - resolve the issue node id first.
+# 2. Set the issue type. Resolve the node id, then send the mutation as ONE line, byte-for-byte (the bot
+#    allow-list matches only this exact updateIssueIssueType mutation). Swap the -f t=... id per the table below.
 ISSUE_ID=$(gh issue view "$URL" --json id -q .id)
-gh api graphql \
-  -f query='mutation($id:ID!,$t:ID!){updateIssueIssueType(input:{issueId:$id,issueTypeId:$t}){issue{number issueType{name}}}}' \
-  -f id="$ISSUE_ID" -f t="IT_kwDOC6ve6c4Bf3qi"
+gh api graphql -f query='mutation($id:ID!,$t:ID!){updateIssueIssueType(input:{issueId:$id,issueTypeId:$t}){issue{number issueType{name}}}}' -f id="$ISSUE_ID" -f t="IT_kwDOC6ve6c4Bf3qi"
 
 # 3. Add it to Roadmap 2026 (project #7); capture the project-item id.
 ITEM_ID=$(gh project item-add 7 --owner inference-gateway --url "$URL" --format json -q .id)
@@ -71,6 +72,13 @@ gh project item-edit --id "$ITEM_ID" \
   --field-id   PVTSSF_lADOC6ve6c4BNnStzg8jqxU \
   --single-select-option-id f75ad846
 ```
+
+**Restricted CI shells (the @infer / @claude bots).** There, command substitution (`$(...)`) and shell variables are
+disabled, and the Type mutation is the only `gh api graphql` the allow-list permits. So don't chain with `$(...)`: run
+each command, read the value it prints, and paste the literal into the next - run `gh issue create` and read the URL;
+run `gh issue view <url> --json id -q .id` and read the node id; then send the single-line step-2 mutation with that
+literal id (and the literal `IT_...` type id), exactly as written. Do the same for the project-item id in step 4
+(`gh project item-add ... --format json -q .id` prints it; paste it into `--id`).
 
 Swap the label (step 1) and the type id (step 2) to match the issue kind - see the template table above for the label and
 the id tables below for the type. The snippets use `gh`'s built-in `-q`/`--format json`, so no external `jq` is needed.
@@ -123,7 +131,7 @@ If an id is ever rejected, re-derive the current values:
 gh project view 7       --owner inference-gateway --format json -q .id          # project id
 gh project field-list 7 --owner inference-gateway --format json \
   -q '.fields[] | select(.name=="Status")'                                      # Status field id + option ids
-gh api graphql -f query='{organization(login:"inference-gateway"){issueTypes(first:20){nodes{id name}}}}'  # type ids
+gh api graphql -f query='{organization(login:"inference-gateway"){issueTypes(first:20){nodes{id name}}}}'  # type ids (run locally; not in the bot allow-list)
 ```
 
 ## Docs Tickets
