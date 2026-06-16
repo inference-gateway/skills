@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-06-08T23:55:23Z",
+  "updated": "2026-06-16T21:26:29.095Z",
   "skills": [
     {
       "name": "adl",
@@ -14,22 +14,6 @@
         "agent",
         "schema-driven",
         "scaffolding"
-      ],
-      "categories": [
-        "developer-tools"
-      ],
-      "homepage": "https://github.com/inference-gateway/skills"
-    },
-    {
-      "name": "maintainer",
-      "description": "Maintain the `inference-gateway` GitHub org. Use inside any org repo, in local or CI checkouts, for cross-repo changes such as OpenAPI/schema updates, releases, docs follow-up, GitHub issues, or ecosystem-level questions.",
-      "source": "https://github.com/inference-gateway/skills/tree/main/skills/maintainer",
-      "vendor": "inference-gateway",
-      "license": "Apache-2.0",
-      "tags": [
-        "inference-gateway",
-        "maintainer",
-        "ecosystem"
       ],
       "categories": [
         "developer-tools"

@@ -73,7 +73,7 @@ SKILL.md authoring contract in full - read it before adding new skills.
 When a skill body is vendored or adapted from another project:
 
 - Preserve the upstream `LICENSE` **inside** `skills/<name>/` (see
-  `skills/maintainer/LICENSE`, `skills/adl/LICENSE` for the pattern).
+  `skills/adl/LICENSE` for the pattern).
 - Add a `NOTICE` file at the repo root recording the attribution.
 - That skill's contents are governed by its own license, **not** the repo-level
   Apache-2.0.
@@ -100,8 +100,8 @@ only - releases are manual, not on every merge to `main`.
 
 This is one repo in the `inference-gateway/*`. For cross-repo concerns
 (release flow, issue templates, the docs-ticket rule for `feat:`/`refactor:`
-changes, etc.), defer to the `maintainer` skill (`skills/maintainer/SKILL.md`) -
-it encodes the org-wide playbook rather than restating it here.
+changes, etc.), consult `inference-gateway/.github` (the org-level `CLAUDE.md`
+and `README.md`) and each repo's own `CLAUDE.md` / `AGENTS.md`.
 
 **Don't conflate** this public catalog repo (`inference-gateway/skills`,
 Apache-2.0, Agent Skills spec) with any private Claude Code skills directory on
