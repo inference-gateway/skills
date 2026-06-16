@@ -692,8 +692,8 @@ one of them might ripple, surface it explicitly:
   for reproducibility.
 
 For ecosystem-wide concerns (release flow, conventional commits,
-cross-repo checklists), defer to the `maintainer` skill rather than
-restating it.
+cross-repo checklists), consult `inference-gateway/.github` (org-level
+`CLAUDE.md` / `README.md`) and each repo's own `CLAUDE.md`.
 
 ## What NOT to do
 

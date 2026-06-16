@@ -36,4 +36,5 @@ the catalog change, list any added or modified skill folders, mention license or
 ## Agent-Specific Instructions
 
 Keep `catalog.json` and local skill bodies synchronized. Before creating a new skill, read `skills/skill-creator/SKILL.md` for the full authoring contract. For
-organization-wide maintenance or release questions, refer to `skills/maintainer/SKILL.md`.
+organization-wide maintenance or release questions, consult `inference-gateway/.github` (org-level `CLAUDE.md` /
+`README.md`) and each repo's own `CLAUDE.md` / `AGENTS.md` (the former `maintainer` skill is deprecated and out of the catalog).

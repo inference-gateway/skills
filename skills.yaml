@@ -59,17 +59,6 @@ skills:
     homepage: https://github.com/inference-gateway/skills
 
   - url: https://github.com/inference-gateway/skills
-    path: skills/maintainer/SKILL.md
-    vendor: inference-gateway
-    tags:
-      - inference-gateway
-      - maintainer
-      - ecosystem
-    categories:
-      - developer-tools
-    homepage: https://github.com/inference-gateway/skills
-
-  - url: https://github.com/inference-gateway/skills
     path: skills/skill-creator/SKILL.md
     vendor: inference-gateway
     license: Apache-2.0
