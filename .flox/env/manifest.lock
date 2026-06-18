@@ -1,7 +1,7 @@
 {
   "lockfile-version": 1,
   "manifest": {
-    "schema-version": "1.12.0",
+    "schema-version": "1.13.0",
     "install": {
       "claude-code": {
         "pkg-path": "claude-code",
@@ -11,7 +11,7 @@
       "codex": {
         "pkg-path": "codex",
         "pkg-group": "codex",
-        "version": "^0.135.0"
+        "version": "^0.139.0"
       },
       "go-task": {
         "pkg-path": "go-task",
@@ -151,27 +151,27 @@
     {
       "attr_path": "codex",
       "broken": false,
-      "derivation": "/nix/store/gzs0s2pjs6r703d5ckzpp15z2z9mh4yx-codex-0.135.0.drv",
+      "derivation": "/nix/store/63vzjfrvmwix530d8sx5vxlpfzm6z20d-codex-0.139.0.drv",
       "description": "Lightweight coding agent that runs in your terminal",
       "install_id": "codex",
       "license": "Apache-2.0",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=331800de5053fcebacf6813adb5db9c9dca22a0c",
-      "name": "codex-0.135.0",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=567a49d1913ce81ac6e9582e3553dd90a955875f",
+      "name": "codex-0.139.0",
       "pname": "codex",
-      "rev": "331800de5053fcebacf6813adb5db9c9dca22a0c",
-      "rev_count": 1008282,
-      "rev_date": "2026-05-31T16:09:29Z",
-      "scrape_date": "2026-06-02T08:55:40.294021Z",
+      "rev": "567a49d1913ce81ac6e9582e3553dd90a955875f",
+      "rev_count": 1017464,
+      "rev_date": "2026-06-16T02:33:49Z",
+      "scrape_date": "2026-06-17T03:13:13.967897Z",
       "stabilities": [
         "unstable"
       ],
       "unfree": false,
-      "version": "0.135.0",
+      "version": "0.139.0",
       "outputs_to_install": [
         "out"
       ],
       "outputs": {
-        "out": "/nix/store/l6p2maazc8iljiz8iv34dkppk7lvk7ni-codex-0.135.0"
+        "out": "/nix/store/kk6w91iazm0qsn6rmx2bpzrcr7z5050g-codex-0.139.0"
       },
       "system": "aarch64-darwin",
       "group": "codex",
@@ -180,27 +180,27 @@
     {
       "attr_path": "codex",
       "broken": false,
-      "derivation": "/nix/store/djxbjp6sx9xwmkgf9yy41vik8kdyhix5-codex-0.135.0.drv",
+      "derivation": "/nix/store/pjx1j4gxicpfr57rx70kb3b1cdcfb2xl-codex-0.139.0.drv",
       "description": "Lightweight coding agent that runs in your terminal",
       "install_id": "codex",
       "license": "Apache-2.0",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=331800de5053fcebacf6813adb5db9c9dca22a0c",
-      "name": "codex-0.135.0",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=567a49d1913ce81ac6e9582e3553dd90a955875f",
+      "name": "codex-0.139.0",
       "pname": "codex",
-      "rev": "331800de5053fcebacf6813adb5db9c9dca22a0c",
-      "rev_count": 1008282,
-      "rev_date": "2026-05-31T16:09:29Z",
-      "scrape_date": "2026-06-02T09:40:19.446424Z",
+      "rev": "567a49d1913ce81ac6e9582e3553dd90a955875f",
+      "rev_count": 1017464,
+      "rev_date": "2026-06-16T02:33:49Z",
+      "scrape_date": "2026-06-17T03:44:08.386385Z",
       "stabilities": [
         "unstable"
       ],
       "unfree": false,
-      "version": "0.135.0",
+      "version": "0.139.0",
       "outputs_to_install": [
         "out"
       ],
       "outputs": {
-        "out": "/nix/store/ywsap0cn6xx7pawpa07bcc7yxlvmfl0r-codex-0.135.0"
+        "out": "/nix/store/c6xw394r6jiy6hdw83ffhsvmv92mra6c-codex-0.139.0"
       },
       "system": "aarch64-linux",
       "group": "codex",
@@ -209,27 +209,27 @@
     {
       "attr_path": "codex",
       "broken": false,
-      "derivation": "/nix/store/aq0sbnzf9y676868ckh9gvp9hy2ndqa1-codex-0.135.0.drv",
+      "derivation": "/nix/store/sl1jk4cj928gk394igx2nrjdshlaknjy-codex-0.139.0.drv",
       "description": "Lightweight coding agent that runs in your terminal",
       "install_id": "codex",
       "license": "Apache-2.0",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=331800de5053fcebacf6813adb5db9c9dca22a0c",
-      "name": "codex-0.135.0",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=567a49d1913ce81ac6e9582e3553dd90a955875f",
+      "name": "codex-0.139.0",
       "pname": "codex",
-      "rev": "331800de5053fcebacf6813adb5db9c9dca22a0c",
-      "rev_count": 1008282,
-      "rev_date": "2026-05-31T16:09:29Z",
-      "scrape_date": "2026-06-02T10:24:47.448521Z",
+      "rev": "567a49d1913ce81ac6e9582e3553dd90a955875f",
+      "rev_count": 1017464,
+      "rev_date": "2026-06-16T02:33:49Z",
+      "scrape_date": "2026-06-17T04:13:06.227650Z",
       "stabilities": [
         "unstable"
       ],
       "unfree": false,
-      "version": "0.135.0",
+      "version": "0.139.0",
       "outputs_to_install": [
         "out"
       ],
       "outputs": {
-        "out": "/nix/store/70qxp4l1gs24gsx0v4pqmyw45jplx8yz-codex-0.135.0"
+        "out": "/nix/store/qyk42m792rd2z9qcdpnv32d0qymf6aaw-codex-0.139.0"
       },
       "system": "x86_64-darwin",
       "group": "codex",
@@ -238,27 +238,27 @@
     {
       "attr_path": "codex",
       "broken": false,
-      "derivation": "/nix/store/swrcc8r0z2kp41ga0j6jf6ig10kli5qv-codex-0.135.0.drv",
+      "derivation": "/nix/store/drabk2w3g0lga6pxhav1h0pqk25yxsj6-codex-0.139.0.drv",
       "description": "Lightweight coding agent that runs in your terminal",
       "install_id": "codex",
       "license": "Apache-2.0",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=331800de5053fcebacf6813adb5db9c9dca22a0c",
-      "name": "codex-0.135.0",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=567a49d1913ce81ac6e9582e3553dd90a955875f",
+      "name": "codex-0.139.0",
       "pname": "codex",
-      "rev": "331800de5053fcebacf6813adb5db9c9dca22a0c",
-      "rev_count": 1008282,
-      "rev_date": "2026-05-31T16:09:29Z",
-      "scrape_date": "2026-06-02T11:06:43.030616Z",
+      "rev": "567a49d1913ce81ac6e9582e3553dd90a955875f",
+      "rev_count": 1017464,
+      "rev_date": "2026-06-16T02:33:49Z",
+      "scrape_date": "2026-06-17T04:47:04.431620Z",
       "stabilities": [
         "unstable"
       ],
       "unfree": false,
-      "version": "0.135.0",
+      "version": "0.139.0",
       "outputs_to_install": [
         "out"
       ],
       "outputs": {
-        "out": "/nix/store/q1j9qd6h3cvbbi24q6mr5b5x4ia5q0kd-codex-0.135.0"
+        "out": "/nix/store/9li75nh4fyk2m574lmim7wnjqm49hl39-codex-0.139.0"
       },
       "system": "x86_64-linux",
       "group": "codex",
@@ -267,17 +267,17 @@
     {
       "attr_path": "go-task",
       "broken": false,
-      "derivation": "/nix/store/hblj7ll86md16hkhkciq92msl7gb1hm3-go-task-3.48.0.drv",
+      "derivation": "/nix/store/2r9lnyrn8wq43g5a5g6ryq54m037k0wb-go-task-3.48.0.drv",
       "description": "Task runner / simpler Make alternative written in Go",
       "install_id": "go-task",
       "license": "MIT",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=29916453413845e54a65b8a1cf996842300cd299",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=567a49d1913ce81ac6e9582e3553dd90a955875f",
       "name": "go-task-3.48.0",
       "pname": "go-task",
-      "rev": "29916453413845e54a65b8a1cf996842300cd299",
-      "rev_count": 1003640,
-      "rev_date": "2026-05-23T03:54:30Z",
-      "scrape_date": "2026-05-24T07:05:51.779830Z",
+      "rev": "567a49d1913ce81ac6e9582e3553dd90a955875f",
+      "rev_count": 1017464,
+      "rev_date": "2026-06-16T02:33:49Z",
+      "scrape_date": "2026-06-17T03:13:15.002181Z",
       "stabilities": [
         "unstable"
       ],
@@ -296,17 +296,17 @@
     {
       "attr_path": "go-task",
       "broken": false,
-      "derivation": "/nix/store/4c7ijxx1kjjx0dal2n90yh0581gkazli-go-task-3.48.0.drv",
+      "derivation": "/nix/store/683gh2hy7c3cgyfdqjcbvwvbay9vcbmh-go-task-3.48.0.drv",
       "description": "Task runner / simpler Make alternative written in Go",
       "install_id": "go-task",
       "license": "MIT",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=29916453413845e54a65b8a1cf996842300cd299",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=567a49d1913ce81ac6e9582e3553dd90a955875f",
       "name": "go-task-3.48.0",
       "pname": "go-task",
-      "rev": "29916453413845e54a65b8a1cf996842300cd299",
-      "rev_count": 1003640,
-      "rev_date": "2026-05-23T03:54:30Z",
-      "scrape_date": "2026-05-24T07:34:06.615850Z",
+      "rev": "567a49d1913ce81ac6e9582e3553dd90a955875f",
+      "rev_count": 1017464,
+      "rev_date": "2026-06-16T02:33:49Z",
+      "scrape_date": "2026-06-17T03:44:10.555375Z",
       "stabilities": [
         "unstable"
       ],
@@ -325,17 +325,17 @@
     {
       "attr_path": "go-task",
       "broken": false,
-      "derivation": "/nix/store/pdr1kpqx7f6c23l456z6dsfrrdfs0lkr-go-task-3.48.0.drv",
+      "derivation": "/nix/store/yl56zh18f4j25f6m8mb2p0haz9ypwcvw-go-task-3.48.0.drv",
       "description": "Task runner / simpler Make alternative written in Go",
       "install_id": "go-task",
       "license": "MIT",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=29916453413845e54a65b8a1cf996842300cd299",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=567a49d1913ce81ac6e9582e3553dd90a955875f",
       "name": "go-task-3.48.0",
       "pname": "go-task",
-      "rev": "29916453413845e54a65b8a1cf996842300cd299",
-      "rev_count": 1003640,
-      "rev_date": "2026-05-23T03:54:30Z",
-      "scrape_date": "2026-05-24T08:01:33.417567Z",
+      "rev": "567a49d1913ce81ac6e9582e3553dd90a955875f",
+      "rev_count": 1017464,
+      "rev_date": "2026-06-16T02:33:49Z",
+      "scrape_date": "2026-06-17T04:13:07.358690Z",
       "stabilities": [
         "unstable"
       ],
@@ -354,17 +354,17 @@
     {
       "attr_path": "go-task",
       "broken": false,
-      "derivation": "/nix/store/6lnmskpks8kkr058mplx1g06s8zz7jvs-go-task-3.48.0.drv",
+      "derivation": "/nix/store/ld2437x3giwpdyfb5svhzfgy229l35l5-go-task-3.48.0.drv",
       "description": "Task runner / simpler Make alternative written in Go",
       "install_id": "go-task",
       "license": "MIT",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=29916453413845e54a65b8a1cf996842300cd299",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=567a49d1913ce81ac6e9582e3553dd90a955875f",
       "name": "go-task-3.48.0",
       "pname": "go-task",
-      "rev": "29916453413845e54a65b8a1cf996842300cd299",
-      "rev_count": 1003640,
-      "rev_date": "2026-05-23T03:54:30Z",
-      "scrape_date": "2026-05-24T08:31:58.038558Z",
+      "rev": "567a49d1913ce81ac6e9582e3553dd90a955875f",
+      "rev_count": 1017464,
+      "rev_date": "2026-06-16T02:33:49Z",
+      "scrape_date": "2026-06-17T04:47:06.806551Z",
       "stabilities": [
         "unstable"
       ],
@@ -383,17 +383,17 @@
     {
       "attr_path": "markdownlint-cli",
       "broken": false,
-      "derivation": "/nix/store/vn613bx62f63jrvj9lhqfnjm6m9604fj-markdownlint-cli-0.48.0.drv",
+      "derivation": "/nix/store/brynnaf55f76ykkn40m1zbqicp6qmwz0-markdownlint-cli-0.48.0.drv",
       "description": "Command line interface for MarkdownLint",
       "install_id": "markdownlint-cli",
       "license": "MIT",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=29916453413845e54a65b8a1cf996842300cd299",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=567a49d1913ce81ac6e9582e3553dd90a955875f",
       "name": "markdownlint-cli-0.48.0",
       "pname": "markdownlint-cli",
-      "rev": "29916453413845e54a65b8a1cf996842300cd299",
-      "rev_count": 1003640,
-      "rev_date": "2026-05-23T03:54:30Z",
-      "scrape_date": "2026-05-24T07:06:12.912643Z",
+      "rev": "567a49d1913ce81ac6e9582e3553dd90a955875f",
+      "rev_count": 1017464,
+      "rev_date": "2026-06-16T02:33:49Z",
+      "scrape_date": "2026-06-17T03:13:36.700347Z",
       "stabilities": [
         "unstable"
       ],
@@ -412,17 +412,17 @@
     {
       "attr_path": "markdownlint-cli",
       "broken": false,
-      "derivation": "/nix/store/l9k5y4cp8i5y0x5n78bqhqi0sygsy2a2-markdownlint-cli-0.48.0.drv",
+      "derivation": "/nix/store/rxmyk40adhd2s6xa2k56lij82gdpx354-markdownlint-cli-0.48.0.drv",
       "description": "Command line interface for MarkdownLint",
       "install_id": "markdownlint-cli",
       "license": "MIT",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=29916453413845e54a65b8a1cf996842300cd299",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=567a49d1913ce81ac6e9582e3553dd90a955875f",
       "name": "markdownlint-cli-0.48.0",
       "pname": "markdownlint-cli",
-      "rev": "29916453413845e54a65b8a1cf996842300cd299",
-      "rev_count": 1003640,
-      "rev_date": "2026-05-23T03:54:30Z",
-      "scrape_date": "2026-05-24T07:34:38.589451Z",
+      "rev": "567a49d1913ce81ac6e9582e3553dd90a955875f",
+      "rev_count": 1017464,
+      "rev_date": "2026-06-16T02:33:49Z",
+      "scrape_date": "2026-06-17T03:44:44.029610Z",
       "stabilities": [
         "unstable"
       ],
@@ -441,17 +441,17 @@
     {
       "attr_path": "markdownlint-cli",
       "broken": false,
-      "derivation": "/nix/store/yb68dnlw25z0n4xa02z9nm4wf6xvi9gf-markdownlint-cli-0.48.0.drv",
+      "derivation": "/nix/store/13r7081j1hnq49yvrzv7ppfplg7s8rc5-markdownlint-cli-0.48.0.drv",
       "description": "Command line interface for MarkdownLint",
       "install_id": "markdownlint-cli",
       "license": "MIT",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=29916453413845e54a65b8a1cf996842300cd299",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=567a49d1913ce81ac6e9582e3553dd90a955875f",
       "name": "markdownlint-cli-0.48.0",
       "pname": "markdownlint-cli",
-      "rev": "29916453413845e54a65b8a1cf996842300cd299",
-      "rev_count": 1003640,
-      "rev_date": "2026-05-23T03:54:30Z",
-      "scrape_date": "2026-05-24T08:01:54.997748Z",
+      "rev": "567a49d1913ce81ac6e9582e3553dd90a955875f",
+      "rev_count": 1017464,
+      "rev_date": "2026-06-16T02:33:49Z",
+      "scrape_date": "2026-06-17T04:13:29.818453Z",
       "stabilities": [
         "unstable"
       ],
@@ -470,17 +470,17 @@
     {
       "attr_path": "markdownlint-cli",
       "broken": false,
-      "derivation": "/nix/store/ycs1ar01r257saxvrf4kb3w3sy9llms4-markdownlint-cli-0.48.0.drv",
+      "derivation": "/nix/store/w70xz7wyv1c7lzd2ynlixczn97bladk5-markdownlint-cli-0.48.0.drv",
       "description": "Command line interface for MarkdownLint",
       "install_id": "markdownlint-cli",
       "license": "MIT",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=29916453413845e54a65b8a1cf996842300cd299",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=567a49d1913ce81ac6e9582e3553dd90a955875f",
       "name": "markdownlint-cli-0.48.0",
       "pname": "markdownlint-cli",
-      "rev": "29916453413845e54a65b8a1cf996842300cd299",
-      "rev_count": 1003640,
-      "rev_date": "2026-05-23T03:54:30Z",
-      "scrape_date": "2026-05-24T08:32:31.977045Z",
+      "rev": "567a49d1913ce81ac6e9582e3553dd90a955875f",
+      "rev_count": 1017464,
+      "rev_date": "2026-06-16T02:33:49Z",
+      "scrape_date": "2026-06-17T04:47:43.426432Z",
       "stabilities": [
         "unstable"
       ],
@@ -499,17 +499,17 @@
     {
       "attr_path": "nodejs_24",
       "broken": false,
-      "derivation": "/nix/store/4f7gz4vdm9msfw3958cy6d7b4mn8zcpn-nodejs-24.15.0.drv",
+      "derivation": "/nix/store/vbx35am7lar9zvwhk4nfl3lysmbd0ils-nodejs-24.15.0.drv",
       "description": "Event-driven I/O framework for the V8 JavaScript engine",
       "install_id": "nodejs_24",
       "license": "MIT",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=29916453413845e54a65b8a1cf996842300cd299",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=567a49d1913ce81ac6e9582e3553dd90a955875f",
       "name": "nodejs-24.15.0",
       "pname": "nodejs_24",
-      "rev": "29916453413845e54a65b8a1cf996842300cd299",
-      "rev_count": 1003640,
-      "rev_date": "2026-05-23T03:54:30Z",
-      "scrape_date": "2026-05-24T07:06:15.301055Z",
+      "rev": "567a49d1913ce81ac6e9582e3553dd90a955875f",
+      "rev_count": 1017464,
+      "rev_date": "2026-06-16T02:33:49Z",
+      "scrape_date": "2026-06-17T03:13:39.230289Z",
       "stabilities": [
         "unstable"
       ],
@@ -528,17 +528,17 @@
     {
       "attr_path": "nodejs_24",
       "broken": false,
-      "derivation": "/nix/store/lzdf2d8kky8k67nqjv07r9zbcqmihns7-nodejs-24.15.0.drv",
+      "derivation": "/nix/store/zc41z1042wi0d1gmyc8mlwv5av8fds2q-nodejs-24.15.0.drv",
       "description": "Event-driven I/O framework for the V8 JavaScript engine",
       "install_id": "nodejs_24",
       "license": "MIT",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=29916453413845e54a65b8a1cf996842300cd299",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=567a49d1913ce81ac6e9582e3553dd90a955875f",
       "name": "nodejs-24.15.0",
       "pname": "nodejs_24",
-      "rev": "29916453413845e54a65b8a1cf996842300cd299",
-      "rev_count": 1003640,
-      "rev_date": "2026-05-23T03:54:30Z",
-      "scrape_date": "2026-05-24T07:34:42.815905Z",
+      "rev": "567a49d1913ce81ac6e9582e3553dd90a955875f",
+      "rev_count": 1017464,
+      "rev_date": "2026-06-16T02:33:49Z",
+      "scrape_date": "2026-06-17T03:44:48.148890Z",
       "stabilities": [
         "unstable"
       ],
@@ -557,17 +557,17 @@
     {
       "attr_path": "nodejs_24",
       "broken": false,
-      "derivation": "/nix/store/3q3jmp4ahvdy9dr6zhwsd2zhv12nw3d2-nodejs-24.15.0.drv",
+      "derivation": "/nix/store/f0ay9hny5gn4c0lfrb95xrakm7yf3s2q-nodejs-24.15.0.drv",
       "description": "Event-driven I/O framework for the V8 JavaScript engine",
       "install_id": "nodejs_24",
       "license": "MIT",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=29916453413845e54a65b8a1cf996842300cd299",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=567a49d1913ce81ac6e9582e3553dd90a955875f",
       "name": "nodejs-24.15.0",
       "pname": "nodejs_24",
-      "rev": "29916453413845e54a65b8a1cf996842300cd299",
-      "rev_count": 1003640,
-      "rev_date": "2026-05-23T03:54:30Z",
-      "scrape_date": "2026-05-24T08:01:57.475640Z",
+      "rev": "567a49d1913ce81ac6e9582e3553dd90a955875f",
+      "rev_count": 1017464,
+      "rev_date": "2026-06-16T02:33:49Z",
+      "scrape_date": "2026-06-17T04:13:32.479300Z",
       "stabilities": [
         "unstable"
       ],
@@ -586,17 +586,17 @@
     {
       "attr_path": "nodejs_24",
       "broken": false,
-      "derivation": "/nix/store/jk98cvnvcb5adz3d58r8x6zxrvnhlng0-nodejs-24.15.0.drv",
+      "derivation": "/nix/store/f8i8jydaqs0ngxm97c091zna2mnjb43f-nodejs-24.15.0.drv",
       "description": "Event-driven I/O framework for the V8 JavaScript engine",
       "install_id": "nodejs_24",
       "license": "MIT",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=29916453413845e54a65b8a1cf996842300cd299",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=567a49d1913ce81ac6e9582e3553dd90a955875f",
       "name": "nodejs-24.15.0",
       "pname": "nodejs_24",
-      "rev": "29916453413845e54a65b8a1cf996842300cd299",
-      "rev_count": 1003640,
-      "rev_date": "2026-05-23T03:54:30Z",
-      "scrape_date": "2026-05-24T08:32:36.292744Z",
+      "rev": "567a49d1913ce81ac6e9582e3553dd90a955875f",
+      "rev_count": 1017464,
+      "rev_date": "2026-06-16T02:33:49Z",
+      "scrape_date": "2026-06-17T04:47:47.934763Z",
       "stabilities": [
         "unstable"
       ],
