@@ -69,3 +69,20 @@ skills:
     categories:
       - developer-tools
     homepage: https://github.com/inference-gateway/skills
+
+  - url: https://github.com/Xquik-dev/x-twitter-scraper
+    ref: v2.4.16
+    path: skills/x-twitter-scraper/SKILL.md
+    vendor: Xquik
+    license: MIT
+    tags:
+      - xquik
+      - x
+      - twitter
+      - social-media
+      - rest-api
+      - mcp
+    categories:
+      - social-media
+      - developer-tools
+    homepage: https://docs.xquik.com
