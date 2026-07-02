@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.3.0](https://github.com/inference-gateway/skills/compare/v0.2.2...v0.3.0) (2026-07-02)
+
 ## [0.2.2](https://github.com/inference-gateway/skills/compare/v0.2.1...v0.2.2) (2026-06-08)
 
 ### 🐛 Bug Fixes
