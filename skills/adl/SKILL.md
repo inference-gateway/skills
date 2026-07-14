@@ -48,7 +48,7 @@ matched there survives `adl generate --overwrite`.
 | `capabilities` | yes       | A2A feature flags - `streaming`, `pushNotifications`, `stateTransitionHistory` (all three booleans)   |
 | `server`       | yes       | `port` (1-65535), optional `scheme`, `debug`, `auth.enabled`                                          |
 | `language`     | yes       | At least one of `go`, `typescript`, `rust` (each with its own required pair, e.g. `module`+`version`) |
-| `agent`        | no        | LLM provider/model/systemPrompt/maxTokens/temperature                                                 |
+| `agent`        | no        | LLM provider/model/systemPrompt/maxTokens/temperature + `mcps[]` MCP servers                          |
 | `card`         | no        | Static A2A agent-card metadata served at `.well-known/agent-card.json`                                |
 | `services`     | no        | Domain services declared as ports (`type`, `interface`, `factory`, `description`)                     |
 | `config`       | no        | Arbitrary per-section config maps; one section per service (env-mapped)                               |
@@ -56,10 +56,11 @@ matched there survives `adl generate --overwrite`.
 | `skills`       | no        | Markdown playbooks - registry / GitHub `source:` / `bare: true`                                       |
 | `acronyms`     | no        | String list the generator preserves in generated identifier casing                                    |
 | `artifacts`    | no        | `enabled: true` to generate an artifacts server (filesystem or MinIO backend)                         |
+| `telemetry`    | no        | `enabled: true` to generate OpenTelemetry instrumentation (traces, metrics, logs)                     |
 | `hooks`        | no        | `post: [...]` commands the CLI runs after each `adl generate`                                         |
 | `scm`          | no        | `provider`, `url`, `github_app`, `issue_templates`, `dependabot`, `ci`, `cd`                          |
-| `development`  | no        | `sandbox.{flox,devcontainer,dockerCompose}` + `ai.{claudecode,codex,gemini,opencode,infer}`           |
-| `deployment`   | no        | `type: kubernetes \| cloudrun` plus the matching block                                                |
+| `development`  | no        | `sandbox.{flox,devcontainer,dockerCompose}` + `ai.orchestrators.{claudecode,...}` + `deps[]`          |
+| `deployment`   | no        | `type: kubernetes \| cloudrun \| vercel \| cloudflare` plus the matching block                        |
 
 The sections below cover each in turn. Anything not in this table is not in
 v1 - if you see it in an existing manifest, treat it as a CLI extension and
@@ -72,7 +73,9 @@ work so the manifest leads and the code follows.
 
 1. **Model the domain in YAML before touching any source file.**
    - Name the bounded context in `metadata.name` (lowercase, hyphenated) and
-     pin `metadata.version` (semver - `^\d+\.\d+\.\d+$`).
+     pin `metadata.version` (semver - `^\d+\.\d+\.\d+$`). Optional metadata:
+     `author` (`name` required, `email`/`url`), `license` (same SPDX enum as
+     skills, or `Proprietary`), and `tags[]` for discoverability.
    - **Declare the required spec frame first:** `spec.capabilities` (all
      three booleans - `streaming`, `pushNotifications`,
      `stateTransitionHistory`), `spec.server.port`, and at least one
@@ -126,8 +129,9 @@ capabilities:
 
 **`spec.agent` (optional but near-universal).** The LLM the generated agent
 defers to. Provider is a fixed enum: `openai`, `anthropic`, `ollama`,
-`deepseek`, `google`, `mistral`, `groq`, or `""` for "configure at runtime
-via env vars only". Temperature is bounded to 0-2; `maxTokens` must be ≥1.
+`deepseek`, `google`, `mistral`, `groq`, `cohere`, `cloudflare`, `moonshot`,
+`ollama_cloud`, `nvidia`, `minimax`, or `""` for "configure at runtime via
+env vars only". Temperature is bounded to 0-2; `maxTokens` must be ≥1.
 
 ```yaml
 agent:
@@ -138,6 +142,30 @@ agent:
     workflows; call tools for deterministic actions.
   maxTokens: 4096
   temperature: 0.3
+```
+
+**`spec.agent.mcps[]` (optional).** MCP (Model Context Protocol) servers the
+agent connects to at runtime to discover and call external tools, on top of
+the locally generated `spec.tools`. Each entry requires `name` (unique,
+`^[a-zA-Z0-9_-]+$`) and `transport` (`stdio` | `sse` | `http`). `stdio`
+launches a local subprocess (`command`, `args`, `env`); `http`/`sse` connect
+to a remote endpoint (`url`, `headers`). Only meaningful for an LLM-backed
+agent - that's why it lives under `spec.agent`:
+
+```yaml
+agent:
+  provider: anthropic
+  model: claude-sonnet-5
+  mcps:
+    - name: filesystem
+      transport: stdio
+      command: npx
+      args: ["-y", "@modelcontextprotocol/server-filesystem", "/data"]
+    - name: internal-api
+      transport: http
+      url: https://mcp.example.com/mcp
+      headers:
+        Authorization: Bearer ${MCP_TOKEN}
 ```
 
 **`spec.card` (optional).** Static fields for the A2A agent card served at
@@ -188,26 +216,23 @@ language:
     version: "1.26.2"
 ```
 
-**`vendor.{deps,devdeps}` (CLI extension, not in v1 schema).** `adl-cli`
-reads `spec.language.<lang>.vendor.deps[]` (runtime) and `vendor.devdeps[]`
-(code generators / dev tools) for Go and Rust to pre-populate `go.mod` /
-`Cargo.toml`. The v1 JSON Schema doesn't validate these keys, but it permits
-additional properties so they round-trip cleanly:
+**`vendor.{deps,devdeps}`.** Every language block accepts a `vendor` object
+(schema-validated since v0.11): `deps[]` for runtime dependencies and
+`devdeps[]` for dev/test-only tools, each entry in `<package>@<version>`
+form using the language's native syntax. The CLI pre-populates `go.mod` /
+`Cargo.toml` / `package.json` from them:
 
 ```yaml
 language:
   go:
     module: github.com/example/my-agent
     version: "1.26.2"
-    vendor: # CLI extension
+    vendor:
       deps:
         - github.com/stretchr/testify@v1.10.0
       devdeps:
         - golang.org/x/tools/cmd/stringer@v0.20.0
 ```
-
-Verify against the latest `adl-cli` changelog before relying on it; treat
-schema-validated fields as load-bearing and extensions as best-effort.
 
 ## Tools vs Skills (the often-confused distinction)
 
@@ -495,7 +520,7 @@ expressions like `MIT OR Apache-2.0` are not currently accepted.
 
 `spec.development` configures the experience of working _on_ the agent
 locally - reproducible dev environments and AI-assistant onboarding files.
-Two independent subsections, both optional.
+Three independent subsections (`sandbox`, `ai`, `deps`), all optional.
 
 **`spec.development.sandbox`.** Three alternative packagings - pick any
 combination; each declares its own `enabled` boolean. Generated artefacts:
@@ -506,19 +531,24 @@ combination; each declares its own `enabled` boolean. Generated artefacts:
 | `devcontainer`  | `.devcontainer/devcontainer.json` (VS Code Dev Containers)                                     |
 | `dockerCompose` | `docker-compose.yaml` (with the artifacts server wired in when `spec.artifacts.enabled: true`) |
 
-**`spec.development.ai`.** Per-agent toggles for the coding assistants the
-project is meant to be edited with. Each is independent; all default off.
-The CLI generates each agent's onboarding file the first time it's enabled,
-and keeps it in sync on subsequent `adl generate --overwrite` runs unless
-you list it in `.adl-ignore`:
+**`spec.development.ai.orchestrators`.** Per-agent toggles for the coding
+assistants the project is meant to be edited with, nested under
+`ai.orchestrators` (the older flat `ai.<agent>` and `ai.enabled` shapes are
+**rejected** by `adl validate`/`adl generate` with a migration hint - move
+the toggle under `orchestrators`). Each is independent; all default off.
+Enabling one generates its onboarding doc plus a GitHub Actions workflow,
+kept in sync on `adl generate --overwrite` unless listed in `.adl-ignore`:
 
-| Sub-block    | Generated file                                 |
-| ------------ | ---------------------------------------------- |
-| `claudecode` | `CLAUDE.md` (Anthropic Claude Code)            |
-| `gemini`     | `GEMINI.md` (Google Gemini)                    |
-| `codex`      | shared `AGENTS.md` (OpenAI Codex)              |
-| `opencode`   | shared `AGENTS.md`                             |
-| `infer`      | shared `AGENTS.md` (Inference Gateway `infer`) |
+| Sub-block    | Generated docs file                            | Generated workflow                    |
+| ------------ | ---------------------------------------------- | ------------------------------------- |
+| `claudecode` | `CLAUDE.md` (Anthropic Claude Code)            | `.github/workflows/claude.yml`        |
+| `gemini`     | `GEMINI.md` (Google Gemini)                    | `.github/workflows/gemini.yml`        |
+| `codex`      | shared `AGENTS.md` (OpenAI Codex)              | `.github/workflows/codex.yml`         |
+| `opencode`   | shared `AGENTS.md`                             | none (no upstream action yet)         |
+| `infer`      | shared `AGENTS.md` (Inference Gateway `infer`) | `.github/workflows/infer.yml`         |
+
+Enabling `claudecode` also provisions the `claude-code` CLI into the Flox /
+DevContainer sandboxes automatically.
 
 A small example combining sandbox + AI toggles:
 
@@ -532,16 +562,17 @@ development:
     dockerCompose:
       enabled: true
   ai:
-    claudecode:
-      enabled: true
-    codex:
-      enabled: true
+    orchestrators:
+      claudecode:
+        enabled: true
+      codex:
+        enabled: true
 ```
 
-**`spec.development.deps[]` (CLI extension, not in v1 schema).**
-`adl-cli` v0.38.0+ reads a cross-cutting list of sandbox-level tool
-dependencies to install across every enabled sandbox flavour. Treat it as
-a CLI convention - useful, but not schema-validated.
+**`spec.development.deps[]`.** A cross-cutting list of sandbox-level tool
+dependencies (`<package>@<version>`, e.g. `kubectl@1.31.0`) installed into
+every enabled sandbox flavour - for tools that don't belong to any single
+language's package manager.
 
 ## SCM, CI/CD, and deployment
 
@@ -560,9 +591,13 @@ the code lives, how it ships, and where it runs.
 | `ci`              | Write `.github/workflows/ci.yml`                                          |
 | `cd`              | Write `.github/workflows/cd.yml` and `.releaserc.yaml` (semantic-release) |
 
-**`spec.deployment`.** Choose `type: kubernetes` or `type: cloudrun`; the
-matching sub-block carries the detail. Both share an `image` shape with
-`registry`, `repository`, `tag`, optional `useCloudBuild`.
+**`spec.deployment`.** Choose `type: kubernetes`, `cloudrun`, `vercel`, or
+`cloudflare`; the matching sub-block carries the detail. `kubernetes` and
+`cloudrun` deploy a prebuilt container image and share an `image` shape
+(`registry`, `repository`, `tag`, optional `useCloudBuild`); `vercel` and
+`cloudflare` deploy from source via the platform's own build pipeline, so
+they have no `image` block. In any `environment:` map, use `${VAR}`
+placeholders for secrets - never inline real values.
 
 `type: kubernetes` generates `k8s/deployment.yaml`:
 
@@ -605,15 +640,55 @@ deployment:
       ENVIRONMENT: production
 ```
 
+`type: vercel` deploys from source through Vercel's build pipeline. Fields:
+`project`, `team`, `framework` (omit to auto-detect), `runtime` (`nodejs` |
+`edge`), `regions[]`, `functions.{memory,maxDuration}`, `environment`:
+
+```yaml
+deployment:
+  type: vercel
+  vercel:
+    project: my-agent
+    runtime: nodejs
+    regions: [iad1]
+    functions:
+      memory: 1024
+      maxDuration: 300
+    environment:
+      LOG_LEVEL: info
+```
+
+`type: cloudflare` targets Cloudflare Workers (not Pages); the CLI
+translates the block into wrangler configuration. Fields: `name`,
+`accountId` (prefer a `${VAR}` placeholder), `compatibilityDate`
+(`YYYY-MM-DD`; generator supplies a default if omitted),
+`compatibilityFlags[]` (e.g. `nodejs_compat`), `routes[]`, `workersDev`,
+`environment` (wrangler `vars`; real secrets go out-of-band via
+`wrangler secret put`):
+
+```yaml
+deployment:
+  type: cloudflare
+  cloudflare:
+    name: my-agent
+    accountId: ${CLOUDFLARE_ACCOUNT_ID}
+    compatibilityDate: "2026-01-01"
+    compatibilityFlags: [nodejs_compat]
+    routes:
+      - agent.example.com/*
+    workersDev: false
+```
+
 `adl generate` exposes equivalent CLI flags (`--ci`, `--cd`,
 `--deployment kubernetes|cloudrun`, `--flox`, `--devcontainer`) that **OR
-with the manifest values**. Prefer the manifest for anything that needs to
+with the manifest values**. The `--deployment` flag only accepts
+`kubernetes` and `cloudrun` - `vercel` and `cloudflare` are manifest-only. Prefer the manifest for anything that needs to
 be reproducible across machines and CI runs - treat the flags as
 one-off escape hatches.
 
-## Artifacts and post-generate hooks
+## Artifacts, telemetry, and post-generate hooks
 
-Two small spec blocks that round out the manifest.
+Three small spec blocks that round out the manifest.
 
 **`spec.artifacts.enabled`.** Set `true` to generate an artifacts server -
 a small HTTP service for storing task outputs - and to wire the matching
@@ -621,10 +696,21 @@ a small HTTP service for storing task outputs - and to wire the matching
 generated code. The backend (filesystem vs MinIO) is chosen at runtime via
 env vars on the generated binary, not via the manifest. When
 `spec.development.sandbox.dockerCompose.enabled: true`, the MinIO instance
-is wired into the generated `docker-compose.yaml` (adl-cli v0.39.0+).
+is wired into the generated `docker-compose.yaml`.
 
 ```yaml
 artifacts:
+  enabled: true
+```
+
+**`spec.telemetry.enabled`.** Set `true` to pull OpenTelemetry dependencies
+into the project, instrument built-in tool calls with spans, and turn on the
+ADK's telemetry/metrics server (the `A2A_TELEMETRY_ENABLE` switch). Like
+artifacts, the manifest only carries the on/off switch - exporter endpoint,
+metrics port, and sampling are resolved at runtime. Disabled by default.
+
+```yaml
+telemetry:
   enabled: true
 ```
 
@@ -718,7 +804,7 @@ cross-repo checklists), consult `inference-gateway/.github` (org-level
   `pushNotifications`, `stateTransitionHistory`) are required by the v1
   schema; `adl validate` rejects the manifest if any are missing.
 - Don't hand-edit generated `CLAUDE.md`, `AGENTS.md`, or `GEMINI.md`. They're
-  re-emitted by the `spec.development.ai.*` generators on every
+  re-emitted by the `spec.development.ai.orchestrators.*` generators on every
   `adl generate --overwrite` unless you add them to `.adl-ignore`. If you
   want the AI-onboarding docs to stay hand-written, ignore the file and
   accept that you've forked it from the generator.
