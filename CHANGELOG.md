@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.3.2](https://github.com/inference-gateway/skills/compare/v0.3.1...v0.3.2) (2026-07-14)
+
+### 📚 Documentation
+
+* **adl:** adopt per-signal telemetry exporter schema ([#64](https://github.com/inference-gateway/skills/issues/64)) ([9457b3f](https://github.com/inference-gateway/skills/commit/9457b3f00d7dabcf130f07b5bf1e3419ba7321e9))
+* **adl:** correct telemetry coverage - Go/TypeScript only, traces + metrics ([#63](https://github.com/inference-gateway/skills/issues/63)) ([8329e86](https://github.com/inference-gateway/skills/commit/8329e86d3699f4707c3a58acd424ff9c6aeffa54)), references [inference-gateway/adl#102](https://github.com/inference-gateway/adl/issues/102)
+
 ## [0.3.1](https://github.com/inference-gateway/skills/compare/v0.3.0...v0.3.1) (2026-07-14)
 
 ### 👷 CI
