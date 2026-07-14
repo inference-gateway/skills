@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-07-02T21:06:10Z",
+  "updated": "2026-07-14T18:52:31Z",
   "skills": [
     {
       "name": "adl",
@@ -62,5 +62,5 @@
       }
     }
   ],
-  "release": "0.3.0"
+  "release": "0.3.1"
 }

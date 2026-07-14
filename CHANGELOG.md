@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.3.1](https://github.com/inference-gateway/skills/compare/v0.3.0...v0.3.1) (2026-07-14)
+
+### 👷 CI
+
+* **claude:** centralize claude.yml via reusable workflow ([#59](https://github.com/inference-gateway/skills/issues/59)) ([276f66f](https://github.com/inference-gateway/skills/commit/276f66f6b2a0c40582ac176c7d1814a895f49618))
+* **infer:** centralize infer.yml via reusable workflow ([#55](https://github.com/inference-gateway/skills/issues/55)) ([389bc87](https://github.com/inference-gateway/skills/commit/389bc87540ce09f1a6c1a53a5f48d0e5fd9dfc4f))
+* **infer:** centralize infer.yml via reusable workflow ([#56](https://github.com/inference-gateway/skills/issues/56)) ([efa709d](https://github.com/inference-gateway/skills/commit/efa709dc57a59563e7823a73055cb71433601fc8))
+* **release:** update semantic release and plugins to latest versions with local installation ([01ddc27](https://github.com/inference-gateway/skills/commit/01ddc27c08674386399faf44509abe7fbe02f012))
+* restrict default workflow token permissions to contents: read ([#54](https://github.com/inference-gateway/skills/issues/54)) ([a6ee9fa](https://github.com/inference-gateway/skills/commit/a6ee9fa53b62459dab0813a14ab141c4fea0906b))
+
+### 📚 Documentation
+
+* **adl:** sync skill with schema v0.18.1 / adl-cli v0.47.1 ([#62](https://github.com/inference-gateway/skills/issues/62)) ([c9eb2e8](https://github.com/inference-gateway/skills/commit/c9eb2e8f48071aa3607befe1799c4770487fd91e))
+
+### 🔧 Miscellaneous
+
+* **deps:** bump claude-code 2.1.177 -> 2.1.197, claude-code-action v1.0.161 -> v1.0.165 ([#48](https://github.com/inference-gateway/skills/issues/48)) ([8f8895d](https://github.com/inference-gateway/skills/commit/8f8895da3511f6cf846b2adaf5214e80f78ec896))
+* **deps:** bump claude-code 2.1.197 -> 2.1.201 ([#49](https://github.com/inference-gateway/skills/issues/49)) ([479cdeb](https://github.com/inference-gateway/skills/commit/479cdeb2a4171587d4ed74b8c6d15454a7e2dcf9))
+* **deps:** bump claude-code-action v1.0.168 -> v1.0.169 ([#58](https://github.com/inference-gateway/skills/issues/58)) ([c8a2fa1](https://github.com/inference-gateway/skills/commit/c8a2fa185f549240a008b234d497a5d73019dc94))
+* **deps:** bump infer CLI v0.125.0 -> v0.130.1, infer-action v0.19.1 -> v0.23.1 ([#47](https://github.com/inference-gateway/skills/issues/47)) ([cbd3ae0](https://github.com/inference-gateway/skills/commit/cbd3ae095b9c3e9a9cd814e9c8f6ea26e1ce99ed))
+* **deps:** bump infer CLI v0.130.1 -> v0.133.0, infer-action v0.23.1 -> v0.26.0 ([#50](https://github.com/inference-gateway/skills/issues/50)) ([31a5344](https://github.com/inference-gateway/skills/commit/31a53449a8d1e81e932afa2e3671f353b8d00590))
+* **deps:** bump infer CLI v0.133.0 -> v0.133.1, infer-action v0.26.0 -> v0.27.1 ([#51](https://github.com/inference-gateway/skills/issues/51)) ([fabd2a1](https://github.com/inference-gateway/skills/commit/fabd2a1e03f50ee2ce82151f16c7e7a63f1592b5))
+* **deps:** bump infer CLI v0.133.1 -> v0.137.0, infer-action v0.27.1 -> v0.29.0 ([#52](https://github.com/inference-gateway/skills/issues/52)) ([aaa9252](https://github.com/inference-gateway/skills/commit/aaa9252d4bb04661348eddc8b06577fc4118fe04))
+* **deps:** bump infer CLI v0.137.0 -> v0.138.0, infer-action v0.29.0 -> v0.30.1 ([#53](https://github.com/inference-gateway/skills/issues/53)) ([358368b](https://github.com/inference-gateway/skills/commit/358368b349a68bfc7400e48c4e9858ef57ac1a6f))
+* **deps:** bump infer CLI v0.138.0 -> v0.141.0 ([#60](https://github.com/inference-gateway/skills/issues/60)) ([0fc0b69](https://github.com/inference-gateway/skills/commit/0fc0b6990dffe3d3fa1abc5616f9bd03054f20a7))
+* **deps:** bump inference-gateway/.github/.github/workflows/claude.yml ([#57](https://github.com/inference-gateway/skills/issues/57)) ([630f09f](https://github.com/inference-gateway/skills/commit/630f09f21b942bd1b660732959a7a6f8199dd8fa))
+
 ## [0.3.0](https://github.com/inference-gateway/skills/compare/v0.2.2...v0.3.0) (2026-07-02)
 
 ## [0.2.2](https://github.com/inference-gateway/skills/compare/v0.2.1...v0.2.2) (2026-06-08)
