@@ -56,7 +56,7 @@ matched there survives `adl generate --overwrite`.
 | `skills`       | no        | Markdown playbooks - registry / GitHub `source:` / `bare: true`                                       |
 | `acronyms`     | no        | String list the generator preserves in generated identifier casing                                    |
 | `artifacts`    | no        | `enabled: true` to generate an artifacts server (filesystem or MinIO backend)                         |
-| `telemetry`    | no        | `enabled: true` to generate OpenTelemetry instrumentation (traces, metrics; Go and TypeScript only)                     |
+| `telemetry`    | no        | `enabled: true` to generate OpenTelemetry instrumentation (traces + metrics; Go/TS only)              |
 | `hooks`        | no        | `post: [...]` commands the CLI runs after each `adl generate`                                         |
 | `scm`          | no        | `provider`, `url`, `github_app`, `issue_templates`, `dependabot`, `ci`, `cd`                          |
 | `development`  | no        | `sandbox.{flox,devcontainer,dockerCompose}` + `ai.orchestrators.{claudecode,...}` + `deps[]`          |
