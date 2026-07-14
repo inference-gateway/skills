@@ -539,13 +539,13 @@ the toggle under `orchestrators`). Each is independent; all default off.
 Enabling one generates its onboarding doc plus a GitHub Actions workflow,
 kept in sync on `adl generate --overwrite` unless listed in `.adl-ignore`:
 
-| Sub-block    | Generated docs file                            | Generated workflow                    |
-| ------------ | ---------------------------------------------- | ------------------------------------- |
-| `claudecode` | `CLAUDE.md` (Anthropic Claude Code)            | `.github/workflows/claude.yml`        |
-| `gemini`     | `GEMINI.md` (Google Gemini)                    | `.github/workflows/gemini.yml`        |
-| `codex`      | shared `AGENTS.md` (OpenAI Codex)              | `.github/workflows/codex.yml`         |
-| `opencode`   | shared `AGENTS.md`                             | none (no upstream action yet)         |
-| `infer`      | shared `AGENTS.md` (Inference Gateway `infer`) | `.github/workflows/infer.yml`         |
+| Sub-block    | Generated docs file                            | Generated workflow             |
+| ------------ | ---------------------------------------------- | ------------------------------ |
+| `claudecode` | `CLAUDE.md` (Anthropic Claude Code)            | `.github/workflows/claude.yml` |
+| `gemini`     | `GEMINI.md` (Google Gemini)                    | `.github/workflows/gemini.yml` |
+| `codex`      | shared `AGENTS.md` (OpenAI Codex)              | `.github/workflows/codex.yml`  |
+| `opencode`   | shared `AGENTS.md`                             | none (no upstream action yet)  |
+| `infer`      | shared `AGENTS.md` (Inference Gateway `infer`) | `.github/workflows/infer.yml`  |
 
 Enabling `claudecode` also provisions the `claude-code` CLI into the Flox /
 DevContainer sandboxes automatically.
