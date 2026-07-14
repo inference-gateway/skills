@@ -56,7 +56,7 @@ matched there survives `adl generate --overwrite`.
 | `skills`       | no        | Markdown playbooks - registry / GitHub `source:` / `bare: true`                                       |
 | `acronyms`     | no        | String list the generator preserves in generated identifier casing                                    |
 | `artifacts`    | no        | `enabled: true` to generate an artifacts server (filesystem or MinIO backend)                         |
-| `telemetry`    | no        | `enabled: true` to generate OpenTelemetry instrumentation (traces + metrics; Go/TS only)              |
+| `telemetry`    | no        | `enabled: true` for OpenTelemetry; `traces`/`metrics` select per-signal exporters (Go/TS only)        |
 | `hooks`        | no        | `post: [...]` commands the CLI runs after each `adl generate`                                         |
 | `scm`          | no        | `provider`, `url`, `github_app`, `issue_templates`, `dependabot`, `ci`, `cd`                          |
 | `development`  | no        | `sandbox.{flox,devcontainer,dockerCompose}` + `ai.orchestrators.{claudecode,...}` + `deps[]`          |
@@ -705,17 +705,44 @@ artifacts:
 
 **`spec.telemetry.enabled`.** Set `true` to pull OpenTelemetry dependencies
 into the project, instrument built-in tool calls with spans, and turn on the
-ADK's telemetry/metrics server (the `A2A_TELEMETRY_ENABLE` switch). Like
-artifacts, the manifest only carries the on/off switch - exporter endpoint,
-metrics port, and sampling are resolved at runtime. Disabled by default.
-Supported for Go and TypeScript targets only - Rust manifests ignore the
-toggle. Richer manifest-level exporter configuration is planned
-(inference-gateway/adl#102).
+ADK's telemetry/metrics server (the `A2A_TELEMETRY_ENABLE` switch). Disabled
+by default. Supported for Go and TypeScript targets only - Rust manifests
+ignore the block.
 
 ```yaml
 telemetry:
   enabled: true
 ```
+
+`enabled` is the master switch and the only required field. The optional
+`traces` and `metrics` blocks each select a **per-signal exporter**, following
+the OpenTelemetry SDK declarative-configuration model: the exporter is nested
+under the signal and the single key beneath `exporter` picks it - `otlp`
+(push) for either signal, `prometheus` (pull) for `metrics` only. There is no
+separate exporter enum, and exactly one exporter key is allowed per signal.
+
+```yaml
+telemetry:
+  enabled: true
+  traces:
+    exporter:
+      otlp:
+        endpoint: http://localhost:4318 # -> OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
+        protocol: http/protobuf # http/protobuf | grpc
+  metrics:
+    exporter:
+      prometheus: # pull; use `otlp:` to push instead
+        host: ""
+        port: 9464
+```
+
+Every field maps 1:1 to a standard `OTEL_*` environment variable, which
+`adl-cli` emits as a generated `.env.example` default. Omitting a signal (or
+its `exporter` block) disables it - `OTEL_TRACES_EXPORTER=none` /
+`OTEL_METRICS_EXPORTER=none`. Headers, credentials, and sampling deliberately
+stay out of the manifest and are resolved at runtime through the environment.
+`traces`/`metrics` are purely additive, so an existing
+`telemetry: { enabled: true }` manifest stays valid.
 
 **`spec.hooks.post`.** A list of shell commands the CLI runs at the end of
 every `adl generate`. Use for the things a generator can't reasonably
