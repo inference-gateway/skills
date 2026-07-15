@@ -219,8 +219,11 @@ language:
 **`vendor.{deps,devdeps}`.** Every language block accepts a `vendor` object
 (schema-validated since v0.11): `deps[]` for runtime dependencies and
 `devdeps[]` for dev/test-only tools, each entry in `<package>@<version>`
-form using the language's native syntax. The CLI pre-populates `go.mod` /
-`Cargo.toml` / `package.json` from them:
+form using the language's native syntax. The manifest is **authoritative**:
+since adl-cli v0.48.0 the generator rewrites `go.mod` / `Cargo.toml` /
+`package.json` from it, so any dependency your custom code imports but does
+not declare here is silently dropped on the next `adl generate`. Add extra
+deps in the manifest — never by editing `go.mod` directly:
 
 ```yaml
 language:
@@ -233,6 +236,13 @@ language:
       devdeps:
         - golang.org/x/tools/cmd/stringer@v0.20.0
 ```
+
+For Go, `devdeps` become `tool` directives — CLI executables only (e.g.
+`counterfeiter`, `stringer`). Libraries imported by `_test.go` files (e.g.
+`testify`) belong in `deps`. Pair vendor deps with a
+`spec.hooks.post: [go mod tidy]` hook (see
+[Artifacts, telemetry, and post-generate hooks](#artifacts-telemetry-and-post-generate-hooks))
+so the indirect dependency graph stays consistent after each regeneration.
 
 ## Tools vs Skills (the often-confused distinction)
 
