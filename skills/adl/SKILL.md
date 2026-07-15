@@ -43,24 +43,26 @@ matched there survives `adl generate --overwrite`.
 
 **Spec at a glance.** Every `spec.*` top-level field the v1 schema defines:
 
-| `spec.*` field | Required? | Purpose                                                                                               |
-| -------------- | --------- | ----------------------------------------------------------------------------------------------------- |
-| `capabilities` | yes       | A2A feature flags - `streaming`, `pushNotifications`, `stateTransitionHistory` (all three booleans)   |
-| `server`       | yes       | `port` (1-65535), optional `scheme`, `debug`, `auth.enabled`                                          |
-| `language`     | yes       | At least one of `go`, `typescript`, `rust` (each with its own required pair, e.g. `module`+`version`) |
-| `agent`        | no        | LLM provider/model/systemPrompt/maxTokens/temperature + `mcps[]` MCP servers                          |
-| `card`         | no        | Static A2A agent-card metadata served at `.well-known/agent-card.json`                                |
-| `services`     | no        | Domain services declared as ports (`type`, `interface`, `factory`, `description`)                     |
-| `config`       | no        | Arbitrary per-section config maps; one section per service (env-mapped)                               |
-| `tools`        | no        | Function-call entrypoints - reserved built-in ids and user tools                                      |
-| `skills`       | no        | Markdown playbooks - registry / GitHub `source:` / `bare: true`                                       |
-| `acronyms`     | no        | String list the generator preserves in generated identifier casing                                    |
-| `artifacts`    | no        | `enabled: true` to generate an artifacts server (filesystem or MinIO backend)                         |
-| `telemetry`    | no        | `enabled: true` for OpenTelemetry; `traces`/`metrics` select per-signal exporters (Go/TS only)        |
-| `hooks`        | no        | `post: [...]` commands the CLI runs after each `adl generate`                                         |
-| `scm`          | no        | `provider`, `url`, `github_app`, `issue_templates`, `dependabot`, `ci`, `cd`                          |
-| `development`  | no        | `sandbox.{flox,devcontainer,dockerCompose}` + `ai.orchestrators.{claudecode,...}` + `deps[]`          |
-| `deployment`   | no        | `type: kubernetes \| cloudrun \| vercel \| cloudflare` plus the matching block                        |
+| `spec.*` field  | Required? | Purpose                                                                                               |
+| --------------- | --------- | ----------------------------------------------------------------------------------------------------- |
+| `capabilities`  | yes       | A2A feature flags - `streaming`, `pushNotifications`, `stateTransitionHistory` (all three booleans)   |
+| `server`        | yes       | `port` (1-65535), optional `scheme`, `debug`, `auth.enabled`                                          |
+| `language`      | yes       | At least one of `go`, `typescript`, `rust` (each with its own required pair, e.g. `module`+`version`) |
+| `agent`         | no        | LLM provider/model/systemPrompt/maxTokens/temperature + `mcps[]` MCP servers                          |
+| `card`          | no        | Static A2A agent-card metadata served at `.well-known/agent-card.json`                                |
+| `services`      | no        | Domain services declared as ports (`type`, `interface`, `factory`, `description`)                     |
+| `config`        | no        | Arbitrary per-section config maps; one section per service (env-mapped)                               |
+| `tools`         | no        | Function-call entrypoints - reserved built-in ids and user tools                                      |
+| `skills`        | no        | Markdown playbooks - registry / GitHub `source:` / `bare: true`                                       |
+| `acronyms`      | no        | String list the generator preserves in generated identifier casing                                    |
+| `artifacts`     | no        | `enabled: true` to generate an artifacts server (filesystem or MinIO backend)                         |
+| `telemetry`     | no        | `enabled: true` for OpenTelemetry; `traces`/`metrics` select per-signal exporters (Go/TS only)        |
+| `hooks`         | no        | `post: [...]` commands the CLI runs after each `adl generate`                                         |
+| `scm`           | no        | `provider`, `url`, `github_app`, `issue_templates`, `dependabot`, `ci`, `cd`                          |
+| `documentation` | no        | `pages[]` with `title`, `path`, and optional `description` - hand-authored docs seeded in `docs/`     |
+| `examples`      | no        | `title`, `path`, and optional `description` - example code/usage rendered in the README               |
+| `development`   | no        | `sandbox.{flox,devcontainer,dockerCompose}` + `ai.orchestrators.{claudecode,...}` + `deps[]`          |
+| `deployment`    | no        | `type: kubernetes \| cloudrun \| vercel \| cloudflare` plus the matching block                        |
 
 The sections below cover each in turn. Anything not in this table is not in
 v1 - if you see it in an existing manifest, treat it as a CLI extension and
@@ -695,6 +697,50 @@ with the manifest values**. The `--deployment` flag only accepts
 `kubernetes` and `cloudrun` - `vercel` and `cloudflare` are manifest-only. Prefer the manifest for anything that needs to
 be reproducible across machines and CI runs - treat the flags as
 one-off escape hatches.
+
+## Documentation pages and examples
+
+Two spec blocks that enrich the generated README with hand-authored content.
+
+**`spec.documentation.pages[]` (optional).** Declare hand-authored documentation
+pages that link from the generated README. Each entry requires `title` and `path`
+(the path relative to the repo root, typically `docs/<file>.md`); `description`
+is optional. The generator creates a stub `docs/<file>.md` on first run (title-only,
+never overwrites) and renders a `## Documentation` section in the README:
+
+```yaml
+documentation:
+  pages:
+    - title: Getting Started
+      path: docs/getting-started.md
+      description: Quickstart guide for the agent
+    - title: Architecture
+      path: docs/architecture.md
+      description: System design and component overview
+```
+
+The stub files follow the same seed-once pattern as bare skill scaffolds - the
+generator writes them only if they do not exist, so your edits survive
+`adl generate --overwrite`. Add the `docs/` directory to `.adl-ignore` if you
+want full control over the file set.
+
+**`spec.examples[]` (optional).** Declare example files that link from the
+generated README. Each entry requires `title` and `path`; `description` is
+optional. The generator renders a `## Examples` section in the README and warns
+(non-fatal) if a referenced path does not exist on disk:
+
+```yaml
+examples:
+  - title: Basic Chat
+    path: examples/basic-chat.md
+    description: A simple request-response interaction
+  - title: Multi-turn Workflow
+    path: examples/multi-turn.md
+```
+
+Unlike documentation pages, the generator does **not** scaffold example stubs -
+you author them by hand. Both blocks are purely additive: omitting them produces
+the same README as before.
 
 ## Artifacts, telemetry, and post-generate hooks
 
