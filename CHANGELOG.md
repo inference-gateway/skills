@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.4.0](https://github.com/inference-gateway/skills/compare/v0.3.3...v0.4.0) (2026-07-15)
+
+### ✨ Features
+
+* **adl:** document spec.documentation.pages and spec.examples from adl-cli v0.49.0 ([#67](https://github.com/inference-gateway/skills/issues/67)) ([0e4ddca](https://github.com/inference-gateway/skills/commit/0e4ddcaf2610def7ee7997d3346b3f3ecb8f2a8a))
+
 ## [0.3.3](https://github.com/inference-gateway/skills/compare/v0.3.2...v0.3.3) (2026-07-15)
 
 ### 📚 Documentation
