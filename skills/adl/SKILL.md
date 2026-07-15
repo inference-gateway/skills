@@ -786,6 +786,24 @@ adl generate ... --devcontainer              # enable DevContainer sandbox (OR w
 adl generate ... -t minimal                  # template selector (currently only "minimal" ships)
 ```
 
+**In a generated project, prefer the repo tasks over invoking `adl`
+directly.** A globally installed `adl` may be stale or unapproved in a
+sandboxed/CI session; the project pins the correct version itself.
+Generated projects ship `task validate` (`adl validate agent.yaml`) and
+`task generate` (`adl generate --overwrite`) in their `Taskfile.yml`, and
+when a `.flox/` env exists it pins the adl-cli version
+(`.flox/env/manifest.toml`) - run through it:
+
+```sh
+flox activate -- task validate               # adl validate agent.yaml, pinned CLI
+flox activate -- task generate               # adl generate --overwrite, pinned CLI
+```
+
+After `task generate`, check `git status` - anything custom that changed
+means an `.adl-ignore` gap. To pick up a schema change, bump the adl-cli
+flake ref in `.flox/env/manifest.toml` rather than upgrading a global
+binary.
+
 Once generated:
 
 ```sh
