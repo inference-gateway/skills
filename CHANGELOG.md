@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.3.3](https://github.com/inference-gateway/skills/compare/v0.3.2...v0.3.3) (2026-07-15)
+
+### 📚 Documentation
+
+* **adl:** document manifest-authoritative vendor deps and Go devdeps semantics ([#65](https://github.com/inference-gateway/skills/issues/65)) ([761302d](https://github.com/inference-gateway/skills/commit/761302d1cc324a2777db86df2cf4a3c8af519a79))
+* **adl:** prefer repo tasks over global adl binary in generated projects ([#66](https://github.com/inference-gateway/skills/issues/66)) ([9576814](https://github.com/inference-gateway/skills/commit/957681462e17df8d40a4e5b0021064c5b521d5b2)), references [inference-gateway/mock-agent#59](https://github.com/inference-gateway/mock-agent/issues/59)
+
 ## [0.3.2](https://github.com/inference-gateway/skills/compare/v0.3.1...v0.3.2) (2026-07-14)
 
 ### 📚 Documentation
