@@ -60,7 +60,7 @@ matched there survives `adl generate --overwrite`.
 | `hooks`         | no        | `post: [...]` commands the CLI runs after each `adl generate`                                         |
 | `scm`           | no        | `provider`, `url`, `github_app`, `issue_templates`, `dependabot`, `ci`, `cd`                          |
 | `documentation` | no        | `pages[]` with `title`, `path`, and optional `description` - hand-authored docs seeded in `docs/`     |
-| `examples`      | no        | `title`, `path`, and optional `description` - example code/usage rendered in the README               |
+| `examples`      | no        | `title` and `description` - seeded once as `examples/<slug>/README.md`, linked from the README        |
 | `development`   | no        | `sandbox.{flox,devcontainer,dockerCompose}` + `ai.orchestrators.{claudecode,...}` + `deps[]`          |
 | `deployment`    | no        | `type: kubernetes \| cloudrun \| vercel \| cloudflare` plus the matching block                        |
 
@@ -700,7 +700,14 @@ one-off escape hatches.
 
 ## Documentation pages and examples
 
-Two spec blocks that enrich the generated README with hand-authored content.
+The generator owns two root-level docs, regenerated on every run: `README.md`
+(overview, quick start, tools/skills/examples tables) and `CONFIGURATIONS.md`
+(the full config reference - the custom `spec.config` table plus every `A2A_*`
+env var, including the telemetry rows when enabled). The README's
+Configuration section is just a short paragraph linking to `CONFIGURATIONS.md`.
+Neither is in `.adl-ignore` by default; add them yourself if you fork them.
+
+Two spec blocks enrich the generated README with hand-authored content.
 
 **`spec.documentation.pages[]` (optional).** Declare hand-authored documentation
 pages that link from the generated README. Each entry requires `title` and `path`
@@ -724,23 +731,24 @@ generator writes them only if they do not exist, so your edits survive
 `adl generate --overwrite`. Add the `docs/` directory to `.adl-ignore` if you
 want full control over the file set.
 
-**`spec.examples[]` (optional).** Declare example files that link from the
-generated README. Each entry requires `title` and `path`; `description` is
-optional. The generator renders a `## Examples` section in the README and warns
-(non-fatal) if a referenced path does not exist on disk:
+**`spec.examples[]` (optional).** Declare curated examples that link from the
+generated README. Each entry has `title` and `description` only - there is no
+`path` field. The generator derives a directory from the title
+(lowercased, spaces to dashes) and seeds `examples/<slug>/README.md` once
+(title + description + TODO, never overwritten); the README's `## Examples`
+table links each entry to its directory. The `examples/` directory is listed
+in `.adl-ignore`, so everything you add there survives regeneration:
 
 ```yaml
 examples:
-  - title: Basic Chat
-    path: examples/basic-chat.md
+  - title: Basic Chat # -> examples/basic-chat/
     description: A simple request-response interaction
-  - title: Multi-turn Workflow
-    path: examples/multi-turn.md
+  - title: Multi-turn Workflow # -> examples/multi-turn-workflow/
+    description: Chaining several tool calls across turns
 ```
 
-Unlike documentation pages, the generator does **not** scaffold example stubs -
-you author them by hand. Both blocks are purely additive: omitting them produces
-the same README as before.
+Both blocks are purely additive: omitting them produces the same README as
+before.
 
 ## Artifacts, telemetry, and post-generate hooks
 
@@ -783,7 +791,7 @@ telemetry:
   traces:
     exporter:
       otlp:
-        endpoint: http://localhost:4318 # -> OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
+        endpoint: http://localhost:4318 # -> A2A_OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
         protocol: http/protobuf # http/protobuf | grpc
   metrics:
     exporter:
@@ -792,10 +800,13 @@ telemetry:
         port: 9464
 ```
 
-Every field maps 1:1 to a standard `OTEL_*` environment variable, which
-`adl-cli` emits as a generated `.env.example` default. Omitting a signal (or
-its `exporter` block) disables it - `OTEL_TRACES_EXPORTER=none` /
-`OTEL_METRICS_EXPORTER=none`. Headers, credentials, and sampling deliberately
+Every field maps 1:1 to a standard `OTEL_*` environment variable carried
+under the `A2A_` prefix for all languages (`A2A_OTEL_*`), which `adl-cli`
+emits as a generated `.env.example` default. Generated TypeScript agents
+mirror `A2A_OTEL_*` onto the bare `OTEL_*` names the Node SDK reads at
+startup; explicitly set bare names win. Omitting a signal (or its `exporter`
+block) disables it - `A2A_OTEL_TRACES_EXPORTER=none` /
+`A2A_OTEL_METRICS_EXPORTER=none`. Headers, credentials, and sampling deliberately
 stay out of the manifest and are resolved at runtime through the environment.
 `traces`/`metrics` are purely additive, so an existing
 `telemetry: { enabled: true }` manifest stays valid.
