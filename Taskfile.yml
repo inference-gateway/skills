@@ -26,3 +26,8 @@ tasks:
     desc: Check formatting of all markdown files
     cmds:
       - npm run format:check
+
+  scan:
+    desc: Security-scan catalog skills with SkillSpector (warn-only; see docs/security-scanning.md)
+    cmds:
+      - npm run scan

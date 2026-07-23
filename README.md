@@ -61,6 +61,14 @@ The catalog is consumed by:
     `infer skills install <name>` in the
     [inference-gateway CLI](https://github.com/inference-gateway/cli).
 
+## Security scanning
+
+Every catalog skill is security-scanned with
+[NVIDIA SkillSpector](https://github.com/NVIDIA/SkillSpector) - local skills and
+external ones at their pinned `ref`. Run `npm run scan` locally (warn-only) or see
+[docs/security-scanning.md](docs/security-scanning.md) for the threshold policy and the
+CI workflow.
+
 ## Licensing
 
 - Repository-level files (`README.md`, `catalog.json`, `LICENSE`) and IG-authored

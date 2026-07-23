@@ -1,0 +1,46 @@
+---
+name: Security scan
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "skills/**"
+      - "skills.yaml"
+      - "scripts/scan-skills.mjs"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write # upload SARIF to code scanning
+
+jobs:
+  skillspector:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7.0.0
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@v7.0.0
+        with:
+          node-version: "24.15.0"
+
+      - run: npm ci
+
+      - uses: astral-sh/setup-uv@v5
+
+      # Pin a commit SHA - SkillSpector has no releases yet. Bump to re-verify.
+      - name: Install SkillSpector
+        run: uv tool install "git+https://github.com/NVIDIA/skillspector.git@a54947c307fe19a24a43db55f6148e181a987a67"
+
+      # Warn-only to baseline. Set SKILLSPECTOR_ENFORCE=1 here to gate.
+      - name: Scan catalog skills
+        run: npm run scan
+
+      - name: Upload SARIF to code scanning
+        if: always()
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: sarif
