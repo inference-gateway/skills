@@ -36,7 +36,7 @@ else and will regenerate it on demand.
 | Scaffolding (`main.go`, `config/`, `internal/<service>/`, `Dockerfile`, CI, ...) | various        | the generator                    | yes                             |
 | Custom tool bodies (`tools/<name>.{go,rs,ts}`)                                   | `tools/`       | you, after a TODO scaffold       | no - protected by `.adl-ignore` |
 | Custom service impls (`internal/<service>/*.go`)                                 | `internal/`    | you, after a TODO scaffold       | no - protected by `.adl-ignore` |
-| Skills (`skills/<id>/SKILL.md`)                                                  | `skills/`      | you (bare) or upstream (sourced) | no - whole dir protected        |
+| Skills (`.agents/skills/<id>/SKILL.md`)                                          | `.agents/skills/` | you (bare) or upstream (sourced) | no - whole dir protected     |
 
 If you forget which half a file belongs to, `cat .adl-ignore` - anything
 matched there survives `adl generate --overwrite`.
@@ -48,7 +48,7 @@ matched there survives `adl generate --overwrite`.
 | `capabilities`  | yes       | A2A feature flags - `streaming`, `pushNotifications`, `stateTransitionHistory` (all three booleans)   |
 | `server`        | yes       | `port` (1-65535), optional `scheme`, `debug`, `auth.enabled`                                          |
 | `language`      | yes       | At least one of `go`, `typescript`, `rust` (each with its own required pair, e.g. `module`+`version`) |
-| `agent`         | no        | LLM provider/model/systemPrompt/maxTokens/temperature + `mcps[]` MCP servers                          |
+| `agent`         | no        | LLM provider/model/systemPrompt/maxTokens/temperature + `mcp` MCP client (servers + runtime config)   |
 | `card`          | no        | Static A2A agent-card metadata served at `.well-known/agent-card.json`                                |
 | `services`      | no        | Domain services declared as ports (`type`, `interface`, `factory`, `description`)                     |
 | `config`        | no        | Arbitrary per-section config maps; one section per service (env-mapped)                               |
@@ -146,29 +146,53 @@ agent:
   temperature: 0.3
 ```
 
-**`spec.agent.mcps[]` (optional).** MCP (Model Context Protocol) servers the
-agent connects to at runtime to discover and call external tools, on top of
-the locally generated `spec.tools`. Each entry requires `name` (unique,
-`^[a-zA-Z0-9_-]+$`) and `transport` (`stdio` | `sse` | `http`). `stdio`
-launches a local subprocess (`command`, `args`, `env`); `http`/`sse` connect
-to a remote endpoint (`url`, `headers`). Only meaningful for an LLM-backed
-agent - that's why it lives under `spec.agent`:
+**`spec.agent.mcp` (optional).** Configuration for the ADK's built-in MCP
+(Model Context Protocol) client: the `servers` the agent connects to at runtime
+to discover and call external tools (on top of the locally generated
+`spec.tools`), plus the global runtime settings for that client. `enabled` is
+the **required master switch** (maps to `A2A_MCP_ENABLE`) - when `false` (the
+default) no MCP client is generated or wired in, even if `servers` lists
+entries. Only meaningful for an LLM-backed agent, which is why it lives under
+`spec.agent`.
+
+Each `servers[]` entry requires `name` (unique, `^[a-zA-Z0-9_-]+$`) and
+`transport` (`stdio` | `sse` | `http`): `stdio` launches a local subprocess
+(`command`, `args`, `env`); `http`/`sse` connect to a remote endpoint (`url`,
+`headers`). Note the Go ADK client is **HTTP-only with a single shared
+connection/retry set** - the runtime fields below apply globally across all
+servers, not per-server, and the server base URLs it dials (`A2A_MCP_SERVERS`)
+are derived from `servers`:
 
 ```yaml
 agent:
   provider: anthropic
   model: claude-sonnet-5
-  mcps:
-    - name: filesystem
-      transport: stdio
-      command: npx
-      args: ["-y", "@modelcontextprotocol/server-filesystem", "/data"]
-    - name: internal-api
-      transport: http
-      url: https://mcp.example.com/mcp
-      headers:
-        Authorization: Bearer ${MCP_TOKEN}
+  mcp:
+    enabled: true # required master switch -> A2A_MCP_ENABLE
+    endpoint: /mcp # path appended to each server URL -> A2A_MCP_ENDPOINT
+    refreshInterval: 5m # tool re-discovery cadence -> A2A_MCP_REFRESH_INTERVAL
+    dialTimeout: 30s # connect timeout -> A2A_MCP_DIAL_TIMEOUT
+    callTimeout: 30s # per-call timeout -> A2A_MCP_CALL_TIMEOUT
+    maxRetries: 0 # 0 = retry forever -> A2A_MCP_MAX_RETRIES
+    retryInterval: 2s # initial backoff -> A2A_MCP_RETRY_INTERVAL
+    retryMaxInterval: 30s # backoff ceiling -> A2A_MCP_RETRY_MAX_INTERVAL
+    servers:
+      - name: filesystem
+        transport: stdio
+        command: npx
+        args: ["-y", "@modelcontextprotocol/server-filesystem", "/data"]
+      - name: internal-api
+        transport: http
+        url: https://mcp.example.com/mcp
+        headers:
+          Authorization: Bearer ${MCP_TOKEN}
 ```
+
+Every runtime field maps 1:1 to an `A2A_MCP_*` env var, and the manifest value
+becomes the generated default (e.g. in `.env.example`); the env var overrides
+it at runtime. `enabled` is the only required field - omit the rest to take the
+defaults shown. (Restructured in adl v0.23.0 / adl-cli v0.54.0; the older flat
+`spec.agent.mcps[]` list no longer validates.)
 
 **`spec.card` (optional).** Static fields for the A2A agent card served at
 `/.well-known/agent-card.json`. Used by other agents and the Inference
@@ -441,7 +465,7 @@ but applies to the _generator_ - anything matched is preserved across
 
 - every custom tool file (`tools/<name>.<ext>`),
 - every custom service implementation (`internal/<service>/*`),
-- every `bare: true` skill directory (`skills/<id>/`).
+- every generated skill directory (`.agents/skills/<id>/`).
 
 You can extend it to protect anything else you've hand-edited:
 
@@ -498,7 +522,7 @@ maintainable:
 | Shape                                                                             | Behaviour                                                                                           |
 | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
 | `id: <name>` (and optional `version: <semver>`)                                   | Fetched from `https://registry.inference-gateway.com/skills/`. Override with `ADL_SKILLS_REGISTRY`. |
-| `id: <name>` + `source: <shorthand-or-URL>`                                       | The whole GitHub directory (SKILL.md + any bundled assets) is pulled into `skills/<id>/`.           |
+| `id: <name>` + `source: <shorthand-or-URL>`                                       | The whole GitHub directory (SKILL.md + any bundled assets) is pulled into `.agents/skills/<id>/`.   |
 | `id: <name>` + `bare: true` (+ `name`, `description`, `tags`, optional `license`) | Scaffolded locally as a TODO. Author it by hand.                                                    |
 
 `source:` shorthand:
@@ -517,10 +541,15 @@ maintainable:
 ```
 
 At runtime, the generated agent walks first-level subdirectories under
-`skills/`, parses each `<id>/SKILL.md`'s frontmatter, and appends an
-`AVAILABLE SKILLS:` block to the system prompt - the _bodies_ are not
-inlined. The model loads them on demand via the `read` tool, so a
-skills-using agent must opt `read` in (see "Reserved built-in tools").
+`.agents/skills/` (override with `A2A_SKILLS_DIR`), parses each
+`<id>/SKILL.md`'s frontmatter, and appends an `AVAILABLE SKILLS:` block to the
+system prompt - the _bodies_ are not inlined. The model loads them on demand
+via the `read` tool, so a skills-using agent must opt `read` in (see "Reserved
+built-in tools"). The generator also symlinks `.claude/skills ->
+../.agents/skills`, so Claude Code reads the same tree at
+`.claude/skills/<id>/SKILL.md`. (adl-cli v0.52.2 moved generated skills from
+`skills/` to `.agents/skills/`; existing projects must move the directory - or
+set `A2A_SKILLS_DIR=skills` - on the next regenerate.)
 
 `license:` on a skill entry must be one of the SPDX identifiers the schema
 accepts (`MIT`, `Apache-2.0`, `BSD-2-Clause`, `BSD-3-Clause`, `GPL-2.0`,
@@ -602,6 +631,13 @@ the code lives, how it ships, and where it runs.
 | `dependabot`      | Write `.github/dependabot.yml`                                            |
 | `ci`              | Write `.github/workflows/ci.yml`                                          |
 | `cd`              | Write `.github/workflows/cd.yml` and `.releaserc.yaml` (semantic-release) |
+
+When `github_app: true`, the generated CD workflow reads the App credentials
+from repo secrets `RELEASER_APP_ID` / `RELEASER_APP_PRIVATE_KEY` by default;
+override the names with `spec.scm.app_id_secret` / `app_private_key_secret`.
+The `claudecode` and `infer` orchestrators take the same override pair -
+`appIdSecret` / `appPrivateKeySecret`, defaulting to `CLAUDE_APP_*` /
+`INFER_APP_*` (see `spec.development.ai.orchestrators`).
 
 **`spec.deployment`.** Choose `type: kubernetes`, `cloudrun`, `vercel`, or
 `cloudflare`; the matching sub-block carries the detail. `kubernetes` and
