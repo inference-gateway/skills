@@ -30,13 +30,13 @@ else and will regenerate it on demand.
 
 **The contract has two halves you must keep straight:**
 
-| Concept                                                                          | Where it lives | Who owns it                      | Regenerated on `adl generate`?  |
-| -------------------------------------------------------------------------------- | -------------- | -------------------------------- | ------------------------------- |
-| Manifest (`agent.yaml`)                                                          | repo root      | you                              | no - source of truth            |
-| Scaffolding (`main.go`, `config/`, `internal/<service>/`, `Dockerfile`, CI, ...) | various        | the generator                    | yes                             |
-| Custom tool bodies (`tools/<name>.{go,rs,ts}`)                                   | `tools/`       | you, after a TODO scaffold       | no - protected by `.adl-ignore` |
-| Custom service impls (`internal/<service>/*.go`)                                 | `internal/`    | you, after a TODO scaffold       | no - protected by `.adl-ignore` |
-| Skills (`.agents/skills/<id>/SKILL.md`)                                          | `.agents/skills/` | you (bare) or upstream (sourced) | no - whole dir protected     |
+| Concept                                                                          | Where it lives    | Who owns it                      | Regenerated on `adl generate`?  |
+| -------------------------------------------------------------------------------- | ----------------- | -------------------------------- | ------------------------------- |
+| Manifest (`agent.yaml`)                                                          | repo root         | you                              | no - source of truth            |
+| Scaffolding (`main.go`, `config/`, `internal/<service>/`, `Dockerfile`, CI, ...) | various           | the generator                    | yes                             |
+| Custom tool bodies (`tools/<name>.{go,rs,ts}`)                                   | `tools/`          | you, after a TODO scaffold       | no - protected by `.adl-ignore` |
+| Custom service impls (`internal/<service>/*.go`)                                 | `internal/`       | you, after a TODO scaffold       | no - protected by `.adl-ignore` |
+| Skills (`.agents/skills/<id>/SKILL.md`)                                          | `.agents/skills/` | you (bare) or upstream (sourced) | no - whole dir protected        |
 
 If you forget which half a file belongs to, `cat .adl-ignore` - anything
 matched there survives `adl generate --overwrite`.
