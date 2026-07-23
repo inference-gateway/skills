@@ -11,6 +11,12 @@
   <a href="https://github.com/inference-gateway/skills/blob/main/LICENSE">
     <img src="https://img.shields.io/github/license/inference-gateway/skills?color=blue&style=flat-square" alt="License"/>
   </a>
+  <!-- Security Scan Badge -->
+  <a href="https://github.com/inference-gateway/skills/actions/workflows/security-scan.yml?query=branch%3Amain">
+    <img
+      src="https://github.com/inference-gateway/skills/actions/workflows/security-scan.yml/badge.svg?branch=main"
+      alt="Security Scan"/>
+  </a>
 </p>
 
 Curated catalog of [Agent Skills](https://github.com/anthropics/skills/tree/main/spec)
