@@ -43,62 +43,14 @@ Env knobs: `SKILLSPECTOR_CMD` (default `skillspector`), `SKILLSPECTOR_SARIF_DIR`
 
 ## CI workflow
 
-> The maintainer bot cannot commit under `.github/workflows/` (GitHub App workflow
-> permission). A maintainer must add the file below as
-> `.github/workflows/security-scan.yml`.
+The scan runs in
+[`.github/workflows/security-scan.yml`](../.github/workflows/security-scan.yml) on pull
+requests that touch `skills/**`, `skills.yaml`, or the scan script, and on
+`workflow_dispatch`. It uploads the per-skill SARIF to the code-scanning tab.
 
 There is no published SkillSpector image or release tag yet, so CI installs it from source
 with `uv` (lighter than building the Docker image every run) and pins a commit SHA for
-reproducibility. Bump the SHA to re-verify against a newer SkillSpector.
-
-```yaml
----
-name: Security scan
-
-on:
-  pull_request:
-    branches:
-      - main
-    paths:
-      - "skills/**"
-      - "skills.yaml"
-      - "scripts/scan-skills.mjs"
-  workflow_dispatch:
-
-permissions:
-  contents: read
-  security-events: write # upload SARIF to code scanning
-
-jobs:
-  skillspector:
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v7.0.0
-        with:
-          persist-credentials: false
-
-      - uses: actions/setup-node@v7.0.0
-        with:
-          node-version: "24.15.0"
-
-      - run: npm ci
-
-      - uses: astral-sh/setup-uv@v5
-
-      # Pin a commit SHA - SkillSpector has no releases yet. Bump to re-verify.
-      - name: Install SkillSpector
-        run: uv tool install "git+https://github.com/NVIDIA/skillspector.git@a54947c307fe19a24a43db55f6148e181a987a67"
-
-      # Warn-only to baseline. Set SKILLSPECTOR_ENFORCE=1 here to gate.
-      - name: Scan catalog skills
-        run: npm run scan
-
-      - name: Upload SARIF to code scanning
-        if: always()
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          sarif_file: sarif
-```
+reproducibility. Bump the SHA in the workflow to re-verify against a newer SkillSpector.
 
 ## Known v1 limits
 
