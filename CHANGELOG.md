@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.5.0](https://github.com/inference-gateway/skills/compare/v0.4.0...v0.5.0) (2026-07-23)
+
+### ✨ Features
+
+* security-scan catalog skills with NVIDIA SkillSpector ([#72](https://github.com/inference-gateway/skills/issues/72)) ([60fb893](https://github.com/inference-gateway/skills/commit/60fb8933cbf7833337de8a685a248f154c2292c1))
+
+### 📚 Documentation
+
+* **adl:** sync skill with adl-cli examples seeding, CONFIGURATIONS.md, and A2A_OTEL_* env vars ([#70](https://github.com/inference-gateway/skills/issues/70)) ([36a6d79](https://github.com/inference-gateway/skills/commit/36a6d7983fcaa7e48346b2978d3c79d5a43f4029))
+
+### 🔧 Miscellaneous
+
+* **deps:** bump actions/checkout in the github-actions group ([#71](https://github.com/inference-gateway/skills/issues/71)) ([5dc46ac](https://github.com/inference-gateway/skills/commit/5dc46aca8cc78c4e436c5e88127c93a1db43f9a3))
+* **deps:** bump actions/setup-node in the github-actions group ([#68](https://github.com/inference-gateway/skills/issues/68)) ([878f20e](https://github.com/inference-gateway/skills/commit/878f20ea424850ff8864a284472117ded445a1c3))
+* **deps:** bump infer CLI v0.141.0 -> v0.147.1 ([#69](https://github.com/inference-gateway/skills/issues/69)) ([39b99fb](https://github.com/inference-gateway/skills/commit/39b99fb17cc5a3f4fbc1db6108be583ea39c3d0e))
+* **release:** update GitHub App credentials to use RELEASER_APP_ID and RELEASER_APP_PRIVATE_KEY ([32c557f](https://github.com/inference-gateway/skills/commit/32c557f2c7cacc45b370837071eef028ece23d35))
+
 ## [0.4.0](https://github.com/inference-gateway/skills/compare/v0.3.3...v0.4.0) (2026-07-15)
 
 ### ✨ Features
