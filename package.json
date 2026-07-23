@@ -8,6 +8,8 @@
   },
   "scripts": {
     "build": "node scripts/build-catalog.mjs",
+    "scan": "node scripts/scan-skills.mjs",
+    "test": "node --test scripts/*.test.mjs",
     "format": "prettier '**/*.md' --write",
     "format:check": "prettier '**/*.md' --check"
   },
