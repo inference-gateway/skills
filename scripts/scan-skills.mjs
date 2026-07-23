@@ -16,6 +16,7 @@
 // Run with: npm run scan
 import { spawnSync } from 'node:child_process';
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
+import { readFile, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { basename, dirname, join, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -85,6 +86,14 @@ function appendSummary(md) {
   if (f) writeFileSync(f, md, { flag: 'a' });
 }
 
+// Give each SARIF run a unique automationDetails.id so the upload-sarif action
+// can combine per-skill files without a category collision.
+async function tagSarif(sarifPath, id) {
+  const raw = JSON.parse(await readFile(sarifPath, 'utf8'));
+  if (raw?.runs?.[0]) raw.runs[0].automationDetails = { id };
+  await writeFile(sarifPath, JSON.stringify(raw, null, 2));
+}
+
 async function main() {
   mkdirSync(OUT_DIR, { recursive: true });
   const targets = scanTargets(loadSources());
@@ -97,6 +106,7 @@ async function main() {
     let status;
     try {
       status = scan(t, await resolveTarget(t), sarifPath);
+      if (status !== 2) await tagSarif(sarifPath, t.name);
     } catch (err) {
       console.error(`  ✗ ${t.name}: ${err.message}`);
       status = 2;
