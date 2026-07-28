@@ -62,6 +62,36 @@ const ALLOWED_LICENSES = new Set([
   'Proprietary',
 ]);
 
+// Programming language -> devicon slug. A skill gets `language` + `logo` in the
+// catalog (for the registry UI's corner badge) when `language:` is set in
+// skills.yaml or one of its tags matches a key here. No match -> no logo.
+const LANGUAGE_ICONS = {
+  go: 'go/go-original',
+  rust: 'rust/rust-original',
+  python: 'python/python-original',
+  typescript: 'typescript/typescript-original',
+  javascript: 'javascript/javascript-original',
+  java: 'java/java-original',
+  ruby: 'ruby/ruby-original',
+  csharp: 'csharp/csharp-original',
+  cpp: 'cplusplus/cplusplus-original',
+  c: 'c/c-original',
+  php: 'php/php-original',
+  kotlin: 'kotlin/kotlin-original',
+  swift: 'swift/swift-original',
+  bash: 'bash/bash-original',
+};
+
+function resolveLanguage(label, entry) {
+  if (entry.language !== undefined) {
+    if (typeof entry.language !== 'string' || !LANGUAGE_ICONS[entry.language]) {
+      throw new Error(`${label}: 'language' must be one of: ${Object.keys(LANGUAGE_ICONS).join(', ')}`);
+    }
+    return entry.language;
+  }
+  return entry.tags.find((t) => LANGUAGE_ICONS[t]);
+}
+
 const RETRY_LIMIT = 3;
 const RETRY_BACKOFF_MS = 750;
 
@@ -185,6 +215,7 @@ function loadSources() {
       tags: entry.tags,
       categories: entry.categories,
       homepage: entry.homepage,
+      language: resolveLanguage(label, entry),
     };
   });
 }
@@ -238,6 +269,10 @@ async function buildSkillEntry(source, fetchedAt) {
     categories: source.categories,
   };
   if (source.homepage) entry.homepage = source.homepage;
+  if (source.language) {
+    entry.language = source.language;
+    entry.logo = `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${LANGUAGE_ICONS[source.language]}.svg`;
+  }
   if (!source.isSelf) {
     entry._source = { url: source.url, ref: source.ref, fetchedAt };
   }

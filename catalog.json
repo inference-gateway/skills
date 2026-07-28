@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-07-28T19:51:27Z",
+  "updated": "2026-07-28T19:57:19.478Z",
   "skills": [
     {
       "name": "adl",
@@ -37,7 +37,9 @@
       "categories": [
         "developer-tools"
       ],
-      "homepage": "https://github.com/cpp-best-practices/cppbestpractices"
+      "homepage": "https://github.com/cpp-best-practices/cppbestpractices",
+      "language": "cpp",
+      "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg"
     },
     {
       "name": "cpp-concurrency",
@@ -56,7 +58,9 @@
       "categories": [
         "developer-tools"
       ],
-      "homepage": "https://github.com/cpp-best-practices/cppbestpractices"
+      "homepage": "https://github.com/cpp-best-practices/cppbestpractices",
+      "language": "cpp",
+      "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg"
     },
     {
       "name": "cpp-review",
@@ -75,7 +79,9 @@
       "categories": [
         "developer-tools"
       ],
-      "homepage": "https://github.com/cpp-best-practices/cppbestpractices"
+      "homepage": "https://github.com/cpp-best-practices/cppbestpractices",
+      "language": "cpp",
+      "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg"
     },
     {
       "name": "opentask",
@@ -134,7 +140,7 @@
       "_source": {
         "url": "https://github.com/Xquik-dev/x-twitter-scraper",
         "ref": "v2.4.16",
-        "fetchedAt": "2026-07-28T19:38:13.500Z"
+        "fetchedAt": "2026-07-28T19:57:19.478Z"
       }
     }
   ],
