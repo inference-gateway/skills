@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-07-28T11:15:47.471Z",
+  "updated": "2026-07-28T19:38:13.500Z",
   "skills": [
     {
       "name": "adl",
@@ -19,6 +19,63 @@
         "developer-tools"
       ],
       "homepage": "https://github.com/inference-gateway/skills"
+    },
+    {
+      "name": "cpp-best-practices",
+      "description": "Write modern C++ the way the C++ Best Practices community (Jason Turner / `lefticus`) teaches it - const-correct, RAII-only ownership, algorithms over raw loops, strong types over stringly-typed interfaces, and a build that turns the compiler and sanitizers into the first line of defence. Use when writing, refactoring, or scaffolding C++ code, picking between `unique_ptr`/`shared_ptr`/value semantics, choosing warning and sanitizer flags, or deciding which language feature to reach for.",
+      "source": "https://github.com/inference-gateway/skills/tree/main/skills/cpp-best-practices",
+      "vendor": "inference-gateway",
+      "license": "Apache-2.0",
+      "tags": [
+        "cpp",
+        "c-plus-plus",
+        "best-practices",
+        "modern-cpp",
+        "static-analysis",
+        "sanitizers"
+      ],
+      "categories": [
+        "developer-tools"
+      ],
+      "homepage": "https://github.com/cpp-best-practices/cppbestpractices"
+    },
+    {
+      "name": "cpp-concurrency",
+      "description": "Write and review concurrent C++ the way the C++ Best Practices community (Jason Turner / `lefticus`) frames it - design shared state away first, then use `std::jthread`, scoped locks, the mutex-and-mutable rule, and ThreadSanitizer to make what is left provably safe. Use when adding threads, thread pools, async work, or atomics, when diagnosing a data race, deadlock, or heisenbug, when choosing between `jthread`/`async`/executors, or when reviewing code that shares mutable state.",
+      "source": "https://github.com/inference-gateway/skills/tree/main/skills/cpp-concurrency",
+      "vendor": "inference-gateway",
+      "license": "Apache-2.0",
+      "tags": [
+        "cpp",
+        "c-plus-plus",
+        "concurrency",
+        "threads",
+        "atomics",
+        "thread-sanitizer"
+      ],
+      "categories": [
+        "developer-tools"
+      ],
+      "homepage": "https://github.com/cpp-best-practices/cppbestpractices"
+    },
+    {
+      "name": "cpp-review",
+      "description": "Review C++ code - a diff, a pull request, or a file - against the C++ Best Practices checklist popularized by Jason Turner (`lefticus`): undefined behaviour and lifetime bugs first, then ownership, const-correctness, interface design, and only then style. Use when asked to review, critique, or audit C++ code, when triaging a C++ pull request, or when a C++ build is warning-clean but you still do not trust it. Prescribes running the tools (warnings, clang-tidy, sanitizers) before reading, so the review spends its attention on what tools cannot see.",
+      "source": "https://github.com/inference-gateway/skills/tree/main/skills/cpp-review",
+      "vendor": "inference-gateway",
+      "license": "Apache-2.0",
+      "tags": [
+        "cpp",
+        "c-plus-plus",
+        "code-review",
+        "static-analysis",
+        "sanitizers",
+        "undefined-behavior"
+      ],
+      "categories": [
+        "developer-tools"
+      ],
+      "homepage": "https://github.com/cpp-best-practices/cppbestpractices"
     },
     {
       "name": "opentask",
@@ -77,7 +134,7 @@
       "_source": {
         "url": "https://github.com/Xquik-dev/x-twitter-scraper",
         "ref": "v2.4.16",
-        "fetchedAt": "2026-07-28T11:15:47.471Z"
+        "fetchedAt": "2026-07-28T19:38:13.500Z"
       }
     }
   ],

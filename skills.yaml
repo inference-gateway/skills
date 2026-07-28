@@ -85,6 +85,51 @@ skills:
       - developer-tools
     homepage: https://github.com/inference-gateway/opentask
 
+  - url: https://github.com/inference-gateway/skills
+    path: skills/cpp-best-practices/SKILL.md
+    vendor: inference-gateway
+    license: Apache-2.0
+    tags:
+      - cpp
+      - c-plus-plus
+      - best-practices
+      - modern-cpp
+      - static-analysis
+      - sanitizers
+    categories:
+      - developer-tools
+    homepage: https://github.com/cpp-best-practices/cppbestpractices
+
+  - url: https://github.com/inference-gateway/skills
+    path: skills/cpp-review/SKILL.md
+    vendor: inference-gateway
+    license: Apache-2.0
+    tags:
+      - cpp
+      - c-plus-plus
+      - code-review
+      - static-analysis
+      - sanitizers
+      - undefined-behavior
+    categories:
+      - developer-tools
+    homepage: https://github.com/cpp-best-practices/cppbestpractices
+
+  - url: https://github.com/inference-gateway/skills
+    path: skills/cpp-concurrency/SKILL.md
+    vendor: inference-gateway
+    license: Apache-2.0
+    tags:
+      - cpp
+      - c-plus-plus
+      - concurrency
+      - threads
+      - atomics
+      - thread-sanitizer
+    categories:
+      - developer-tools
+    homepage: https://github.com/cpp-best-practices/cppbestpractices
+
   - url: https://github.com/Xquik-dev/x-twitter-scraper
     ref: v2.4.16
     path: skills/x-twitter-scraper/SKILL.md
