@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-07-23T09:32:43Z",
+  "updated": "2026-07-28T11:15:47.471Z",
   "skills": [
     {
       "name": "adl",
@@ -19,6 +19,25 @@
         "developer-tools"
       ],
       "homepage": "https://github.com/inference-gateway/skills"
+    },
+    {
+      "name": "opentask",
+      "description": "Drive OpenTask - the inference-gateway Manifest V3 browser extension (`inference-gateway/opentask`) that surfaces a repo's skills and `@opentask` agent directives inside GitHub's comment box, issue/PR pages, and an injected repo-nav bar (Tasks / Skills / Agents / Init tabs). Use when operating a browser on github.com to send the OpenTask agent a custom prompt (not just a saved template), install the agent workflow, refine an issue in place after research, or manage skills/agents - and, crucially, to decide when a plain `gh` CLI call is faster than driving the UI at all.",
+      "source": "https://github.com/inference-gateway/skills/tree/main/skills/opentask",
+      "vendor": "inference-gateway",
+      "license": "Apache-2.0",
+      "tags": [
+        "inference-gateway",
+        "opentask",
+        "github",
+        "browser-extension",
+        "agent",
+        "gh-cli"
+      ],
+      "categories": [
+        "developer-tools"
+      ],
+      "homepage": "https://github.com/inference-gateway/opentask"
     },
     {
       "name": "skill-creator",
@@ -58,7 +77,7 @@
       "_source": {
         "url": "https://github.com/Xquik-dev/x-twitter-scraper",
         "ref": "v2.4.16",
-        "fetchedAt": "2026-06-28T21:51:42.464Z"
+        "fetchedAt": "2026-07-28T11:15:47.471Z"
       }
     }
   ],
