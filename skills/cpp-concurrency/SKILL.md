@@ -32,7 +32,7 @@ Most concurrency bugs are the consequence of an ownership decision made long bef
 ## The rules for what sharing remains
 
 - **Mutex and `mutable` go together (the M&M rule).** A `mutable` member is by presumption shared, so it must be
-  guarded by a mutex or be atomic. A member that *is* a mutex must be `mutable`, so `const` member functions can lock
+  guarded by a mutex or be atomic. A member that _is_ a mutex must be `mutable`, so `const` member functions can lock
   it. A `const` member function is a promise of thread-safety to callers, not merely of non-mutation.
 - **Never lock by hand.** `std::scoped_lock` (or `lock_guard`/`unique_lock`) always - it is exception-safe, and
   `scoped_lock` takes multiple mutexes deadlock-free via a lock ordering. A bare `.lock()`/`.unlock()` pair is a leak
@@ -52,7 +52,7 @@ Most concurrency bugs are the consequence of an ownership decision made long bef
 - **`std::async` is a trap in disguise:** the returned future's destructor blocks for `std::launch::async`, and the
   policy is implementation-chosen if you do not pass one. If you want a thread, say `jthread`; if you want a pool, use
   a pool.
-- **Static local initialization is thread-safe (C++11 magic statics); ordinary static *destruction* order is not**,
+- **Static local initialization is thread-safe (C++11 magic statics); ordinary static _destruction_ order is not**,
   particularly across shared libraries. Do not rely on it.
 - **`const` on a standard-library object means safe for concurrent reads only.** Two threads reading the same
   `std::vector` is fine; one writing while another reads is a race even if the reader holds a `const&`.
