@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.8.0](https://github.com/inference-gateway/skills/compare/v0.7.0...v0.8.0) (2026-07-28)
+
+### ✨ Features
+
+* add go skills from inference-gateway to catalog ([#90](https://github.com/inference-gateway/skills/issues/90)) ([63df3b2](https://github.com/inference-gateway/skills/commit/63df3b2da9115e71e32b338d773b2a853b160fd2))
+
+### 👷 CI
+
+* purge jsDelivr [@latest](https://github.com/latest) alias instead of [@main](https://github.com/main) ([#89](https://github.com/inference-gateway/skills/issues/89)) ([b383352](https://github.com/inference-gateway/skills/commit/b38335226431d255610837b299f4d97ea659d660)), references [pre-#86](https://github.com/pre-/issues/86)
+* purge jsDelivr cache when catalog.json changes ([#88](https://github.com/inference-gateway/skills/issues/88)) ([811a433](https://github.com/inference-gateway/skills/commit/811a43398be54563141c939f7b2939ed16aecbe1)), references [#86](https://github.com/inference-gateway/skills/issues/86)
+
+### 📦 Miscellaneous
+
+* migrate toolchain from Node.js to Bun ([#87](https://github.com/inference-gateway/skills/issues/87)) ([da7ee67](https://github.com/inference-gateway/skills/commit/da7ee67c1c55f0a5c2b2fae1b43f303ff3fe6247))
+
 ## [0.7.0](https://github.com/inference-gateway/skills/compare/v0.6.0...v0.7.0) (2026-07-28)
 
 ### ✨ Features
