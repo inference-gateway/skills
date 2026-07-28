@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.7.0](https://github.com/inference-gateway/skills/compare/v0.6.0...v0.7.0) (2026-07-28)
+
+### ✨ Features
+
+* add language logo to catalog entries ([#86](https://github.com/inference-gateway/skills/issues/86)) ([3175b1b](https://github.com/inference-gateway/skills/commit/3175b1b3150fecfb5d6bfe9a03e768fb584a8978))
+
 ## [0.6.0](https://github.com/inference-gateway/skills/compare/v0.5.0...v0.6.0) (2026-07-28)
 
 ### ✨ Features
