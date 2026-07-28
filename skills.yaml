@@ -33,6 +33,13 @@
 #   tags       (required) Discoverability tags, string array.
 #   categories (required) Catalog categories, string array.
 #   homepage   (optional) URL to the upstream project page.
+#   language   (optional) Programming language the skill targets, e.g. `go`.
+#                         Adds `language` + `logo` (devicon SVG URL) to the
+#                         catalog entry so the registry UI can show a language
+#                         badge. Inferred from `tags` when a tag matches a
+#                         known language; omit both for language-agnostic
+#                         skills and no logo is emitted. Allowed values: see
+#                         LANGUAGE_ICONS in scripts/build-catalog.mjs.
 #
 # Validation rules (enforced by scripts/build-catalog.mjs):
 #
