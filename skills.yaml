@@ -153,3 +153,52 @@ skills:
       - social-media
       - developer-tools
     homepage: https://docs.xquik.com
+
+  - url: https://github.com/inference-gateway/inference-gateway
+    ref: v0.42.1
+    path: .agents/skills/go/SKILL.md
+    vendor: inference-gateway
+    license: Apache-2.0
+    language: go
+    tags:
+      - go
+      - golang
+      - best-practices
+      - idiomatic
+      - testing
+    categories:
+      - developer-tools
+    homepage: https://github.com/inference-gateway/inference-gateway
+
+  - url: https://github.com/inference-gateway/inference-gateway
+    ref: v0.42.1
+    path: .agents/skills/go-concurrency/SKILL.md
+    vendor: inference-gateway
+    license: Apache-2.0
+    language: go
+    tags:
+      - go
+      - golang
+      - concurrency
+      - goroutines
+      - channels
+      - context
+    categories:
+      - developer-tools
+    homepage: https://github.com/inference-gateway/inference-gateway
+
+  - url: https://github.com/inference-gateway/inference-gateway
+    ref: v0.42.1
+    path: .agents/skills/go-spec-reviewer/SKILL.md
+    vendor: inference-gateway
+    license: Apache-2.0
+    language: go
+    tags:
+      - go
+      - golang
+      - code-review
+      - spec
+      - design
+    categories:
+      - developer-tools
+    homepage: https://github.com/inference-gateway/inference-gateway
