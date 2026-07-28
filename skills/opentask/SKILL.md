@@ -59,7 +59,7 @@ RunPod GPU popup.
      inserts the selection at the caret.
    - **Repo-nav tabs** (injected into the repo's navigation bar):
      - **Tasks** - install the agent workflow (opens a PR), then send a free-text
-       task. Leave *Create a GitHub issue* checked to open an `@opentask` issue, or
+       task. Leave _Create a GitHub issue_ checked to open an `@opentask` issue, or
        uncheck it to run directly via `workflow_dispatch` with no public issue.
      - **Skills** - multi-select the
        [skills registry](https://github.com/inference-gateway/skills) (repo languages
@@ -80,7 +80,7 @@ but they are only starting text. To send **anything else**:
 - To make a custom prompt permanent, edit **Options -> Quick prompts** (a JSON array
   of `{ id, label, description, insert }`); it then appears in the palette.
 - Headless equivalent: put the exact same text in a `gh issue create`/`gh issue
-  comment` body. `@opentask` anywhere in the text is the only requirement.
+comment` body. `@opentask` anywhere in the text is the only requirement.
 
 ## Placeholder issue + Refine (pre-fill after research)
 
@@ -90,7 +90,7 @@ agent research and fill it in.
 1. Create a stub issue - just a title and a short intent line (via the **Tasks** tab
    or `gh issue create --title "..." --body "@opentask"`).
 2. Click the **Refine** button on the issue page (enable it in
-   **Options -> Issue refinement**; *Auto-refine issues you create* fires it
+   **Options -> Issue refinement**; _Auto-refine issues you create_ fires it
    automatically on new issues).
 3. The agent reads the issue, **explores the repo** so the rewrite is grounded in how
    the project actually works, checks `.github/ISSUE_TEMPLATE/` for a matching
