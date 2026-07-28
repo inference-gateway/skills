@@ -23,11 +23,11 @@ jobs:
         with:
           persist-credentials: false
 
-      - uses: actions/setup-node@v7.0.0
+      - uses: oven-sh/setup-bun@v2
         with:
-          node-version: "24.15.0"
+          bun-version: "1.3.13"
 
-      - run: npm ci
+      - run: bun install --frozen-lockfile
 
       - uses: astral-sh/setup-uv@v5
 
@@ -37,7 +37,7 @@ jobs:
 
       # Warn-only to baseline. Set SKILLSPECTOR_ENFORCE=1 here to gate.
       - name: Scan catalog skills
-        run: npm run scan
+        run: bun run scan
 
       - name: Upload SARIF to code scanning
         if: always()

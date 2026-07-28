@@ -32,8 +32,9 @@ a catalog version, not per-entry refs. Don't add per-entry refs to `catalog.json
 ```sh
 task lint        # markdownlint over all *.md (ignores node_modules)
 task lint:fix    # same, with --fix
-npm install      # one-time, before running the catalog build
-npm run build    # regenerate catalog.json from skills/ + skills.yaml
+bun install      # one-time, before running the catalog build
+task build       # regenerate catalog.json from skills/ + skills.yaml
+task serve       # serve catalog.json at http://localhost:8787/skills/
 ```
 
 CI (`.github/workflows/ci.yml`) runs the same lint with `markdownlint-cli@0.48.0`.
@@ -41,7 +42,7 @@ Lint config is `.markdownlint.json` - `MD013` allows 180-char lines; `MD029`,
 `MD033`, `MD041` are disabled. Match these limits in new markdown.
 
 The `Build catalog` workflow (`.github/workflows/build-catalog.yml`) runs
-`npm run build` on every push that touches `skills.yaml`, `skills/**`,
+`bun run build` on every push that touches `skills.yaml`, `skills/**`,
 `scripts/build-catalog.mjs`, or `package.json`, plus a daily cron at `0 4 * * *`
 UTC and on `workflow_dispatch`. It opens an automated pull request (branch
 `chore/rebuild-catalog`) titled `chore(catalog): Rebuild catalog.json`.
@@ -63,7 +64,7 @@ Every PR that adds/edits a skill must include:
   enum); the build script falls back to the skills.yaml entry if absent.
 
 You do **not** edit `catalog.json` by hand - the build script regenerates it.
-Run `npm run build` locally to preview the resulting entry.
+Run `bun run build` locally to preview the resulting entry.
 
 The `skill-creator` skill (`skills/skill-creator/SKILL.md`) documents the
 SKILL.md authoring contract in full - read it before adding new skills.

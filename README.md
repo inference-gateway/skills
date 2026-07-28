@@ -53,7 +53,7 @@ skills/<name>/SKILL.md`. Also add `skills/<name>/SKILL.md` with valid
   `NOTICE` file at the repo root recording the attribution.
 
 You do not edit `catalog.json` by hand - the build script regenerates it.
-Run `npm install && npm run build` locally to preview the resulting entry.
+Run `bun install && bun run build` locally to preview the resulting entry.
 
 The catalog is versioned as a whole via the repo's git tag (see [Releases](https://github.com/inference-gateway/skills/releases)),
 so per-entry refs aren't needed - consumers pin to a catalog version.
@@ -71,7 +71,7 @@ The catalog is consumed by:
 
 Every catalog skill is security-scanned with
 [NVIDIA SkillSpector](https://github.com/NVIDIA/SkillSpector) - local skills and
-external ones at their pinned `ref`. Run `npm run scan` locally (warn-only) or see
+external ones at their pinned `ref`. Run `bun run scan` locally (warn-only) or see
 [docs/security-scanning.md](docs/security-scanning.md) for the threshold policy and the
 CI workflow.
 

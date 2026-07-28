@@ -20,14 +20,24 @@ tasks:
   format:
     desc: Format all markdown files
     cmds:
-      - npm run format
+      - bun run format
 
   format:check:
     desc: Check formatting of all markdown files
     cmds:
-      - npm run format:check
+      - bun run format:check
 
   scan:
     desc: Security-scan catalog skills with SkillSpector (warn-only; see docs/security-scanning.md)
     cmds:
-      - npm run scan
+      - bun run scan
+
+  build:
+    desc: Regenerate catalog.json from skills/ + skills.yaml
+    cmds:
+      - bun run build
+
+  serve:
+    desc: Serve catalog.json locally at http://localhost:8787/skills/
+    cmds:
+      - bun run serve
