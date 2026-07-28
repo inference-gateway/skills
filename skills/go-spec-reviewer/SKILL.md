@@ -97,6 +97,6 @@ Recommendations (advisory, non-blocking):
 
 ---
 
-*Adapted from [spf13/go-skills](https://github.com/spf13/go-skills) (MIT, by Steve
+_Adapted from [spf13/go-skills](https://github.com/spf13/go-skills) (MIT, by Steve
 Francia) for this repo's local subagent tooling and conventions. Pairs with **go**
-and **cobra-viper**.*
+and **cobra-viper**._
