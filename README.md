@@ -34,6 +34,30 @@ This repository serves two purposes:
    Inference Gateway maintainers have authored, vendored, or adapted. Each folder
    retains its own LICENSE.
 
+## Installing a skill
+
+Besides `infer skills install <name>`, every skill in the catalog can be
+installed with the [`skills` CLI](https://github.com/vercel-labs/skills) - the
+open standard for the agent skills ecosystem (Claude Code, Codex, Cursor,
+OpenCode and more):
+
+```sh
+# every skill authored in this repo
+npx skills add inference-gateway/skills
+
+# a single skill, by its catalog name
+npx skills add inference-gateway/skills --skill adl
+
+# or by the catalog entry's `source` URL (works for external skills too)
+npx skills add https://github.com/inference-gateway/skills/tree/main/skills/adl
+
+# list what's available without installing
+npx skills add inference-gateway/skills --list
+```
+
+Add `-g` to install globally instead of into the current project, and
+`-a claude-code` to target a specific agent.
+
 ## Adding a skill
 
 Open a pull request that:
