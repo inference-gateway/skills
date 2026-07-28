@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env bun
 // Security-scans every skill in `skills.yaml` with NVIDIA SkillSpector and
 // writes one SARIF report per skill (into ./sarif) for CI to upload to the
 // GitHub code-scanning tab. See docs/security-scanning.md for the policy.
@@ -13,7 +13,7 @@
 //   SKILLSPECTOR_SARIF_DIR  output dir for SARIF (default: sarif)
 //   SKILLSPECTOR_ENFORCE  1/true => non-zero exit on findings (default: warn)
 //
-// Run with: npm run scan
+// Run with: bun run scan
 import { spawnSync } from 'node:child_process';
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
 import { readFile, writeFile } from 'node:fs/promises';

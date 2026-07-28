@@ -1,8 +1,8 @@
 schema-version = "1.13.0"
 
 [install]
-nodejs_24.pkg-path = "nodejs_24"
-nodejs_24.version = "24.15.0"
+bun.pkg-path = "bun"
+bun.version = "1.3.13"
 go-task.pkg-path = "go-task"
 go-task.version = "3.48.0"
 markdownlint-cli.pkg-path = "markdownlint-cli"
@@ -12,5 +12,10 @@ claude-code.pkg-path = "claude-code"
 claude-code.version = "^2.1.201"
 claude-code.pkg-group = "claude-code"
 codex.pkg-path = "codex"
-codex.version = "^0.139.0"
+codex.version = "^0.142.3"
 codex.pkg-group = "codex"
+
+[hook]
+on-activate = '''
+bun install --frozen-lockfile
+'''

@@ -22,7 +22,7 @@ Gating uses SkillSpector's own verdict: a scan is **at/above threshold** when a 
 risk score exceeds **50** (SkillSpector's `RISK_THRESHOLD`; exit code `1`). A scan error
 is exit code `2`.
 
-- **Warn-only (default).** `npm run scan` reports findings in the job summary and SARIF
+- **Warn-only (default).** `bun run scan` reports findings in the job summary and SARIF
   but never fails the build. Use this to baseline the catalog first.
 - **Enforce.** Set `SKILLSPECTOR_ENFORCE=1` to fail the run when any skill is at/above
   threshold or errors. Flip this on once the catalog is clean (or false positives are
@@ -34,8 +34,8 @@ is exit code `2`.
 # Install SkillSpector (uv fetches a compatible Python itself; no venv needed)
 uv tool install git+https://github.com/NVIDIA/skillspector.git
 
-npm run scan                 # warn-only
-SKILLSPECTOR_ENFORCE=1 npm run scan   # gate on findings
+bun run scan                 # warn-only
+SKILLSPECTOR_ENFORCE=1 bun run scan   # gate on findings
 ```
 
 Env knobs: `SKILLSPECTOR_CMD` (default `skillspector`), `SKILLSPECTOR_SARIF_DIR`

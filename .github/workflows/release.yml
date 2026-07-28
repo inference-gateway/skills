@@ -47,10 +47,10 @@ jobs:
           persist-credentials: false
           token: ${{ steps.app-token.outputs.token }}
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v7.0.0
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2.2.0
         with:
-          node-version: "24.14.1"
+          bun-version: "1.3.13"
 
       - name: Install semantic release and plugins
         run: |
@@ -73,7 +73,7 @@ jobs:
             }
           }
           EOF
-          npm install --prefix "$RUNNER_TEMP/semantic-release"
+          bun install --cwd "$RUNNER_TEMP/semantic-release"
           echo "$RUNNER_TEMP/semantic-release/node_modules/.bin" >> "$GITHUB_PATH"
 
       - name: Create a release if needed

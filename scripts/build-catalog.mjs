@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env bun
 // Aggregates every Agent Skill listed in `skills.yaml` into `catalog.json`.
 //
 // Design contract (see issue #4):
@@ -24,7 +24,7 @@
 //   * Fail-closed: any fetch, parse, frontmatter, license, or dedupe error
 //     aborts the catalog write - we never publish a partial catalog.
 //
-// Run with: npm run build
+// Run with: bun run build
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
