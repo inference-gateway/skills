@@ -3,10 +3,8 @@ name: Purge CDN
 
 on:
   push:
-    branches:
-      - main
-    paths:
-      - 'catalog.json'
+    tags:
+      - 'v*'
   workflow_dispatch:
 
 permissions: {}
@@ -15,4 +13,26 @@ jobs:
   purge:
     runs-on: ubuntu-24.04
     steps:
-      - run: curl -fsS "https://purge.jsdelivr.net/gh/inference-gateway/skills@main/catalog.json"
+      - name: Purge until @latest resolves to this tag
+        env:
+          WANT: ${{ github.ref_type == 'tag' && github.ref_name || '' }}
+        run: |
+          set -euo pipefail
+          want="${WANT#v}"
+          url="https://cdn.jsdelivr.net/gh/${GITHUB_REPOSITORY}@latest/catalog.json"
+          for attempt in 1 2 3 4 5; do
+            curl -fsS "https://purge.jsdelivr.net/gh/${GITHUB_REPOSITORY}@latest/catalog.json" >/dev/null
+            sleep 10
+            got="$(curl -fsSI "$url" | tr -d '\r' | awk 'tolower($1)=="x-jsd-version:"{print $2}')"
+            if [ -z "$want" ]; then
+              echo "manual run: @latest resolves to ${got}"
+              exit 0
+            fi
+            if [ "$got" = "$want" ]; then
+              echo "@latest resolves to ${got} after ${attempt} purge(s)"
+              exit 0
+            fi
+            echo "attempt ${attempt}: @latest=${got}, want=${want}, retrying"
+          done
+          echo "::error::@latest still resolves to ${got}, expected ${want}"
+          exit 1
