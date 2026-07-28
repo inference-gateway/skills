@@ -154,9 +154,8 @@ skills:
       - developer-tools
     homepage: https://docs.xquik.com
 
-  - url: https://github.com/inference-gateway/inference-gateway
-    ref: v0.42.1
-    path: .agents/skills/go/SKILL.md
+  - url: https://github.com/inference-gateway/skills
+    path: skills/go/SKILL.md
     vendor: inference-gateway
     license: Apache-2.0
     language: go
@@ -170,9 +169,8 @@ skills:
       - developer-tools
     homepage: https://github.com/inference-gateway/inference-gateway
 
-  - url: https://github.com/inference-gateway/inference-gateway
-    ref: v0.42.1
-    path: .agents/skills/go-concurrency/SKILL.md
+  - url: https://github.com/inference-gateway/skills
+    path: skills/go-concurrency/SKILL.md
     vendor: inference-gateway
     license: Apache-2.0
     language: go
@@ -187,9 +185,8 @@ skills:
       - developer-tools
     homepage: https://github.com/inference-gateway/inference-gateway
 
-  - url: https://github.com/inference-gateway/inference-gateway
-    ref: v0.42.1
-    path: .agents/skills/go-spec-reviewer/SKILL.md
+  - url: https://github.com/inference-gateway/skills
+    path: skills/go-spec-reviewer/SKILL.md
     vendor: inference-gateway
     license: Apache-2.0
     language: go
