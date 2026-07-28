@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.6.0](https://github.com/inference-gateway/skills/compare/v0.5.0...v0.6.0) (2026-07-28)
+
+### ✨ Features
+
+* add opentask skill to catalog ([#81](https://github.com/inference-gateway/skills/issues/81)) ([c1a215d](https://github.com/inference-gateway/skills/commit/c1a215dcf13d113eb52cbfcd0dac217cfed28825))
+* **skills:** add C++ best practices, review, and concurrency skills ([#85](https://github.com/inference-gateway/skills/issues/85)) ([4a82ce1](https://github.com/inference-gateway/skills/commit/4a82ce13387873fa6ef39c54bf333f6e750de06e))
+
+### 🐛 Bug Fixes
+
+* **ci:** update maintainer app ID to client ID in workflows and documentation ([232a1f2](https://github.com/inference-gateway/skills/commit/232a1f24394831a794ecc2712996ccc262080fab))
+* **deps:** update js-yaml transitive dependency to 3.15.0 to fix Dependabot alert [#3](https://github.com/inference-gateway/skills/issues/3) ([#83](https://github.com/inference-gateway/skills/issues/83)) ([4f00a13](https://github.com/inference-gateway/skills/commit/4f00a13a971c543281d736ee97ad75ee21e25b61))
+
+### 👷 CI
+
+* **claude:** centralize claude.yml via reusable workflow ([#76](https://github.com/inference-gateway/skills/issues/76)) ([45feed6](https://github.com/inference-gateway/skills/commit/45feed60c307b5cd03782f3c2c14fa5b67efba1d))
+* **claude:** centralize claude.yml via reusable workflow ([#77](https://github.com/inference-gateway/skills/issues/77)) ([2815ca2](https://github.com/inference-gateway/skills/commit/2815ca29c4bc6d7bdae41712373e788145077f09))
+* **claude:** centralize claude.yml via reusable workflow ([#80](https://github.com/inference-gateway/skills/issues/80)) ([b252a51](https://github.com/inference-gateway/skills/commit/b252a519b8c7d6958c2da2b93ff0ec37181b3229))
+* **claude:** centralize claude.yml via reusable workflow ([#84](https://github.com/inference-gateway/skills/issues/84)) ([13eab96](https://github.com/inference-gateway/skills/commit/13eab96f4e564dd323f0de4cec1cecf9b6bc6938))
+* **infer:** centralize infer.yml via reusable workflow ([#82](https://github.com/inference-gateway/skills/issues/82)) ([7390460](https://github.com/inference-gateway/skills/commit/7390460e967773e43f5b1164532a2f4ccedcc8b2))
+
+### 📚 Documentation
+
+* **adl:** sync skill with adl v0.23 and adl-cli v0.54 ([#75](https://github.com/inference-gateway/skills/issues/75)) ([9f11597](https://github.com/inference-gateway/skills/commit/9f1159779f8656030e6256cfb4d174e797b01e1b))
+* **readme:** add security scan badge ([#74](https://github.com/inference-gateway/skills/issues/74)) ([0274400](https://github.com/inference-gateway/skills/commit/02744009b48e513f7776cdd1a1ce149d853b74e7))
+
+### 🔧 Miscellaneous
+
+* **deps:** bump infer CLI v0.147.1 -> v0.153.1 ([#79](https://github.com/inference-gateway/skills/issues/79)) ([44584a4](https://github.com/inference-gateway/skills/commit/44584a48e6afc809256a9325350d7a322ac3992a))
+* **deps:** bump js-yaml from 4.2.0 to 4.3.0 ([#73](https://github.com/inference-gateway/skills/issues/73)) ([ac2f63f](https://github.com/inference-gateway/skills/commit/ac2f63f021dbded34190a4d6c9d1043855c5f649))
+
 ## [0.5.0](https://github.com/inference-gateway/skills/compare/v0.4.0...v0.5.0) (2026-07-23)
 
 ### ✨ Features
