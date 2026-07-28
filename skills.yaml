@@ -70,6 +70,21 @@ skills:
       - developer-tools
     homepage: https://github.com/inference-gateway/skills
 
+  - url: https://github.com/inference-gateway/skills
+    path: skills/opentask/SKILL.md
+    vendor: inference-gateway
+    license: Apache-2.0
+    tags:
+      - inference-gateway
+      - opentask
+      - github
+      - browser-extension
+      - agent
+      - gh-cli
+    categories:
+      - developer-tools
+    homepage: https://github.com/inference-gateway/opentask
+
   - url: https://github.com/Xquik-dev/x-twitter-scraper
     ref: v2.4.16
     path: skills/x-twitter-scraper/SKILL.md
