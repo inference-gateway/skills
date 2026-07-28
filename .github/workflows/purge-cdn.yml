@@ -13,9 +13,6 @@ jobs:
   purge:
     runs-on: ubuntu-24.04
     steps:
-      # The registry site reads the catalog from jsDelivr's `@latest` alias, so
-      # nobody has to hand-bump a version. Only the alias needs a nudge when a
-      # new tag lands - the tagged file itself is immutable and never stale.
       - name: Purge until @latest resolves to this tag
         env:
           WANT: ${{ github.ref_type == 'tag' && github.ref_name || '' }}
