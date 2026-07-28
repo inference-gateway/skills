@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-07-28T20:13:45Z",
+  "updated": "2026-07-28T21:52:56.624Z",
   "skills": [
     {
       "name": "adl",
@@ -84,6 +84,67 @@
       "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg"
     },
     {
+      "name": "go",
+      "description": "Idiomatic Go - package and interface design, error wrapping, table-driven tests, generics, the modern standard library (slices/maps/cmp/errors.Join), current syntax, and logging discipline. Use when writing, reviewing, or refactoring any Go code, especially code drifting toward Java/Spring shapes (deep layer trees, generic repositories, heavy frameworks) - even if the user never says \"idiomatic\". Distilled from spf13/go-skills and adapted to this repo.",
+      "source": "https://github.com/inference-gateway/skills/tree/main/skills/go",
+      "vendor": "inference-gateway",
+      "license": "Apache-2.0",
+      "tags": [
+        "go",
+        "golang",
+        "best-practices",
+        "idiomatic",
+        "testing"
+      ],
+      "categories": [
+        "developer-tools"
+      ],
+      "homepage": "https://github.com/inference-gateway/inference-gateway",
+      "language": "go",
+      "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg"
+    },
+    {
+      "name": "go-concurrency",
+      "description": "Idiomatic Go concurrency - sync primitives, channel semantics, the select statement, and the standard channel patterns (cancellation/done-channel, fan-out/fan-in, pipeline, or-done, context, worker-pool). Use when writing or reviewing Go that spawns goroutines, shares state, or coordinates over channels, even if the user never says \"concurrency\" - e.g. data races, deadlocks, goroutine leaks, sync/context/select usage, or \"make this parallel\". Distilled from luk4z7/go-concurrency-guide.",
+      "source": "https://github.com/inference-gateway/skills/tree/main/skills/go-concurrency",
+      "vendor": "inference-gateway",
+      "license": "Apache-2.0",
+      "tags": [
+        "go",
+        "golang",
+        "concurrency",
+        "goroutines",
+        "channels",
+        "context"
+      ],
+      "categories": [
+        "developer-tools"
+      ],
+      "homepage": "https://github.com/inference-gateway/inference-gateway",
+      "language": "go",
+      "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg"
+    },
+    {
+      "name": "go-spec-reviewer",
+      "description": "Review a Go design spec before implementation begins - dispatch a subagent that checks a design doc for completeness, consistency, and idiomatic Go (simplicity, small consumer-defined interfaces, explicit wrapped errors, context propagation) plus Cobra/Viper conventions where applicable. Use when a user has a Go spec to review, asks \"is this spec ready?\", or is about to implement from a written design. Distilled from spf13/go-skills and adapted to this repo's conventions.",
+      "source": "https://github.com/inference-gateway/skills/tree/main/skills/go-spec-reviewer",
+      "vendor": "inference-gateway",
+      "license": "Apache-2.0",
+      "tags": [
+        "go",
+        "golang",
+        "code-review",
+        "spec",
+        "design"
+      ],
+      "categories": [
+        "developer-tools"
+      ],
+      "homepage": "https://github.com/inference-gateway/inference-gateway",
+      "language": "go",
+      "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg"
+    },
+    {
       "name": "opentask",
       "description": "Drive OpenTask - the inference-gateway Manifest V3 browser extension (`inference-gateway/opentask`) that surfaces a repo's skills and `@opentask` agent directives inside GitHub's comment box, issue/PR pages, and an injected repo-nav bar (Tasks / Skills / Agents / Init tabs). Use when operating a browser on github.com to send the OpenTask agent a custom prompt (not just a saved template), install the agent workflow, refine an issue in place after research, or manage skills/agents - and, crucially, to decide when a plain `gh` CLI call is faster than driving the UI at all.",
       "source": "https://github.com/inference-gateway/skills/tree/main/skills/opentask",
@@ -140,7 +201,7 @@
       "_source": {
         "url": "https://github.com/Xquik-dev/x-twitter-scraper",
         "ref": "v2.4.16",
-        "fetchedAt": "2026-07-28T19:57:19.478Z"
+        "fetchedAt": "2026-07-28T21:52:56.624Z"
       }
     }
   ],
