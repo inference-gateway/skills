@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.9.0](https://github.com/inference-gateway/skills/compare/v0.8.0...v0.9.0) (2026-07-29)
+
+### ✨ Features
+
+* add rust, rust-concurrency and rust-review skills ([#93](https://github.com/inference-gateway/skills/issues/93)) ([543fad7](https://github.com/inference-gateway/skills/commit/543fad7ad511b0d24ecdc6ab3df529228971f546))
+
+### 📚 Documentation
+
+* add npx skills install instructions ([#91](https://github.com/inference-gateway/skills/issues/91)) ([63ffb6a](https://github.com/inference-gateway/skills/commit/63ffb6ad54a6135cbb12327abb7cdb2839482b11))
+
 ## [0.8.0](https://github.com/inference-gateway/skills/compare/v0.7.0...v0.8.0) (2026-07-28)
 
 ### ✨ Features
