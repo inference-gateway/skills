@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-07-28T22:10:51Z",
+  "updated": "2026-07-29T09:47:43.082Z",
   "skills": [
     {
       "name": "adl",
@@ -164,6 +164,69 @@
       "homepage": "https://github.com/inference-gateway/opentask"
     },
     {
+      "name": "rust",
+      "description": "Idiomatic Rust - ownership at API boundaries, type-driven design, error handling with thiserror/anyhow, iterators and combinators, module and workspace layout, testing tiers, and the cargo toolchain. Use when writing, reviewing, or refactoring any Rust code, especially code drifting toward other-language shapes (clone-to-appease-the-borrow-checker, `Rc<RefCell<_>>` object graphs, traits with one implementor, stringly-typed APIs) - even if the user never says \"idiomatic\". Follows the Let's Get Rusty curriculum and the Rust API Guidelines.",
+      "source": "https://github.com/inference-gateway/skills/tree/main/skills/rust",
+      "vendor": "inference-gateway",
+      "license": "Apache-2.0",
+      "tags": [
+        "rust",
+        "best-practices",
+        "idiomatic",
+        "ownership",
+        "error-handling",
+        "cargo"
+      ],
+      "categories": [
+        "developer-tools"
+      ],
+      "homepage": "https://github.com/letsgetrusty/learn",
+      "language": "rust",
+      "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/rust/rust-original.svg"
+    },
+    {
+      "name": "rust-concurrency",
+      "description": "Concurrent and async Rust - `Send`/`Sync`, scoped threads, `Arc<Mutex<_>>` discipline, channels, rayon, and the tokio rules that the compiler cannot check for you (blocking the executor, holding a lock across `.await`, cancellation safety, structured shutdown). Use when adding threads, tasks, channels, or atomics, when a future never completes or a task silently disappears, when choosing between threads/rayon/async, or when reviewing code that shares mutable state. Includes verification with miri, loom, and ThreadSanitizer.",
+      "source": "https://github.com/inference-gateway/skills/tree/main/skills/rust-concurrency",
+      "vendor": "inference-gateway",
+      "license": "Apache-2.0",
+      "tags": [
+        "rust",
+        "concurrency",
+        "async",
+        "tokio",
+        "send-sync",
+        "threads"
+      ],
+      "categories": [
+        "developer-tools"
+      ],
+      "homepage": "https://github.com/letsgetrusty/learn",
+      "language": "rust",
+      "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/rust/rust-original.svg"
+    },
+    {
+      "name": "rust-review",
+      "description": "Review Rust code - a diff, a pull request, or a file - in priority order: panics and unsoundness first, then error handling, ownership, API design against the Rust API Guidelines, and only then style. Use when asked to review, critique, or audit Rust code, when triaging a Rust pull request, or when a crate is clippy-clean but you still do not trust it. Prescribes running fmt, clippy, tests, and miri before reading, so the review spends its attention on what the tools cannot see.",
+      "source": "https://github.com/inference-gateway/skills/tree/main/skills/rust-review",
+      "vendor": "inference-gateway",
+      "license": "Apache-2.0",
+      "tags": [
+        "rust",
+        "code-review",
+        "clippy",
+        "api-guidelines",
+        "unsafe",
+        "miri"
+      ],
+      "categories": [
+        "developer-tools"
+      ],
+      "homepage": "https://github.com/letsgetrusty/learn",
+      "language": "rust",
+      "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/rust/rust-original.svg"
+    },
+    {
       "name": "skill-creator",
       "description": "Author a new Agent Skill from a minimal SKILL.md template. Use when the user wants to create a new skill, scaffold one from scratch, or learn the SKILL.md frontmatter and body conventions.",
       "source": "https://github.com/inference-gateway/skills/tree/main/skills/skill-creator",
@@ -201,7 +264,7 @@
       "_source": {
         "url": "https://github.com/Xquik-dev/x-twitter-scraper",
         "ref": "v2.4.16",
-        "fetchedAt": "2026-07-28T21:52:56.624Z"
+        "fetchedAt": "2026-07-29T09:47:43.082Z"
       }
     }
   ],
