@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.9.1](https://github.com/inference-gateway/skills/compare/v0.9.0...v0.9.1) (2026-07-29)
+
+### 🐛 Bug Fixes
+
+* **ci:** keep catalog.json consistent with release tags ([#95](https://github.com/inference-gateway/skills/issues/95)) ([a45df98](https://github.com/inference-gateway/skills/commit/a45df982d189a5b6e4638495d17d8345ad675d82))
+
+### 🔧 Miscellaneous
+
+* **catalog:** rebuild catalog.json ([#94](https://github.com/inference-gateway/skills/issues/94)) ([c9f555d](https://github.com/inference-gateway/skills/commit/c9f555dd3ba520fb0d5b1eb596c21c3d9a402330))
+
 ## [0.9.0](https://github.com/inference-gateway/skills/compare/v0.8.0...v0.9.0) (2026-07-29)
 
 ### ✨ Features
