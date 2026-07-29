@@ -76,7 +76,7 @@ let total = Arc::new(Mutex::new(0));
   self-deadlock. Bind it to a `let` and scope it.
 - **Two locks means a documented global lock order**, taken the same way everywhere. Rust will not catch
   the inversion.
-- **`RwLock`** only when reads dominate *and* are long; otherwise a `Mutex` is faster and has no writer
+- **`RwLock`** only when reads dominate _and_ are long; otherwise a `Mutex` is faster and has no writer
   starvation question.
 - **Atomics** for a counter or a flag, not for an invariant spanning two variables. Default to
   `Ordering::SeqCst`; anything weaker needs a written justification and a loom test.
@@ -136,7 +136,7 @@ Passing tests prove very little about interleavings your machine happened not to
 ## Reviewing concurrent code
 
 For each piece of shared mutable state the change touches: which lock or channel owns it, is that written
-down next to the declaration, and does *every* access path go through it? For each spawn: how does it stop,
+down next to the declaration, and does _every_ access path go through it? For each spawn: how does it stop,
 who observes its failure, and what happens if it panics? For each `.await` inside a lock scope or a
 `select!` arm: what is dropped, and is dropping it safe? A "this is only touched from one thread" answer
 belongs in an assertion or a comment, because the next author will not infer it.

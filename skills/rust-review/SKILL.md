@@ -45,7 +45,7 @@ Comment on the first category that fires. Do not bury an unsoundness bug under n
   need `checked_*` / `saturating_*` / `wrapping_*` chosen deliberately.
 - `as` casts that truncate or change sign (`u64 as u32`, `i64 as usize`); prefer `TryFrom`.
 - `unsafe` without a `// SAFETY:` comment stating the invariant, `transmute`, raw pointer arithmetic,
-  `unsafe impl Send`/`Sync` without an argument. Is the safe wrapper actually sound for *every* input?
+  `unsafe impl Send`/`Sync` without an argument. Is the safe wrapper actually sound for _every_ input?
 - A panic (or `unwrap`) inside `Drop`, or across an `extern "C"` boundary.
 - `RefCell::borrow_mut` reachable twice on one path - a runtime panic where a compile error used to be.
 
@@ -62,7 +62,7 @@ Comment on the first category that fires. Do not bury an unsoundness bug under n
 
 ### 3. Ownership, lifetimes, and allocation
 
-- `.clone()` that exists to appease the borrow checker. Ask what the ownership *should* be:
+- `.clone()` that exists to appease the borrow checker. Ask what the ownership _should_ be:
   `mem::take`/`mem::replace`, a tighter scope, `split_at_mut`, or one clear owner.
 - `Arc<Mutex<T>>` around something with exactly one owner; `Rc<RefCell<T>>` used to build an object graph
   that a plain index or ID would model better; `Rc` cycles that never drop.

@@ -107,7 +107,7 @@ in a public library signature - it erases the type the caller needs.
 - **Keep the chain.** Attach the cause as `#[source]`; never `format!("{e}")` into a `String` error - that
   throws away everything below the top frame.
 - **`unwrap` / `expect` only** in tests, in `main`, and where a genuine invariant holds - and then use
-  `expect` with a message that states *why* it cannot fail, not what failed.
+  `expect` with a message that states _why_ it cannot fail, not what failed.
 - **`panic!` is for bugs, `Result` is for expected failure.** Anything reachable from untrusted input is
   expected failure.
 - Document the failure modes: rustdoc `# Errors` and `# Panics` sections (C-FAILURE).
