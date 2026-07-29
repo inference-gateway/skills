@@ -1,9 +1,6 @@
 ---
 name: Build catalog
 
-# Push-to-main is deliberately not a trigger: CI now fails a PR whose
-# catalog.json is stale, so main is always current. This workflow only covers
-# drift from sources outside the repo.
 on:
   schedule:
     - cron: '0 4 * * *'
@@ -16,9 +13,6 @@ jobs:
   build:
     runs-on: ubuntu-24.04
     steps:
-      # The default GITHUB_TOKEN cannot open PRs while the org's "Allow GitHub
-      # Actions to create and approve pull requests" toggle is off. The releaser
-      # app token is not subject to it.
       - uses: actions/create-github-app-token@v3.2.0
         id: app-token
         with:

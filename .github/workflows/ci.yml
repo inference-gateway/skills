@@ -38,10 +38,6 @@ jobs:
       - name: Check formatting
         run: bunx prettier '**/*.md' --check
 
-      # Keeps catalog.json in the same commit as the skill it describes, so any
-      # release tag is self-consistent. Without this the rebuild lands in a
-      # follow-up chore commit that never triggers a release, and @latest serves
-      # a catalog missing the newest skills.
       - name: Check catalog.json is up to date
         run: |
           bun run build
