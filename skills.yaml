@@ -186,6 +186,54 @@ skills:
     homepage: https://github.com/inference-gateway/inference-gateway
 
   - url: https://github.com/inference-gateway/skills
+    path: skills/rust/SKILL.md
+    vendor: inference-gateway
+    license: Apache-2.0
+    language: rust
+    tags:
+      - rust
+      - best-practices
+      - idiomatic
+      - ownership
+      - error-handling
+      - cargo
+    categories:
+      - developer-tools
+    homepage: https://github.com/letsgetrusty/learn
+
+  - url: https://github.com/inference-gateway/skills
+    path: skills/rust-concurrency/SKILL.md
+    vendor: inference-gateway
+    license: Apache-2.0
+    language: rust
+    tags:
+      - rust
+      - concurrency
+      - async
+      - tokio
+      - send-sync
+      - threads
+    categories:
+      - developer-tools
+    homepage: https://github.com/letsgetrusty/learn
+
+  - url: https://github.com/inference-gateway/skills
+    path: skills/rust-review/SKILL.md
+    vendor: inference-gateway
+    license: Apache-2.0
+    language: rust
+    tags:
+      - rust
+      - code-review
+      - clippy
+      - api-guidelines
+      - unsafe
+      - miri
+    categories:
+      - developer-tools
+    homepage: https://github.com/letsgetrusty/learn
+
+  - url: https://github.com/inference-gateway/skills
     path: skills/go-spec-reviewer/SKILL.md
     vendor: inference-gateway
     license: Apache-2.0
