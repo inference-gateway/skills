@@ -1,30 +1,36 @@
 ---
 name: Build catalog
 
+# Push-to-main is deliberately not a trigger: CI now fails a PR whose
+# catalog.json is stale, so main is always current. This workflow only covers
+# drift from sources outside the repo.
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'skills.yaml'
-      - 'skills/**'
-      - 'scripts/build-catalog.mjs'
-      - 'package.json'
-      - 'bun.lock'
-      - '.github/workflows/build-catalog.yml'
   schedule:
     - cron: '0 4 * * *'
   workflow_dispatch:
 
 permissions:
-  contents: write
-  pull-requests: write
+  contents: read
 
 jobs:
   build:
     runs-on: ubuntu-24.04
     steps:
+      # The default GITHUB_TOKEN cannot open PRs while the org's "Allow GitHub
+      # Actions to create and approve pull requests" toggle is off. The releaser
+      # app token is not subject to it.
+      - uses: actions/create-github-app-token@v3.2.0
+        id: app-token
+        with:
+          client-id: ${{ secrets.RELEASER_APP_CLIENT_ID }}
+          private-key: ${{ secrets.RELEASER_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: |
+            ${{ github.event.repository.name }}
+
       - uses: actions/checkout@v7.0.1
+        with:
+          token: ${{ steps.app-token.outputs.token }}
 
       - uses: oven-sh/setup-bun@v2.2.0
         with:
@@ -36,6 +42,7 @@ jobs:
 
       - uses: peter-evans/create-pull-request@v8.1.1
         with:
+          token: ${{ steps.app-token.outputs.token }}
           commit-message: 'chore(catalog): Rebuild catalog.json'
           title: 'chore(catalog): Rebuild catalog.json'
           body: |
