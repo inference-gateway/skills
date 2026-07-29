@@ -37,3 +37,11 @@ jobs:
 
       - name: Check formatting
         run: bunx prettier '**/*.md' --check
+
+      - name: Check catalog.json is up to date
+        run: |
+          bun run build
+          if ! git diff --exit-code catalog.json; then
+            echo "::error::catalog.json is stale. Run 'bun run build' and commit the result."
+            exit 1
+          fi

@@ -77,7 +77,9 @@ skills/<name>/SKILL.md`. Also add `skills/<name>/SKILL.md` with valid
   `NOTICE` file at the repo root recording the attribution.
 
 You do not edit `catalog.json` by hand - the build script regenerates it.
-Run `bun install && bun run build` locally to preview the resulting entry.
+Run `bun install && bun run build` and **commit the regenerated `catalog.json`
+in the same pull request**; CI fails if it is stale. This keeps the catalog
+consistent with every release tag, which is what `@latest` on the CDN serves.
 
 The catalog is versioned as a whole via the repo's git tag (see [Releases](https://github.com/inference-gateway/skills/releases)),
 so per-entry refs aren't needed - consumers pin to a catalog version.
