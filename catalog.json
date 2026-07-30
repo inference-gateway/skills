@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-07-29T10:39:25Z",
+  "updated": "2026-07-30T13:08:36.615Z",
   "skills": [
     {
       "name": "adl",
@@ -145,6 +145,32 @@
       "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg"
     },
     {
+      "name": "last30days",
+      "description": "Research what people actually say about any topic in the last 30 days. Pulls posts and engagement from Reddit, X, YouTube, TikTok, Hacker News, Polymarket, GitHub, and the web. Includes a doctor health check to diagnose broken or missing sources.",
+      "source": "https://github.com/mvanhorn/last30days-skill/tree/v3.18.4/skills/last30days",
+      "vendor": "mvanhorn",
+      "license": "MIT",
+      "tags": [
+        "research",
+        "recency",
+        "reddit",
+        "x",
+        "hackernews",
+        "news",
+        "multi-source"
+      ],
+      "categories": [
+        "research",
+        "social-media"
+      ],
+      "homepage": "https://github.com/mvanhorn/last30days-skill",
+      "_source": {
+        "url": "https://github.com/mvanhorn/last30days-skill",
+        "ref": "v3.18.4",
+        "fetchedAt": "2026-07-30T13:08:36.615Z"
+      }
+    },
+    {
       "name": "opentask",
       "description": "Drive OpenTask - the inference-gateway Manifest V3 browser extension (`inference-gateway/opentask`) that surfaces a repo's skills and `@opentask` agent directives inside GitHub's comment box, issue/PR pages, and an injected repo-nav bar (Tasks / Skills / Agents / Init tabs). Use when operating a browser on github.com to send the OpenTask agent a custom prompt (not just a saved template), install the agent workflow, refine an issue in place after research, or manage skills/agents - and, crucially, to decide when a plain `gh` CLI call is faster than driving the UI at all.",
       "source": "https://github.com/inference-gateway/skills/tree/main/skills/opentask",
@@ -264,7 +290,7 @@
       "_source": {
         "url": "https://github.com/Xquik-dev/x-twitter-scraper",
         "ref": "v2.4.16",
-        "fetchedAt": "2026-07-29T09:47:43.082Z"
+        "fetchedAt": "2026-07-30T13:08:36.615Z"
       }
     }
   ],
