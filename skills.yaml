@@ -154,6 +154,24 @@ skills:
       - developer-tools
     homepage: https://docs.xquik.com
 
+  - url: https://github.com/mvanhorn/last30days-skill
+    ref: v3.18.4
+    path: skills/last30days/SKILL.md
+    vendor: mvanhorn
+    license: MIT
+    tags:
+      - research
+      - recency
+      - reddit
+      - x
+      - hackernews
+      - news
+      - multi-source
+    categories:
+      - research
+      - social-media
+    homepage: https://github.com/mvanhorn/last30days-skill
+
   - url: https://github.com/inference-gateway/skills
     path: skills/go/SKILL.md
     vendor: inference-gateway
