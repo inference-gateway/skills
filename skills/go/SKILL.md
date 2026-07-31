@@ -172,6 +172,7 @@ helper or hand-rolled loop:
 | `atomic.AddInt64(&n, 1)`      | typed `atomic.Int64`/`Bool`/`Pointer[T]` (`n.Add(1)`)                  |
 | gorilla/mux for basic routing | `net/http`: `mux.HandleFunc("GET /u/{id}", ...)` + `r.PathValue("id")` |
 | `for i := 0; i < n; i++`      | `for i := range n`                                                     |
+| `stringPtr`/`intPtr` helpers  | `new("x")`, `new(42)` - `new(expr)` returns a pointer (Go 1.26)        |
 | `interface{}`                 | `any`                                                                  |
 | `// +build` tags              | `//go:build`                                                           |
 
