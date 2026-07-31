@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.11.0](https://github.com/inference-gateway/skills/compare/v0.10.1...v0.11.0) (2026-07-31)
+
+### ✨ Features
+
+* add openai codex imagegen skill to catalog ([#102](https://github.com/inference-gateway/skills/issues/102)) ([7bfba48](https://github.com/inference-gateway/skills/commit/7bfba48e926317b1e87ef0c5af1e1e4b6c24c50b))
+
+### 👷 CI
+
+* **claude:** centralize claude.yml via reusable workflow ([#101](https://github.com/inference-gateway/skills/issues/101)) ([24fd120](https://github.com/inference-gateway/skills/commit/24fd12000b6287f32cab44b9513d279144314c82))
+
 ## [0.10.1](https://github.com/inference-gateway/skills/compare/v0.10.0...v0.10.1) (2026-07-31)
 
 ### 📚 Documentation
