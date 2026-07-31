@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.10.1](https://github.com/inference-gateway/skills/compare/v0.10.0...v0.10.1) (2026-07-31)
+
+### 📚 Documentation
+
+* **go:** prefer new(expr) over stringPtr/intPtr helpers ([#100](https://github.com/inference-gateway/skills/issues/100)) ([f127823](https://github.com/inference-gateway/skills/commit/f127823850b533a1c0f5ff27160eac563fc6e2c5))
+
 ## [0.10.0](https://github.com/inference-gateway/skills/compare/v0.9.1...v0.10.0) (2026-07-31)
 
 ### ✨ Features
