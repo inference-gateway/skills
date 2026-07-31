@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-07-31T15:17:47Z",
+  "updated": "2026-07-31T20:43:49.726Z",
   "skills": [
     {
       "name": "adl",
@@ -145,6 +145,31 @@
       "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg"
     },
     {
+      "name": "imagegen",
+      "description": "Generate or edit raster images when the task benefits from AI-created bitmap visuals such as photos, illustrations, textures, sprites, mockups, or transparent-background cutouts. Use when Codex should create a brand-new image, transform an existing image, or derive visual variants from references, and the output should be a bitmap asset rather than repo-native code or vector. Do not use when the task is better handled by editing existing SVG/vector/code-native assets, extending an established icon or logo system, or building the visual directly in HTML/CSS/canvas.",
+      "source": "https://github.com/openai/codex/tree/rust-v0.146.0/codex-rs/skills/src/assets/samples/imagegen",
+      "vendor": "openai",
+      "license": "Apache-2.0",
+      "tags": [
+        "openai",
+        "imagegen",
+        "image-generation",
+        "images",
+        "assets",
+        "codex"
+      ],
+      "categories": [
+        "developer-tools",
+        "design"
+      ],
+      "homepage": "https://github.com/openai/codex",
+      "_source": {
+        "url": "https://github.com/openai/codex",
+        "ref": "rust-v0.146.0",
+        "fetchedAt": "2026-07-31T20:43:49.726Z"
+      }
+    },
+    {
       "name": "last30days",
       "description": "Research what people actually say about any topic in the last 30 days. Pulls posts and engagement from Reddit, X, YouTube, TikTok, Hacker News, Polymarket, GitHub, and the web. Includes a doctor health check to diagnose broken or missing sources.",
       "source": "https://github.com/mvanhorn/last30days-skill/tree/v3.18.4/skills/last30days",
@@ -167,7 +192,7 @@
       "_source": {
         "url": "https://github.com/mvanhorn/last30days-skill",
         "ref": "v3.18.4",
-        "fetchedAt": "2026-07-30T13:08:36.615Z"
+        "fetchedAt": "2026-07-31T20:43:49.726Z"
       }
     },
     {
@@ -290,7 +315,7 @@
       "_source": {
         "url": "https://github.com/Xquik-dev/x-twitter-scraper",
         "ref": "v2.4.16",
-        "fetchedAt": "2026-07-30T13:08:36.615Z"
+        "fetchedAt": "2026-07-31T20:43:49.726Z"
       }
     }
   ],
