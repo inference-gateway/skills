@@ -251,6 +251,23 @@ skills:
       - developer-tools
     homepage: https://github.com/letsgetrusty/learn
 
+  - url: https://github.com/openai/codex
+    ref: rust-v0.146.0
+    path: codex-rs/skills/src/assets/samples/imagegen/SKILL.md
+    vendor: openai
+    license: Apache-2.0
+    tags:
+      - openai
+      - imagegen
+      - image-generation
+      - images
+      - assets
+      - codex
+    categories:
+      - developer-tools
+      - design
+    homepage: https://github.com/openai/codex
+
   - url: https://github.com/inference-gateway/skills
     path: skills/go-spec-reviewer/SKILL.md
     vendor: inference-gateway
