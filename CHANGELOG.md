@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.10.0](https://github.com/inference-gateway/skills/compare/v0.9.1...v0.10.0) (2026-07-31)
+
+### ✨ Features
+
+* **catalog:** add last30days external skill entry pinned to v3.18.4 ([#98](https://github.com/inference-gateway/skills/issues/98)) ([48de465](https://github.com/inference-gateway/skills/commit/48de465951f5128fed80921cf3061ce9cfb72605)), closes [#97](https://github.com/inference-gateway/skills/issues/97)
+
+### 🔧 Miscellaneous
+
+* **deps:** bump infer CLI v0.153.1 -> v0.155.0 ([#99](https://github.com/inference-gateway/skills/issues/99)) ([6521345](https://github.com/inference-gateway/skills/commit/6521345c890821c996de2803068bad8dbd6b6bce))
+* **deps:** bump the github-actions group with 3 updates ([#96](https://github.com/inference-gateway/skills/issues/96)) ([7e18aca](https://github.com/inference-gateway/skills/commit/7e18aca90a0b9a120dad7ac758cef6c85a404d77))
+
 ## [0.9.1](https://github.com/inference-gateway/skills/compare/v0.9.0...v0.9.1) (2026-07-29)
 
 ### 🐛 Bug Fixes
