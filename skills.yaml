@@ -137,6 +137,22 @@ skills:
       - developer-tools
     homepage: https://github.com/cpp-best-practices/cppbestpractices
 
+  - url: https://github.com/inference-gateway/tokenless
+    path: .agents/skills/tokenless/SKILL.md
+    vendor: inference-gateway
+    license: Apache-2.0
+    language: go
+    tags:
+      - inference-gateway
+      - go
+      - testing
+      - e2e
+      - mock
+      - llm
+    categories:
+      - developer-tools
+    homepage: https://github.com/inference-gateway/tokenless
+
   - url: https://github.com/Xquik-dev/x-twitter-scraper
     ref: v2.4.16
     path: skills/x-twitter-scraper/SKILL.md
