@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.12.0](https://github.com/inference-gateway/skills/compare/v0.11.0...v0.12.0) (2026-08-04)
+
+### ✨ Features
+
+* add tokenless skill ([#104](https://github.com/inference-gateway/skills/issues/104)) ([624ebed](https://github.com/inference-gateway/skills/commit/624ebed584314e4877d1112fb3a157ec6104b4f4))
+
+### 👷 CI
+
+* **claude:** centralize claude.yml via reusable workflow ([#103](https://github.com/inference-gateway/skills/issues/103)) ([26a0977](https://github.com/inference-gateway/skills/commit/26a0977f561a41f769b8f927fe07e0d97a9bcd71))
+
 ## [0.11.0](https://github.com/inference-gateway/skills/compare/v0.10.1...v0.11.0) (2026-07-31)
 
 ### ✨ Features
