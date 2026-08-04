@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-07-31T20:47:53Z",
+  "updated": "2026-08-03T22:04:10.820Z",
   "skills": [
     {
       "name": "adl",
@@ -166,7 +166,7 @@
       "_source": {
         "url": "https://github.com/openai/codex",
         "ref": "rust-v0.146.0",
-        "fetchedAt": "2026-07-31T20:43:49.726Z"
+        "fetchedAt": "2026-08-03T22:04:10.820Z"
       }
     },
     {
@@ -192,7 +192,7 @@
       "_source": {
         "url": "https://github.com/mvanhorn/last30days-skill",
         "ref": "v3.18.4",
-        "fetchedAt": "2026-07-31T20:43:49.726Z"
+        "fetchedAt": "2026-08-03T22:04:10.820Z"
       }
     },
     {
@@ -294,6 +294,32 @@
       "homepage": "https://github.com/inference-gateway/skills"
     },
     {
+      "name": "tokenless",
+      "description": "Test LLM agents against a deterministic mock gateway with zero token cost. Use when writing or debugging e2e/integration tests for agents built on the OpenAI-compatible or Anthropic Messages APIs: author scenarios.yaml scripted conversations, embed the gateway in Go tests via the harness package, run the standalone tokenless binary, or drive an app's own mock switch (e.g. INFER_GATEWAY_MOCK).",
+      "source": "https://github.com/inference-gateway/tokenless/tree/main/.agents/skills/tokenless",
+      "vendor": "inference-gateway",
+      "license": "Apache-2.0",
+      "tags": [
+        "inference-gateway",
+        "go",
+        "testing",
+        "e2e",
+        "mock",
+        "llm"
+      ],
+      "categories": [
+        "developer-tools"
+      ],
+      "homepage": "https://github.com/inference-gateway/tokenless",
+      "language": "go",
+      "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg",
+      "_source": {
+        "url": "https://github.com/inference-gateway/tokenless",
+        "ref": "main",
+        "fetchedAt": "2026-08-03T22:04:10.820Z"
+      }
+    },
+    {
       "name": "x-twitter-scraper",
       "description": "Use when the user needs X (Twitter) data or confirmation-gated X actions through Xquik: tweet search, user lookup, follower extraction, media download, monitoring, webhooks, MCP, SDKs, posting, likes, DMs, and profile updates. Requires a Xquik API key. Never ask for X login material.",
       "source": "https://github.com/Xquik-dev/x-twitter-scraper/tree/v2.4.16/skills/x-twitter-scraper",
@@ -315,7 +341,7 @@
       "_source": {
         "url": "https://github.com/Xquik-dev/x-twitter-scraper",
         "ref": "v2.4.16",
-        "fetchedAt": "2026-07-31T20:43:49.726Z"
+        "fetchedAt": "2026-08-03T22:04:10.820Z"
       }
     }
   ],
