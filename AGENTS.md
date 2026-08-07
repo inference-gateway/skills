@@ -10,10 +10,9 @@ history in `CHANGELOG.md`.
 ## Build, Test, and Development Commands
 
 - `task` - lists available Taskfile commands.
+- `task build` - regenerates `catalog.json` from `skills/` + `skills.yaml`. Run before every push.
 - `task lint` - runs `markdownlint '**/*.md'` (ignore globs come from `.markdownlintignore`).
 - `task lint:fix` - applies safe Markdown lint fixes.
-
-There is no application build step. Content validation is primarily Markdown linting plus review of `catalog.json` and `SKILL.md` consistency.
 
 ## Coding Style & Naming Conventions
 
@@ -23,7 +22,7 @@ actionable. Use lowercase kebab-style skill directory names, for example `skills
 
 ## Testing Guidelines
 
-Run `task lint` before opening a pull request. When adding or editing a hosted skill, manually verify both sides of the contract: `catalog.json` includes `name`,
+Run `task build && task lint` before opening a pull request. When adding or editing a hosted skill, manually verify both sides of the contract: `catalog.json` includes `name`,
 `description`, `source`, `vendor`, `license`, `tags`, `categories`, and optional `homepage`, and `skills/<name>/SKILL.md` exists with matching frontmatter. For
 third-party derived content, confirm license and attribution files are present.
 

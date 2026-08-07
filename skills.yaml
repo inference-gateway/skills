@@ -78,8 +78,9 @@ skills:
       - developer-tools
     homepage: https://github.com/inference-gateway/skills
 
-  - url: https://github.com/inference-gateway/skills
-    path: skills/opentask/SKILL.md
+  - url: https://github.com/inference-gateway/opentask
+    ref: main
+    path: .agents/skills/opentask/SKILL.md
     vendor: inference-gateway
     license: Apache-2.0
     tags:
