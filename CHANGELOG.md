@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.13.0](https://github.com/inference-gateway/skills/compare/v0.12.1...v0.13.0) (2026-08-07)
+
+### ✨ Features
+
+* **skills:** move opentask skill to inference-gateway/opentask repo ([#111](https://github.com/inference-gateway/skills/issues/111)) ([7844743](https://github.com/inference-gateway/skills/commit/7844743068dcc05c23ec287ad194f72b1db83d78))
+
+### ♻️ Improvements
+
+* **catalog:** source adl skill from inference-gateway/adl ([#110](https://github.com/inference-gateway/skills/issues/110)) ([c7fe673](https://github.com/inference-gateway/skills/commit/c7fe673df470ff202c58bd0b369712872c2dac86)), references [inference-gateway/adl#161](https://github.com/inference-gateway/adl/issues/161)
+
 ## [0.12.1](https://github.com/inference-gateway/skills/compare/v0.12.0...v0.12.1) (2026-08-07)
 
 ### 🔧 Miscellaneous
