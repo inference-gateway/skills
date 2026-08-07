@@ -28,7 +28,7 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import yaml from 'js-yaml';
+import * as yaml from 'js-yaml';
 import matter from 'gray-matter';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
