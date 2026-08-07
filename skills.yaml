@@ -52,8 +52,9 @@
 # Third-party contributions are welcome. Open a PR adding one entry below.
 
 skills:
-  - url: https://github.com/inference-gateway/skills
-    path: skills/adl/SKILL.md
+  - url: https://github.com/inference-gateway/adl
+    ref: main
+    path: .agents/skills/adl/SKILL.md
     vendor: inference-gateway
     tags:
       - inference-gateway
@@ -63,7 +64,7 @@ skills:
       - scaffolding
     categories:
       - developer-tools
-    homepage: https://github.com/inference-gateway/skills
+    homepage: https://github.com/inference-gateway/adl
 
   - url: https://github.com/inference-gateway/skills
     path: skills/skill-creator/SKILL.md

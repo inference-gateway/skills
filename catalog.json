@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "updated": "2026-08-07T12:15:14Z",
+  "updated": "2026-08-07T13:43:40.074Z",
   "skills": [
     {
       "name": "adl",
       "description": "Author and maintain projects built with ADL (Agent Definition Language) - the YAML manifest format from `inference-gateway/adl` that `adl-cli` turns into a full A2A agent scaffold (Go/Rust/TypeScript). Use when working inside a generated agent project (presence of `agent.yaml` + `.adl-ignore`), when editing the manifest, when implementing custom tools and skills against the generated scaffold, or when planning the schema-first / domain modelling for a new agent.",
-      "source": "https://github.com/inference-gateway/skills/tree/main/skills/adl",
+      "source": "https://github.com/inference-gateway/adl/tree/main/.agents/skills/adl",
       "vendor": "inference-gateway",
       "license": "Apache-2.0",
       "tags": [
@@ -18,7 +18,12 @@
       "categories": [
         "developer-tools"
       ],
-      "homepage": "https://github.com/inference-gateway/skills"
+      "homepage": "https://github.com/inference-gateway/adl",
+      "_source": {
+        "url": "https://github.com/inference-gateway/adl",
+        "ref": "main",
+        "fetchedAt": "2026-08-07T13:43:40.074Z"
+      }
     },
     {
       "name": "cpp-best-practices",
@@ -166,7 +171,7 @@
       "_source": {
         "url": "https://github.com/openai/codex",
         "ref": "rust-v0.146.0",
-        "fetchedAt": "2026-08-03T22:04:10.820Z"
+        "fetchedAt": "2026-08-07T13:43:40.074Z"
       }
     },
     {
@@ -192,7 +197,7 @@
       "_source": {
         "url": "https://github.com/mvanhorn/last30days-skill",
         "ref": "v3.18.4",
-        "fetchedAt": "2026-08-03T22:04:10.820Z"
+        "fetchedAt": "2026-08-07T13:43:40.074Z"
       }
     },
     {
@@ -316,7 +321,7 @@
       "_source": {
         "url": "https://github.com/inference-gateway/tokenless",
         "ref": "main",
-        "fetchedAt": "2026-08-03T22:04:10.820Z"
+        "fetchedAt": "2026-08-07T13:43:40.074Z"
       }
     },
     {
@@ -341,7 +346,7 @@
       "_source": {
         "url": "https://github.com/Xquik-dev/x-twitter-scraper",
         "ref": "v2.4.16",
-        "fetchedAt": "2026-08-03T22:04:10.820Z"
+        "fetchedAt": "2026-08-07T13:43:40.074Z"
       }
     }
   ],

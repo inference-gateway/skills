@@ -73,8 +73,7 @@ SKILL.md authoring contract in full - read it before adding new skills.
 
 When a skill body is vendored or adapted from another project:
 
-- Preserve the upstream `LICENSE` **inside** `skills/<name>/` (see
-  `skills/adl/LICENSE` for the pattern).
+- Preserve the upstream `LICENSE` **inside** `skills/<name>/`.
 - Add a `NOTICE` file at the repo root recording the attribution.
 - That skill's contents are governed by its own license, **not** the repo-level
   Apache-2.0.
