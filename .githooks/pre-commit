@@ -1,0 +1,5 @@
+#!/bin/sh
+# Regenerate catalog.json before every commit.
+# `task build` reads skills.yaml, fetches external skills, and writes catalog.json.
+bun run build
+git add catalog.json
