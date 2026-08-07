@@ -9,14 +9,6 @@ updates:
       github-actions:
         patterns:
           - "*"
-  - package-ecosystem: npm
-    directory: /
-    schedule:
-      interval: weekly
-    groups:
-      npm-dependencies:
-        patterns:
-          - "*"
   - package-ecosystem: bun
     directory: /
     schedule:
