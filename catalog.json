@@ -203,7 +203,7 @@
     {
       "name": "opentask",
       "description": "Drive OpenTask - the inference-gateway Manifest V3 browser extension (`inference-gateway/opentask`) that surfaces a repo's skills and `@opentask` agent directives inside GitHub's comment box, issue/PR pages, and an injected repo-nav bar (Tasks / Skills / Agents / Init tabs). Use when operating a browser on github.com to send the OpenTask agent a custom prompt (not just a saved template), install the agent workflow, refine an issue in place after research, or manage skills/agents - and, crucially, to decide when a plain `gh` CLI call is faster than driving the UI at all.",
-      "source": "https://github.com/inference-gateway/skills/tree/main/skills/opentask",
+      "source": "https://github.com/inference-gateway/opentask/tree/main/.agents/skills/opentask",
       "vendor": "inference-gateway",
       "license": "Apache-2.0",
       "tags": [
@@ -217,7 +217,12 @@
       "categories": [
         "developer-tools"
       ],
-      "homepage": "https://github.com/inference-gateway/opentask"
+      "homepage": "https://github.com/inference-gateway/opentask",
+      "_source": {
+        "url": "https://github.com/inference-gateway/opentask",
+        "ref": "main",
+        "fetchedAt": "2026-08-07T13:43:40.074Z"
+      }
     },
     {
       "name": "rust",
