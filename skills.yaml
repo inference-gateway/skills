@@ -52,7 +52,6 @@
 # Third-party contributions are welcome. Open a PR adding one entry below.
 
 skills:
-  # TODO: pin `ref:` to the first adl release tag that contains the skill.
   - url: https://github.com/inference-gateway/adl
     path: .agents/skills/adl/SKILL.md
     vendor: inference-gateway
