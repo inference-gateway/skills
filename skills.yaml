@@ -53,7 +53,7 @@
 
 skills:
   - url: https://github.com/inference-gateway/adl
-    ref: feat/adl-agent-skill
+    ref: main
     path: .agents/skills/adl/SKILL.md
     vendor: inference-gateway
     tags:
