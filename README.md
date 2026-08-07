@@ -46,10 +46,10 @@ OpenCode and more):
 npx skills add inference-gateway/skills
 
 # a single skill, by its catalog name
-npx skills add inference-gateway/skills --skill adl
+npx skills add inference-gateway/skills --skill go
 
 # or by the catalog entry's `source` URL (works for external skills too)
-npx skills add https://github.com/inference-gateway/skills/tree/main/skills/adl
+npx skills add https://github.com/inference-gateway/skills/tree/main/skills/go
 
 # list what's available without installing
 npx skills add inference-gateway/skills --list
