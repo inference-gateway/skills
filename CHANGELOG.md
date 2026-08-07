@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.12.1](https://github.com/inference-gateway/skills/compare/v0.12.0...v0.12.1) (2026-08-07)
+
+### 🔧 Miscellaneous
+
+* **deps:** bump github/codeql-action in the github-actions group ([#105](https://github.com/inference-gateway/skills/issues/105)) ([406c8a2](https://github.com/inference-gateway/skills/commit/406c8a2d2ff6f013f15cae2f225930a2ad1d4d23))
+* **deps:** bump github/codeql-action in the github-actions group ([#109](https://github.com/inference-gateway/skills/issues/109)) ([ae491bd](https://github.com/inference-gateway/skills/commit/ae491bd15ec46d93bfdb0493e31153fc5f550601))
+* **deps:** bump infer CLI v0.155.0 -> v0.164.0 ([#106](https://github.com/inference-gateway/skills/issues/106)) ([deb1c2a](https://github.com/inference-gateway/skills/commit/deb1c2a091d47ca687f5ef7b09ec882111b8e55e))
+* **deps:** bump js-yaml from 4.3.0 to 4.3.1 ([#107](https://github.com/inference-gateway/skills/issues/107)) ([4f6f7e2](https://github.com/inference-gateway/skills/commit/4f6f7e2f2b839776b948b465fd55ccc512020eeb))
+* **deps:** bump js-yaml from 4.3.1 to 5.2.3 in the bun-dependencies group ([#108](https://github.com/inference-gateway/skills/issues/108)) ([a4d4206](https://github.com/inference-gateway/skills/commit/a4d4206ec5cce46258a272748e225b4585c49403))
+
 ## [0.12.0](https://github.com/inference-gateway/skills/compare/v0.11.0...v0.12.0) (2026-08-04)
 
 ### ✨ Features
