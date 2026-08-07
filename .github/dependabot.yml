@@ -9,3 +9,11 @@ updates:
       github-actions:
         patterns:
           - "*"
+  - package-ecosystem: bun
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      bun-dependencies:
+        patterns:
+          - "*"
