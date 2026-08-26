@@ -94,9 +94,9 @@ skills:
       - developer-tools
     homepage: https://github.com/inference-gateway/opentask
 
-  - url: https://github.com/inference-gateway/infer-action
+  - url: https://github.com/inference-gateway/opentask
     ref: main
-    path: .agents/skills/github-workflow/SKILL.md
+    path: .agents/skills/opentask/SKILL.md
     vendor: inference-gateway
     license: Apache-2.0
     tags:
@@ -107,7 +107,7 @@ skills:
       - ci
     categories:
       - developer-tools
-    homepage: https://github.com/inference-gateway/infer-action
+    homepage: https://github.com/inference-gateway/opentask
 
   - url: https://github.com/inference-gateway/skills
     path: skills/cpp-best-practices/SKILL.md
