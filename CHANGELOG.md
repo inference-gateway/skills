@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.13.1](https://github.com/inference-gateway/skills/compare/v0.13.0...v0.13.1) (2026-08-26)
+
+### 🔧 Miscellaneous
+
+* **deps:** bump js-yaml in the bun-dependencies group ([#113](https://github.com/inference-gateway/skills/issues/113)) ([bca50ed](https://github.com/inference-gateway/skills/commit/bca50edfd5a8891e9e5e2f9b002f8ecfadbe7ea2))
+* **deps:** bump the github-actions group with 2 updates ([#112](https://github.com/inference-gateway/skills/issues/112)) ([2a80c4b](https://github.com/inference-gateway/skills/commit/2a80c4b8d7e5d992564509826f095a936220db1e))
+* **deps:** update package versions ([063d967](https://github.com/inference-gateway/skills/commit/063d9671e11564bff274615efbedf9ba276b149b))
+
 ## [0.13.0](https://github.com/inference-gateway/skills/compare/v0.12.1...v0.13.0) (2026-08-07)
 
 ### ✨ Features
