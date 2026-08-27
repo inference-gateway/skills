@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-08-26T20:14:03Z",
+  "updated": "2026-08-27T13:18:41.470Z",
   "skills": [
     {
       "name": "adl",
@@ -22,7 +22,7 @@
       "_source": {
         "url": "https://github.com/inference-gateway/adl",
         "ref": "main",
-        "fetchedAt": "2026-08-07T14:32:03.550Z"
+        "fetchedAt": "2026-08-27T13:18:41.470Z"
       }
     },
     {
@@ -171,7 +171,7 @@
       "_source": {
         "url": "https://github.com/openai/codex",
         "ref": "rust-v0.146.0",
-        "fetchedAt": "2026-08-07T14:32:03.550Z"
+        "fetchedAt": "2026-08-27T13:18:41.470Z"
       }
     },
     {
@@ -197,12 +197,12 @@
       "_source": {
         "url": "https://github.com/mvanhorn/last30days-skill",
         "ref": "v3.18.4",
-        "fetchedAt": "2026-08-07T14:32:03.550Z"
+        "fetchedAt": "2026-08-27T13:18:41.470Z"
       }
     },
     {
       "name": "opentask",
-      "description": "Drive OpenTask - the inference-gateway Manifest V3 browser extension (`inference-gateway/opentask`) that surfaces a repo's skills and `@opentask` agent directives inside GitHub's comment box, issue/PR pages, and an injected repo-nav bar (Tasks / Skills / Agents / Init tabs). Use when operating a browser on github.com to send the OpenTask agent a custom prompt (not just a saved template), install the agent workflow, refine an issue in place after research, or manage skills/agents - and, crucially, to decide when a plain `gh` CLI call is faster than driving the UI at all.",
+      "description": "Drive OpenTask - the inference-gateway Manifest V3 browser extension (`inference-gateway/opentask`) that surfaces a repo's skills and `@opentask` agent directives inside GitHub's comment box, issue/PR pages, and an injected repo-nav bar (Tasks / Skills / Agents / Init tabs). Use when operating a browser on github.com to send the OpenTask agent a custom prompt (not just a saved template), install the agent workflow, refine an issue in place after research, or manage skills/agents - and, crucially, to decide when a plain `gh` CLI call is faster than driving the UI at all. Also use when authoring, installing, or updating the GitHub Actions workflow that runs the agent on long-horizon tasks (`.github/workflows/tasks.yml` via `inference-gateway/infer-action`) - bumping the action version, adding inputs, or adapting the workflow to a repository's languages and CI conventions.",
       "source": "https://github.com/inference-gateway/opentask/tree/main/.agents/skills/opentask",
       "vendor": "inference-gateway",
       "license": "Apache-2.0",
@@ -221,7 +221,7 @@
       "_source": {
         "url": "https://github.com/inference-gateway/opentask",
         "ref": "main",
-        "fetchedAt": "2026-08-07T14:32:03.550Z"
+        "fetchedAt": "2026-08-27T13:18:41.470Z"
       }
     },
     {
@@ -326,7 +326,7 @@
       "_source": {
         "url": "https://github.com/inference-gateway/tokenless",
         "ref": "main",
-        "fetchedAt": "2026-08-07T14:32:03.550Z"
+        "fetchedAt": "2026-08-27T13:18:41.470Z"
       }
     },
     {
@@ -351,7 +351,7 @@
       "_source": {
         "url": "https://github.com/Xquik-dev/x-twitter-scraper",
         "ref": "v2.4.16",
-        "fetchedAt": "2026-08-07T14:32:03.550Z"
+        "fetchedAt": "2026-08-27T13:18:41.470Z"
       }
     }
   ],
