@@ -300,3 +300,19 @@ skills:
     categories:
       - developer-tools
     homepage: https://github.com/inference-gateway/inference-gateway
+
+  - url: https://github.com/hashgraph-online/hol-guard-plugin
+    ref: v0.3.0
+    path: skills/hol-guard/SKILL.md
+    vendor: Hashgraph Online
+    license: Apache-2.0
+    tags:
+      - security
+      - ai-agents
+      - runtime-safety
+      - hol-guard
+      - codex
+      - claude-code
+    categories:
+      - developer-tools
+    homepage: https://hol.org/guard

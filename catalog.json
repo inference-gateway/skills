@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-08-27T13:18:41.470Z",
+  "updated": "2026-08-28T02:11:46.997Z",
   "skills": [
     {
       "name": "adl",
@@ -22,7 +22,7 @@
       "_source": {
         "url": "https://github.com/inference-gateway/adl",
         "ref": "main",
-        "fetchedAt": "2026-08-27T13:18:41.470Z"
+        "fetchedAt": "2026-08-28T02:11:46.997Z"
       }
     },
     {
@@ -150,6 +150,30 @@
       "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg"
     },
     {
+      "name": "hol-guard",
+      "description": "Use when setting up HOL Guard, protecting local AI harnesses, reviewing Guard approvals or receipts, scanning Codex plugins, skills, MCP servers, marketplace packages, or running plugin-scanner verification before release.",
+      "source": "https://github.com/hashgraph-online/hol-guard-plugin/tree/v0.3.0/skills/hol-guard",
+      "vendor": "Hashgraph Online",
+      "license": "Apache-2.0",
+      "tags": [
+        "security",
+        "ai-agents",
+        "runtime-safety",
+        "hol-guard",
+        "codex",
+        "claude-code"
+      ],
+      "categories": [
+        "developer-tools"
+      ],
+      "homepage": "https://hol.org/guard",
+      "_source": {
+        "url": "https://github.com/hashgraph-online/hol-guard-plugin",
+        "ref": "v0.3.0",
+        "fetchedAt": "2026-08-28T02:11:46.997Z"
+      }
+    },
+    {
       "name": "imagegen",
       "description": "Generate or edit raster images when the task benefits from AI-created bitmap visuals such as photos, illustrations, textures, sprites, mockups, or transparent-background cutouts. Use when Codex should create a brand-new image, transform an existing image, or derive visual variants from references, and the output should be a bitmap asset rather than repo-native code or vector. Do not use when the task is better handled by editing existing SVG/vector/code-native assets, extending an established icon or logo system, or building the visual directly in HTML/CSS/canvas.",
       "source": "https://github.com/openai/codex/tree/rust-v0.146.0/codex-rs/skills/src/assets/samples/imagegen",
@@ -171,7 +195,7 @@
       "_source": {
         "url": "https://github.com/openai/codex",
         "ref": "rust-v0.146.0",
-        "fetchedAt": "2026-08-27T13:18:41.470Z"
+        "fetchedAt": "2026-08-28T02:11:46.997Z"
       }
     },
     {
@@ -197,7 +221,7 @@
       "_source": {
         "url": "https://github.com/mvanhorn/last30days-skill",
         "ref": "v3.18.4",
-        "fetchedAt": "2026-08-27T13:18:41.470Z"
+        "fetchedAt": "2026-08-28T02:11:46.997Z"
       }
     },
     {
@@ -221,7 +245,7 @@
       "_source": {
         "url": "https://github.com/inference-gateway/opentask",
         "ref": "main",
-        "fetchedAt": "2026-08-27T13:18:41.470Z"
+        "fetchedAt": "2026-08-28T02:11:46.997Z"
       }
     },
     {
@@ -326,7 +350,7 @@
       "_source": {
         "url": "https://github.com/inference-gateway/tokenless",
         "ref": "main",
-        "fetchedAt": "2026-08-27T13:18:41.470Z"
+        "fetchedAt": "2026-08-28T02:11:46.997Z"
       }
     },
     {
@@ -351,7 +375,7 @@
       "_source": {
         "url": "https://github.com/Xquik-dev/x-twitter-scraper",
         "ref": "v2.4.16",
-        "fetchedAt": "2026-08-27T13:18:41.470Z"
+        "fetchedAt": "2026-08-28T02:11:46.997Z"
       }
     }
   ],
