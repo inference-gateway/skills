@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-08-27T13:18:41.470Z",
+  "updated": "2026-09-01T15:26:59.108Z",
   "skills": [
     {
       "name": "adl",
@@ -22,7 +22,7 @@
       "_source": {
         "url": "https://github.com/inference-gateway/adl",
         "ref": "main",
-        "fetchedAt": "2026-08-27T13:18:41.470Z"
+        "fetchedAt": "2026-09-01T15:26:59.108Z"
       }
     },
     {
@@ -171,7 +171,7 @@
       "_source": {
         "url": "https://github.com/openai/codex",
         "ref": "rust-v0.146.0",
-        "fetchedAt": "2026-08-27T13:18:41.470Z"
+        "fetchedAt": "2026-09-01T15:26:59.108Z"
       }
     },
     {
@@ -197,7 +197,59 @@
       "_source": {
         "url": "https://github.com/mvanhorn/last30days-skill",
         "ref": "v3.18.4",
-        "fetchedAt": "2026-08-27T13:18:41.470Z"
+        "fetchedAt": "2026-09-01T15:26:59.108Z"
+      }
+    },
+    {
+      "name": "mloda",
+      "description": "Give an AI agent declarative, deterministic data access via mloda (https://github.com/mloda-ai/mloda) - a Python plugin framework where the caller describes WHAT features or data it needs and mloda resolves HOW to compute or fetch them across a plugin graph, with built-in lineage back to source. Use when an agent needs to check whether an existing mloda plugin already covers a requested feature (see the `mloda-plugins` skill for writing a new one), before requesting structured data or feature aggregations as a tool call instead of writing ad hoc fetch/transform code (the \"LLM Tool Function\" pattern), assembling a multi-source context window declaratively, or chaining retrieval/validation/redaction steps for a RAG pipeline by feature name.",
+      "source": "https://github.com/mloda-ai/mloda-skills/tree/main/skills/mloda",
+      "vendor": "mloda-ai",
+      "license": "MIT",
+      "tags": [
+        "mloda",
+        "python",
+        "data-access",
+        "feature-engineering",
+        "rag",
+        "agent-tools"
+      ],
+      "categories": [
+        "developer-tools",
+        "data"
+      ],
+      "homepage": "https://github.com/mloda-ai/mloda",
+      "language": "python",
+      "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+      "_source": {
+        "url": "https://github.com/mloda-ai/mloda-skills",
+        "ref": "main",
+        "fetchedAt": "2026-09-01T15:26:59.108Z"
+      }
+    },
+    {
+      "name": "mloda-plugins",
+      "description": "Guide an AI agent through building mloda (https://github.com/mloda-ai/mloda) plugins: FeatureGroup, ComputeFramework, and Extender classes. Use to check the mloda-registry index for an existing plugin before writing one, when writing or reviewing a FeatureGroup/ComputeFramework/Extender implementation, or when packaging, sharing, or publishing a plugin to mloda-registry.",
+      "source": "https://github.com/mloda-ai/mloda-skills/tree/main/skills/mloda-plugins",
+      "vendor": "mloda-ai",
+      "license": "MIT",
+      "tags": [
+        "mloda",
+        "python",
+        "plugins",
+        "feature-group",
+        "extensibility"
+      ],
+      "categories": [
+        "developer-tools"
+      ],
+      "homepage": "https://github.com/mloda-ai/mloda",
+      "language": "python",
+      "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+      "_source": {
+        "url": "https://github.com/mloda-ai/mloda-skills",
+        "ref": "main",
+        "fetchedAt": "2026-09-01T15:26:59.108Z"
       }
     },
     {
@@ -221,7 +273,7 @@
       "_source": {
         "url": "https://github.com/inference-gateway/opentask",
         "ref": "main",
-        "fetchedAt": "2026-08-27T13:18:41.470Z"
+        "fetchedAt": "2026-09-01T15:26:59.108Z"
       }
     },
     {
@@ -326,7 +378,7 @@
       "_source": {
         "url": "https://github.com/inference-gateway/tokenless",
         "ref": "main",
-        "fetchedAt": "2026-08-27T13:18:41.470Z"
+        "fetchedAt": "2026-09-01T15:26:59.108Z"
       }
     },
     {
@@ -351,7 +403,7 @@
       "_source": {
         "url": "https://github.com/Xquik-dev/x-twitter-scraper",
         "ref": "v2.4.16",
-        "fetchedAt": "2026-08-27T13:18:41.470Z"
+        "fetchedAt": "2026-09-01T15:26:59.108Z"
       }
     }
   ],

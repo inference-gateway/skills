@@ -300,3 +300,37 @@ skills:
     categories:
       - developer-tools
     homepage: https://github.com/inference-gateway/inference-gateway
+
+  - url: https://github.com/mloda-ai/mloda-skills
+    ref: main
+    path: skills/mloda/SKILL.md
+    vendor: mloda-ai
+    license: MIT
+    language: python
+    tags:
+      - mloda
+      - python
+      - data-access
+      - feature-engineering
+      - rag
+      - agent-tools
+    categories:
+      - developer-tools
+      - data
+    homepage: https://github.com/mloda-ai/mloda
+
+  - url: https://github.com/mloda-ai/mloda-skills
+    ref: main
+    path: skills/mloda-plugins/SKILL.md
+    vendor: mloda-ai
+    license: MIT
+    language: python
+    tags:
+      - mloda
+      - python
+      - plugins
+      - feature-group
+      - extensibility
+    categories:
+      - developer-tools
+    homepage: https://github.com/mloda-ai/mloda
