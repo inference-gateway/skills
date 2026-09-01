@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.14.0](https://github.com/inference-gateway/skills/compare/v0.13.1...v0.14.0) (2026-09-01)
+
+### ✨ Features
+
+* **catalog:** add mloda and mloda-plugins external skill entries ([#118](https://github.com/inference-gateway/skills/issues/118)) ([56d4bd1](https://github.com/inference-gateway/skills/commit/56d4bd150c7a1a360697cbf77e5c4c3fbedbc1b5))
+
+### 🔧 Miscellaneous
+
+* **deps:** bump github/codeql-action from 4.37.7 to 4.37.8 in the github-actions group ([#115](https://github.com/inference-gateway/skills/issues/115)) ([12b0615](https://github.com/inference-gateway/skills/commit/12b0615e78d52aae3639d7229035aec23fe158b2))
+* **deps:** bump infer CLI v0.181.0 -> v0.183.0 ([#116](https://github.com/inference-gateway/skills/issues/116)) ([da8455d](https://github.com/inference-gateway/skills/commit/da8455df92d33456b9bd3b03a06b4b6b10da69b0))
+
 ## [0.13.1](https://github.com/inference-gateway/skills/compare/v0.13.0...v0.13.1) (2026-08-26)
 
 ### 🔧 Miscellaneous
