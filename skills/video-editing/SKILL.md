@@ -13,6 +13,13 @@ remux an existing `<stem>.timeline.json`.
 The desktop app renders `<stem>.timeline.json` as an editable timeline, so the file is the contract:
 always read it first if it exists, always write it back after every step that changes it.
 
+## Tools you may use
+
+Only these, nothing else: `Bash` for `ffmpeg`, `whisper-cli`, `cp`, `mkdir` and `grep` inside the
+working directory; `Read` and `Write` for the timeline JSON; `ImageDecode`; `TextToSpeech`. Do not
+use `WebFetch`, `WebSearch`, `find`, package managers, or any other binary, and do not look for
+this skill, other skills or tools on disk: everything you need is listed below at fixed paths.
+
 ## Prerequisites
 
 Everything below is installed by the desktop when a project is switched to the Content type. Do
