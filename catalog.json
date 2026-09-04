@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-09-01T15:38:37Z",
+  "updated": "2026-09-04T16:26:21.686Z",
   "skills": [
     {
       "name": "adl",
@@ -22,7 +22,7 @@
       "_source": {
         "url": "https://github.com/inference-gateway/adl",
         "ref": "main",
-        "fetchedAt": "2026-09-01T15:26:59.108Z"
+        "fetchedAt": "2026-09-04T16:26:21.686Z"
       }
     },
     {
@@ -171,7 +171,7 @@
       "_source": {
         "url": "https://github.com/openai/codex",
         "ref": "rust-v0.146.0",
-        "fetchedAt": "2026-09-01T15:26:59.108Z"
+        "fetchedAt": "2026-09-04T16:26:21.686Z"
       }
     },
     {
@@ -197,7 +197,7 @@
       "_source": {
         "url": "https://github.com/mvanhorn/last30days-skill",
         "ref": "v3.18.4",
-        "fetchedAt": "2026-09-01T15:26:59.108Z"
+        "fetchedAt": "2026-09-04T16:26:21.686Z"
       }
     },
     {
@@ -224,7 +224,7 @@
       "_source": {
         "url": "https://github.com/mloda-ai/mloda-skills",
         "ref": "main",
-        "fetchedAt": "2026-09-01T15:26:59.108Z"
+        "fetchedAt": "2026-09-04T16:26:21.686Z"
       }
     },
     {
@@ -249,7 +249,7 @@
       "_source": {
         "url": "https://github.com/mloda-ai/mloda-skills",
         "ref": "main",
-        "fetchedAt": "2026-09-01T15:26:59.108Z"
+        "fetchedAt": "2026-09-04T16:26:21.686Z"
       }
     },
     {
@@ -273,7 +273,7 @@
       "_source": {
         "url": "https://github.com/inference-gateway/opentask",
         "ref": "main",
-        "fetchedAt": "2026-09-01T15:26:59.108Z"
+        "fetchedAt": "2026-09-04T16:26:21.686Z"
       }
     },
     {
@@ -378,8 +378,26 @@
       "_source": {
         "url": "https://github.com/inference-gateway/tokenless",
         "ref": "main",
-        "fetchedAt": "2026-09-01T15:26:59.108Z"
+        "fetchedAt": "2026-09-04T16:26:21.686Z"
       }
+    },
+    {
+      "name": "video-editing",
+      "description": "Add the user's own cloned voice to a screen recording - probe the video and pull scene keyframes with ffmpeg, describe them with ImageDecode (or write down what the user says in the recording with whisper-cli and clean it up), write a <stem>.timeline.json plan, make the audio for each clip with TextToSpeech (voice_sample cloning) and mux the result into <stem>.with-voice.mp4. Use when the user asks to add a voiceover, add their voice, explain a video, redo the voice on a recording, or redo/remux clips of an existing timeline.",
+      "source": "https://github.com/inference-gateway/skills/tree/main/skills/video-editing",
+      "vendor": "inference-gateway",
+      "license": "Apache-2.0",
+      "tags": [
+        "video",
+        "voiceover",
+        "tts",
+        "ffmpeg",
+        "content-creation"
+      ],
+      "categories": [
+        "media"
+      ],
+      "homepage": "https://github.com/inference-gateway/desktop"
     },
     {
       "name": "x-twitter-scraper",
@@ -403,7 +421,7 @@
       "_source": {
         "url": "https://github.com/Xquik-dev/x-twitter-scraper",
         "ref": "v2.4.16",
-        "fetchedAt": "2026-09-01T15:26:59.108Z"
+        "fetchedAt": "2026-09-04T16:26:21.686Z"
       }
     }
   ],

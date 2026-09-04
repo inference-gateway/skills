@@ -1,0 +1,156 @@
+---
+name: video-editing
+description: Add the user's own cloned voice to a screen recording - probe the video and pull scene keyframes with ffmpeg, describe them with ImageDecode (or write down what the user says in the recording with whisper-cli and clean it up), write a <stem>.timeline.json plan, make the audio for each clip with TextToSpeech (voice_sample cloning) and mux the result into <stem>.with-voice.mp4. Use when the user asks to add a voiceover, add their voice, explain a video, redo the voice on a recording, or redo/remux clips of an existing timeline.
+license: Apache-2.0
+---
+
+# Video Editing
+
+Use this skill when the user gives you a video (usually a macOS screen recording in the working
+directory, silent or with the user talking over it) and wants their voice added, or asks to redo or
+remux an existing `<stem>.timeline.json`.
+
+The desktop app renders `<stem>.timeline.json` as an editable timeline, so the file is the contract:
+always read it first if it exists, always write it back after every step that changes it.
+
+## Prerequisites
+
+- `ffmpeg` on `PATH` (`~/.infer/bin` is included). There is no `ffprobe`; probe with `ffmpeg -i`. If
+  missing, tell the user to enable `text_to_speech.auto_download` or run `brew install ffmpeg`. Do not
+  try to download it yourself.
+- The `ImageDecode` tool must be available (`vision.annotator.enabled` with a vision model). For a
+  local setup the model is typically `ollama/qwen3-vl:2b`; if `ImageDecode` is not in your tool list,
+  stop and tell the user to set the vision model in Settings.
+- The `TextToSpeech` tool must be available (`text_to_speech.enabled`).
+- A voice sample: a 10-30 s `.wav` of the user speaking. The desktop keeps them in
+  `~/.infer/models/tts/samples/`. `TextToSpeech` only accepts a bare file name inside the working
+  directory, so copy the chosen sample to `./voice.wav` once. When the recording itself contains the
+  user's speech (`source_audio: transcribe`), the sample can be cut from it instead (see Source
+  audio). Otherwise, if there is no sample, ask the user to record one (Settings, Voice samples) and
+  stop.
+- `whisper-cli` on `PATH` plus a ggml model under `~/.infer/models/whisper/` (the desktop's voice
+  input downloads `ggml-tiny.bin`; `ggml-base.en.bin` or larger from
+  `https://huggingface.co/ggerganov/whisper.cpp/resolve/main/` transcribes noticeably better). Only
+  needed for `source_audio: transcribe`.
+
+## Timeline contract (`<stem>.timeline.json`)
+
+```json
+{
+  "version": 1,
+  "duration": 42.3,
+  "output": "demo.with-voice.mp4",
+  "source_audio": "transcribe",
+  "tracks": [
+    {
+      "id": "video",
+      "kind": "video",
+      "clips": [{ "id": "v1", "src": "demo.mov", "start": 0, "end": 42.3 }]
+    },
+    {
+      "id": "voice",
+      "kind": "voice",
+      "voice_sample": "voice.wav",
+      "clips": [
+        {
+          "id": "s1",
+          "start": 0.0,
+          "end": 6.2,
+          "text": "First we open the settings panel.",
+          "src": "/Users/me/.infer/tts/demo-s1.wav",
+          "status": "done"
+        },
+        { "id": "s2", "start": 6.2, "end": 12.0, "text": "", "status": "draft" }
+      ]
+    },
+    { "id": "music", "kind": "audio", "gain": 0.2, "clips": [] }
+  ]
+}
+```
+
+- Times are seconds. `src` relative = working directory, absolute = elsewhere (TTS output).
+- `status: "draft"` means the clip needs (re)synthesis. Only touch draft clips; never regenerate a
+  `done` clip the user did not ask about. Keep clip `id`s stable.
+- A draft clip with non-empty `text` was written by the user: keep the text verbatim. Empty text
+  means "suggest something for this range".
+- `kind: "audio"` tracks (music, SFX) are mixed in with their `gain`; never invent them, only mux
+  what is there.
+- `source_audio` says what to do with the recording's own audio track: `transcribe` (reuse the
+  user's own speech as the script and as the voice sample, then replace it), `mute` (drop
+  it), or `keep` (mix it under the voice). Missing means: `transcribe` when the recording has
+  speech, else `mute`; write the choice back so the desktop shows it.
+
+## Steps
+
+1. **Probe.** `ffmpeg -hide_banner -i <video>` (it exits with an error without an output file; read
+   stderr). The `Duration: HH:MM:SS.ms` line gives `duration` in seconds; a `Stream ... Audio:` line
+   means the recording has sound.
+2. **Keyframes.** Prefer scene changes; fall back to fixed sampling on static screens:
+
+   ```sh
+   mkdir -p frames
+   ffmpeg -hide_banner -i <video> -vf "select='gt(scene,0.3)',showinfo,scale=640:-1" -vsync vfr frames/%03d.jpg 2> frames/showinfo.log
+   grep -o 'pts_time:[0-9.]*' frames/showinfo.log
+   ```
+
+   The n-th `pts_time` is the timestamp of `frames/<n>.jpg`. Cap at about 40 frames: raise the
+   threshold (0.4, 0.5) if there are more, or if there are fewer than 4 use
+   `-vf "fps=1/5,scale=640:-1"` (one frame every 5 s) instead.
+
+3. **Describe.** Call `ImageDecode` on every frame with the prompt
+   "One sentence: what is the user doing on screen right now?" Keep the answers with their timestamps.
+   With `source_audio: transcribe`, also run the Source audio steps below; the transcript is the
+   primary script and the frame descriptions only fill gaps.
+4. **Plan.** Group consecutive frames that describe the same activity into segments. Each segment
+   becomes a voice clip: `start` = first frame time, `end` = next segment's start (last one ends
+   at `duration`). Write short, spoken-style text sized to the slot: about 2.5 words per second, so a
+   6 s slot gets at most 15 words. Merge any existing draft clips from the user by their time range.
+   Write `<stem>.timeline.json` with all voice clips `status: "draft"`.
+5. **Synthesize.** For every draft clip:
+   `TextToSpeech { text, voice_sample: "voice.wav", output_path: "<stem>-<id>.wav" }`.
+   The tool reports the wav path and its duration. If the duration exceeds `end - start`, shorten the
+   text and synthesize once more. Set `src` to the reported path and `status: "done"`. Write the
+   JSON after each clip so the desktop can show progress.
+6. **Mux.** Place every voice wav at its start time and mix over the original video:
+
+   ```sh
+   ffmpeg -y -hide_banner -i <video> -i <s1.wav> -i <s2.wav> \
+     -filter_complex "[1]adelay=<s1_start_ms>|<s1_start_ms>[a1];[2]adelay=<s2_start_ms>|<s2_start_ms>[a2];[a1][a2]amix=inputs=2:normalize=0[a]" \
+     -map 0:v -map "[a]" -c:v copy -c:a aac -shortest <output>
+   ```
+
+   One `-i` and one `adelay` per clip; `amix=inputs=N` equals the number of audio inputs. Include
+   `[0:a]` in the mix only when `source_audio` is `keep`; for `transcribe` and `mute` the original
+   track is replaced. For an `audio` track clip add `[k]adelay=<ms>|<ms>,volume=<gain>[ak]` and
+   include `[ak]` in the mix.
+
+7. **Report.** Tell the user the output path, the number of clips, and that they can edit texts on
+   the timeline and ask you to "regenerate draft clips" to redo only those.
+
+## Source audio (re-voicing a spoken recording)
+
+When `source_audio` is `transcribe`, or it is unset and the probe showed an `Audio:` stream:
+
+1. Extract: `ffmpeg -y -i <video> -vn -ac 1 -ar 16000 audio.wav`.
+2. Transcribe with timestamps: `whisper-cli -m ~/.infer/models/whisper/<model>.bin -f audio.wav -oj -of transcript`
+   writes `transcript.json` with `transcription[].timestamps` / `offsets` (ms) and `text`. Use the
+   largest ggml model present. If the transcript is empty or only noise, fall back to `mute` and
+   say so.
+3. Segments: merge transcript lines into clips of one thought each (roughly 4-12 s), `start`/`end`
+   from the offsets. Rewrite every clip's text into clean, simple spoken text: drop filler words, false
+   starts and repetitions, fix grammar, keep the meaning, the order and the timing budget
+   (2.5 words per second). Do not add facts the user did not say.
+4. Voice sample: unless a library sample was chosen, cut the cleanest 15-25 s stretch of
+   continuous speech: `ffmpeg -y -i audio.wav -ss <start> -t <len> voice.wav`.
+5. Continue with Synthesize and Mux; the original track is replaced, not mixed.
+
+## Regenerate / remux
+
+When asked to regenerate: read the JSON, run step 5 for draft clips only, then step 6. When asked
+only to remux (for example after a music track was added), run step 6 only.
+
+## Notes
+
+- Never use `open` or play audio yourself; the desktop renders media inline.
+- Keep `frames/` around during the run and delete it at the end unless the user wants the stills.
+- Voice quality depends on the sample: one speaker, no background noise, no music.
