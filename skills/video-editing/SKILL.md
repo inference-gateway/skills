@@ -1,22 +1,22 @@
 ---
 name: video-editing
-description: Add the user's own cloned voice to a screen recording - probe the video and pull scene keyframes with ffmpeg, describe them with ImageDecode (or write down what the user says in the recording with whisper-cli and clean it up), write a <stem>.timeline.json plan, and make the audio for each clip with TextToSpeech (voice_sample cloning). The desktop renders the export; the agent never muxes. Use when the user asks to add a voiceover, add their voice, explain a video, redo the voice on a recording, or redo/remux clips of an existing timeline.
+description: Add the user's own cloned voice to a screen recording - probe the video and pull scene keyframes with ffmpeg, describe them with ImageDecode (or write down what the user says in the recording with whisper-cli and clean it up), write a <stem>.timeline.json plan, and make the audio for each clip with TextToSpeech (voice_sample cloning). The desktop renders the export; the agent never muxes. Use when the user asks to add a voiceover, add their voice, explain a video, redo the voice on a recording, or redo clips of an existing timeline.
 license: Apache-2.0
 ---
 
 # Video Editing
 
 Use this skill when the user gives you a video (usually a macOS screen recording in the working
-directory, silent or with the user talking over it) and wants their voice added, or asks to redo or
-remux an existing `<stem>.timeline.json`.
+directory, silent or with the user talking over it) and wants their voice added, or asks to redo clips of
+an existing `<stem>.timeline.json`.
 
 The desktop app renders `<stem>.timeline.json` as an editable timeline, so the file is the contract:
 always read it first if it exists, always write it back after every step that changes it.
 
 ## Tools you may use
 
-Only these, nothing else: `Bash` for `ffmpeg`, `whisper-cli`, `cp`, `mkdir` and `grep` inside the
-working directory; `Read` and `Write` for the timeline JSON; `ImageDecode`; `TextToSpeech`. Do not
+Only these, nothing else: `Bash` for `ffmpeg`, `whisper-cli`, `cp`, `mkdir`, `ls`, `grep` and `rm` (scratch
+files only) inside the working directory; `Read` and `Write` for the timeline JSON; `ImageDecode`; `TextToSpeech`. Do not
 use `WebFetch`, `WebSearch`, `find`, package managers, or any other binary, and do not look for
 this skill, other skills or tools on disk: everything you need is listed below at fixed paths.
 
@@ -100,7 +100,7 @@ directory next to the video and the timeline.
 
    ```sh
    mkdir -p frames
-   ffmpeg -hide_banner -i <video> -vf "select='gt(scene,0.3)',showinfo,scale=640:-1" -vsync vfr frames/%03d.jpg 2> frames/showinfo.log
+   ffmpeg -hide_banner -i <video> -vf "select='gt(scene,0.3)',showinfo,scale=640:-1" -fps_mode vfr frames/%03d.jpg 2> frames/showinfo.log
    grep -o 'pts_time:[0-9.]*' frames/showinfo.log
    ```
 
@@ -135,7 +135,7 @@ When `source_audio` is `transcribe`, or it is unset and the probe showed an `Aud
 2. Transcribe with timestamps: `~/.infer/bin/whisper-cli -m ~/.infer/models/whisper/ggml-tiny.bin -f audio.wav -oj -of transcript`
    writes `transcript.json` with `transcription[].timestamps` / `offsets` (ms) and `text`. Use the
    largest ggml model present. If the transcript is empty or only noise, fall back to `mute` and
-   say so.
+   say so; do not try to boost, filter or split the audio and transcribe again.
 3. Segments: merge transcript lines into clips of one thought each (roughly 4-12 s), `start`/`end`
    from the offsets. Rewrite every clip's text into clean, simple spoken text: drop filler words, false
    starts and repetitions, fix grammar, keep the meaning, the order and the timing budget
@@ -147,10 +147,13 @@ When `source_audio` is `transcribe`, or it is unset and the probe showed an `Aud
 ## Redo drafts
 
 When asked to redo or regenerate: read the JSON, run step 5 for `draft` clips only, then stop as in
-step 6. Never touch `done` clips the user did not edit.
+step 6. Never touch `done` clips the user did not edit. When asked for one clip by id, the desktop
+has already marked that clip `draft` with the user's edited text: synthesize exactly that clip with
+that text, keep its `id`, `start` and `end`, and leave everything else alone.
 
 ## Notes
 
 - Never use `open` or play audio yourself; the desktop renders media inline.
-- Keep `frames/` around during the run and delete it at the end unless the user wants the stills.
+- Remove `frames/` with `rm -r frames` at the end unless the user wants the stills; leave the other
+  scratch files in place.
 - Voice quality depends on the sample: one speaker, no background noise, no music.
