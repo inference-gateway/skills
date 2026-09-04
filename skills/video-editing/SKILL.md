@@ -41,8 +41,8 @@ If any of these is missing, stop and tell the user exactly which one: tools and 
 installed by switching the project to Content in Settings > Projects; the two agent tools are
 enabled in Settings > General; voice samples are recorded in Settings > Voice samples.
 
-Scratch files (`frames/`, `audio.wav`, `voice.wav`, `transcript.json`) live in the working
-directory next to the video and the timeline.
+Scratch files (`frames/`, `audio.wav`, `voice.wav`, `transcript.json`) and the clip audio (`clips/`)
+live in the working directory next to the video and the timeline.
 
 ## Timeline contract (`<stem>.timeline.json`)
 
@@ -68,7 +68,7 @@ directory next to the video and the timeline.
           "start": 0.0,
           "end": 6.2,
           "text": "First we open the settings panel.",
-          "src": "/Users/me/.infer/tts/demo-s1.wav",
+          "src": "clips/demo-s1.wav",
           "status": "done"
         },
         { "id": "s2", "start": 6.2, "end": 12.0, "text": "", "status": "draft" }
@@ -79,7 +79,8 @@ directory next to the video and the timeline.
 }
 ```
 
-- Times are seconds. `src` relative = working directory, absolute = elsewhere (TTS output).
+- Times are seconds. `src` is relative to the working directory; clip audio lives in `clips/` so the
+  project folder is self-contained.
 - `status: "draft"` means the clip needs (re)synthesis. Only touch draft clips; never regenerate a
   `done` clip the user did not ask about. Keep clip `id`s stable.
 - A draft clip with non-empty `text` was written by the user: keep the text verbatim. Empty text
@@ -119,9 +120,11 @@ directory next to the video and the timeline.
    Write `<stem>.timeline.json` with all voice clips `status: "draft"`.
 5. **Synthesize.** For every draft clip:
    `TextToSpeech { text, voice_sample: "voice.wav", output_path: "<stem>-<id>.wav" }`.
-   The tool reports the wav path and its duration. If the duration exceeds `end - start`, shorten the
-   text and synthesize once more. Set `src` to the reported path and `status: "done"`. Write the
-   JSON after each clip so the desktop can show progress.
+   The tool reports the wav path (under `~/.infer/tts/`) and its duration. If the duration exceeds
+   `end - start`, shorten the text and synthesize once more. Copy the wav into the project:
+   `mkdir -p clips && cp "<reported path>" "clips/<stem>-<id>.wav"`, set `src` to
+   `clips/<stem>-<id>.wav` and `status: "done"`. Write the JSON after each clip so the desktop can
+   show progress.
 6. **Stop here.** Do not mux, render or export anything, and do not run ffmpeg on the output:
    the user reviews the clips on the timeline and presses Export, which renders the video
    deterministically from the JSON. Tell the user how many clips you placed, that every clip can be
