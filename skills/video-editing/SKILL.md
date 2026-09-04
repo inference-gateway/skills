@@ -1,6 +1,6 @@
 ---
 name: video-editing
-description: Add the user's own cloned voice to a screen recording - probe the video and pull scene keyframes with ffmpeg, describe them with ImageDecode (or write down what the user says in the recording with whisper-cli and clean it up), write a <stem>.timeline.json plan, make the audio for each clip with TextToSpeech (voice_sample cloning) and mux the result into <stem>.with-voice.mp4. Use when the user asks to add a voiceover, add their voice, explain a video, redo the voice on a recording, or redo/remux clips of an existing timeline.
+description: Add the user's own cloned voice to a screen recording - probe the video and pull scene keyframes with ffmpeg, describe them with ImageDecode (or write down what the user says in the recording with whisper-cli and clean it up), write a <stem>.timeline.json plan, and make the audio for each clip with TextToSpeech (voice_sample cloning). The desktop renders the export; the agent never muxes. Use when the user asks to add a voiceover, add their voice, explain a video, redo the voice on a recording, or redo/remux clips of an existing timeline.
 license: Apache-2.0
 ---
 
@@ -84,8 +84,8 @@ directory next to the video and the timeline.
   `done` clip the user did not ask about. Keep clip `id`s stable.
 - A draft clip with non-empty `text` was written by the user: keep the text verbatim. Empty text
   means "suggest something for this range".
-- `kind: "audio"` tracks (music, SFX) are mixed in with their `gain`; never invent them, only mux
-  what is there.
+- `kind: "audio"` tracks (music, SFX) are mixed in by the desktop's export with their `gain`; never
+  invent them.
 - `source_audio` says what to do with the recording's own audio track: `transcribe` (reuse the
   user's own speech as the script and as the voice sample, then replace it), `mute` (drop
   it), or `keep` (mix it under the voice). Missing means: `transcribe` when the recording has
@@ -122,21 +122,10 @@ directory next to the video and the timeline.
    The tool reports the wav path and its duration. If the duration exceeds `end - start`, shorten the
    text and synthesize once more. Set `src` to the reported path and `status: "done"`. Write the
    JSON after each clip so the desktop can show progress.
-6. **Mux.** Place every voice wav at its start time and mix over the original video:
-
-   ```sh
-   ffmpeg -y -hide_banner -i <video> -i <s1.wav> -i <s2.wav> \
-     -filter_complex "[1]adelay=<s1_start_ms>|<s1_start_ms>[a1];[2]adelay=<s2_start_ms>|<s2_start_ms>[a2];[a1][a2]amix=inputs=2:normalize=0[a]" \
-     -map 0:v -map "[a]" -c:v copy -c:a aac -shortest <output>
-   ```
-
-   One `-i` and one `adelay` per clip; `amix=inputs=N` equals the number of audio inputs. Include
-   `[0:a]` in the mix only when `source_audio` is `keep`; for `transcribe` and `mute` the original
-   track is replaced. For an `audio` track clip add `[k]adelay=<ms>|<ms>,volume=<gain>[ak]` and
-   include `[ak]` in the mix.
-
-7. **Report.** Tell the user the output path, the number of clips, and that they can edit texts on
-   the timeline and ask you to "regenerate draft clips" to redo only those.
+6. **Stop here.** Do not mux, render or export anything, and do not run ffmpeg on the output:
+   the user reviews the clips on the timeline and presses Export, which renders the video
+   deterministically from the JSON. Tell the user how many clips you placed, that every clip can be
+   edited on the timeline, and that "redo the draft clips" regenerates only the edited ones.
 
 ## Source audio (re-voicing a spoken recording)
 
@@ -153,12 +142,12 @@ When `source_audio` is `transcribe`, or it is unset and the probe showed an `Aud
    (2.5 words per second). Do not add facts the user did not say.
 4. Voice sample: unless a library sample was chosen, cut the cleanest 15-25 s stretch of
    continuous speech: `ffmpeg -y -i audio.wav -ss <start> -t <len> voice.wav`.
-5. Continue with Synthesize and Mux; the original track is replaced, not mixed.
+5. Continue with Synthesize, then stop; the export replaces the original track.
 
-## Regenerate / remux
+## Redo drafts
 
-When asked to regenerate: read the JSON, run step 5 for draft clips only, then step 6. When asked
-only to remux (for example after a music track was added), run step 6 only.
+When asked to redo or regenerate: read the JSON, run step 5 for `draft` clips only, then stop as in
+step 6. Never touch `done` clips the user did not edit.
 
 ## Notes
 
