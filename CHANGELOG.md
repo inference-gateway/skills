@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.15.0](https://github.com/inference-gateway/skills/compare/v0.14.0...v0.15.0) (2026-09-04)
+
+### ✨ Features
+
+* add video-editing skill ([#123](https://github.com/inference-gateway/skills/issues/123)) ([14b7986](https://github.com/inference-gateway/skills/commit/14b798676a227c0dbbaf65dfa618ff8a5b0dec80))
+
+### 🔧 Miscellaneous
+
+* **deps:** bump claude-code 2.1.238 -> 2.1.245 ([#121](https://github.com/inference-gateway/skills/issues/121)) ([e7b5498](https://github.com/inference-gateway/skills/commit/e7b5498c73c78fe8780c83b1fd61ff7f7a38d187))
+* **deps:** bump github/codeql-action in the github-actions group ([#120](https://github.com/inference-gateway/skills/issues/120)) ([41b742c](https://github.com/inference-gateway/skills/commit/41b742c4ad082151ee23809ee67c54e886fa727d))
+* **deps:** bump js-yaml in the bun-dependencies group ([#119](https://github.com/inference-gateway/skills/issues/119)) ([cc818fe](https://github.com/inference-gateway/skills/commit/cc818fee37ee49c5a19793a1b13b21d0b2739737))
+
 ## [0.14.0](https://github.com/inference-gateway/skills/compare/v0.13.1...v0.14.0) (2026-09-01)
 
 ### ✨ Features
