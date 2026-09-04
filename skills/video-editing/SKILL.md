@@ -15,40 +15,27 @@ always read it first if it exists, always write it back after every step that ch
 
 ## Prerequisites
 
-- `ffmpeg` and (for `source_audio: transcribe`) `whisper-cli`. Look in `~/.infer/bin` and on `PATH`
-  first; if a binary is missing, download it yourself from the
-  [inference-gateway/binaries](https://github.com/inference-gateway/binaries/releases) release - the
-  same prebuilt, statically linked assets the CLI and gateway use. There is no `ffprobe` asset;
-  probe with `ffmpeg -i`.
+Everything below is installed by the desktop when a project is switched to the Content type. Do
+not download, build, symlink or search the disk for tools, and do not create directories anywhere
+under `~/.infer`; the only place you write is the working directory.
 
-  ```sh
-  # name: ffmpeg | whisper-cli    os: darwin | linux | windows    arch: arm64 | amd64
-  os=$(uname -s | tr A-Z a-z); arch=$(uname -m | sed 's/x86_64/amd64/; s/aarch64/arm64/')
-  base=https://github.com/inference-gateway/binaries/releases/latest/download
-  mkdir -p ~/.infer/bin
-  curl -fsSL -o ~/.infer/bin/<name> $base/<name>-$os-$arch
-  curl -fsSL -o /tmp/checksums.txt $base/checksums.txt
-  grep "<name>-$os-$arch" /tmp/checksums.txt
-  shasum -a 256 ~/.infer/bin/<name>
-  chmod +x ~/.infer/bin/<name>
-  ```
-
-  The two sha256 lines must match; delete the file and stop if they do not. Windows assets end in
-  `.exe`. Run the tools as `~/.infer/bin/<name>` when they are not on `PATH`.
-
-- A whisper ggml model under `~/.infer/models/whisper/` (only for `source_audio: transcribe`). The
-  desktop's voice input downloads `ggml-tiny.bin`; `ggml-base.en.bin` or larger transcribes noticeably
-  better: `curl -fsSL -o ~/.infer/models/whisper/ggml-base.en.bin https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-base.en.bin`.
-- The `ImageDecode` tool must be available (`vision.annotator.enabled` with a vision model). For a
-  local setup the model is typically `ollama/qwen3-vl:2b`; if `ImageDecode` is not in your tool list,
-  stop and tell the user to set the vision model in Settings.
-- The `TextToSpeech` tool must be available (`text_to_speech.enabled`).
-- A voice sample: a 10-30 s `.wav` of the user speaking. The desktop keeps them in
+- `~/.infer/bin/ffmpeg` (also on `PATH`). There is no `ffprobe`; probe with `ffmpeg -i`.
+- `~/.infer/bin/whisper-cli` with the model `~/.infer/models/whisper/ggml-tiny.bin` (only for
+  `source_audio: transcribe`). Use a larger model only if one already exists in that directory.
+- The `ImageDecode` tool (`vision.annotator.enabled` with a vision model, typically
+  `ollama/qwen3-vl:2b` for a local setup) and the `TextToSpeech` tool (`text_to_speech.enabled`).
+- A voice sample: a 10-30 s `.wav` of the user speaking, kept by the desktop in
   `~/.infer/models/tts/samples/`. `TextToSpeech` only accepts a bare file name inside the working
   directory, so copy the chosen sample to `./voice.wav` once. When the recording itself contains the
   user's speech (`source_audio: transcribe`), the sample can be cut from it instead (see Source
-  audio). Otherwise, if there is no sample, ask the user to record one (Settings, Voice samples) and
-  stop.
+  audio).
+
+If any of these is missing, stop and tell the user exactly which one: tools and the model are
+installed by switching the project to Content in Settings > Projects; the two agent tools are
+enabled in Settings > General; voice samples are recorded in Settings > Voice samples.
+
+Scratch files (`frames/`, `audio.wav`, `voice.wav`, `transcript.json`) live in the working
+directory next to the video and the timeline.
 
 ## Timeline contract (`<stem>.timeline.json`)
 
@@ -149,7 +136,7 @@ always read it first if it exists, always write it back after every step that ch
 When `source_audio` is `transcribe`, or it is unset and the probe showed an `Audio:` stream:
 
 1. Extract: `ffmpeg -y -i <video> -vn -ac 1 -ar 16000 audio.wav`.
-2. Transcribe with timestamps: `whisper-cli -m ~/.infer/models/whisper/<model>.bin -f audio.wav -oj -of transcript`
+2. Transcribe with timestamps: `~/.infer/bin/whisper-cli -m ~/.infer/models/whisper/ggml-tiny.bin -f audio.wav -oj -of transcript`
    writes `transcript.json` with `transcription[].timestamps` / `offsets` (ms) and `text`. Use the
    largest ggml model present. If the transcript is empty or only noise, fall back to `mute` and
    say so.
