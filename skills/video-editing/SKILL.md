@@ -15,9 +15,30 @@ always read it first if it exists, always write it back after every step that ch
 
 ## Prerequisites
 
-- `ffmpeg` on `PATH` (`~/.infer/bin` is included). There is no `ffprobe`; probe with `ffmpeg -i`. If
-  missing, tell the user to enable `text_to_speech.auto_download` or run `brew install ffmpeg`. Do not
-  try to download it yourself.
+- `ffmpeg` and (for `source_audio: transcribe`) `whisper-cli`. Look in `~/.infer/bin` and on `PATH`
+  first; if a binary is missing, download it yourself from the
+  [inference-gateway/binaries](https://github.com/inference-gateway/binaries/releases) release - the
+  same prebuilt, statically linked assets the CLI and gateway use. There is no `ffprobe` asset;
+  probe with `ffmpeg -i`.
+
+  ```sh
+  # name: ffmpeg | whisper-cli    os: darwin | linux | windows    arch: arm64 | amd64
+  os=$(uname -s | tr A-Z a-z); arch=$(uname -m | sed 's/x86_64/amd64/; s/aarch64/arm64/')
+  base=https://github.com/inference-gateway/binaries/releases/latest/download
+  mkdir -p ~/.infer/bin
+  curl -fsSL -o ~/.infer/bin/<name> $base/<name>-$os-$arch
+  curl -fsSL -o /tmp/checksums.txt $base/checksums.txt
+  grep "<name>-$os-$arch" /tmp/checksums.txt
+  shasum -a 256 ~/.infer/bin/<name>
+  chmod +x ~/.infer/bin/<name>
+  ```
+
+  The two sha256 lines must match; delete the file and stop if they do not. Windows assets end in
+  `.exe`. Run the tools as `~/.infer/bin/<name>` when they are not on `PATH`.
+
+- A whisper ggml model under `~/.infer/models/whisper/` (only for `source_audio: transcribe`). The
+  desktop's voice input downloads `ggml-tiny.bin`; `ggml-base.en.bin` or larger transcribes noticeably
+  better: `curl -fsSL -o ~/.infer/models/whisper/ggml-base.en.bin https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-base.en.bin`.
 - The `ImageDecode` tool must be available (`vision.annotator.enabled` with a vision model). For a
   local setup the model is typically `ollama/qwen3-vl:2b`; if `ImageDecode` is not in your tool list,
   stop and tell the user to set the vision model in Settings.
@@ -28,10 +49,6 @@ always read it first if it exists, always write it back after every step that ch
   user's speech (`source_audio: transcribe`), the sample can be cut from it instead (see Source
   audio). Otherwise, if there is no sample, ask the user to record one (Settings, Voice samples) and
   stop.
-- `whisper-cli` on `PATH` plus a ggml model under `~/.infer/models/whisper/` (the desktop's voice
-  input downloads `ggml-tiny.bin`; `ggml-base.en.bin` or larger from
-  `https://huggingface.co/ggerganov/whisper.cpp/resolve/main/` transcribes noticeably better). Only
-  needed for `source_audio: transcribe`.
 
 ## Timeline contract (`<stem>.timeline.json`)
 
