@@ -1,34 +1,53 @@
-import { expect, test } from 'bun:test';
+import assert from 'node:assert/strict';
 import { mkdtempSync } from 'node:fs';
 import { writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { mergeSarif } from './scan-skills.mjs';
+import { test } from 'node:test';
+import { mergeSarif, scanTargets } from './scan-skills.mjs';
 
-const dir = mkdtempSync(join(tmpdir(), 'sarif-test-'));
+test('scanTargets: local, external, and root SKILL.md', () => {
+  const [local, external, root] = scanTargets([
+    { url: 'https://github.com/inference-gateway/skills', path: 'skills/adl/SKILL.md' },
+    { url: 'https://github.com/Xquik-dev/x-twitter-scraper', ref: 'v2.4.16', path: 'skills/x-twitter-scraper/SKILL.md' },
+    { url: 'https://github.com/acme/solo-skill' }, // no path/ref -> defaults
+  ]);
 
-const sarif = (rules, results) => ({
-  version: '2.1.0',
-  $schema: 'x',
-  runs: [{ tool: { driver: { name: 'skillspector', rules } }, results }],
+  assert.equal(local.isSelf, true);
+  assert.equal(local.name, 'adl');
+  assert.equal(local.dir, 'skills/adl');
+
+  assert.equal(external.isSelf, false);
+  assert.equal(external.name, 'x-twitter-scraper');
+  assert.equal(external.ref, 'v2.4.16');
+  assert.equal(external.owner, 'Xquik-dev');
+
+  assert.equal(root.name, 'solo-skill'); // falls back to repo name
+  assert.equal(root.ref, 'main'); // default ref
+  assert.equal(root.path, 'SKILL.md'); // default path
 });
 
-async function write(name, doc) {
-  const p = join(dir, `${name}.sarif`);
-  await writeFile(p, JSON.stringify(doc));
-  return p;
-}
+test('scanTargets: rejects a non-GitHub url', () => {
+  assert.throws(() => scanTargets([{ url: 'https://example.com/foo' }]), /invalid or missing GitHub url/);
+});
 
-test('merges runs into one, deduping rules and remapping indices', async () => {
+test('mergeSarif: one run, rules deduped, ruleIndex remapped, skill named in message', async () => {
+  const dir = mkdtempSync(join(tmpdir(), 'sarif-test-'));
+  const sarif = async (name, rules, results) => {
+    const p = join(dir, `${name}.sarif`);
+    await writeFile(p, JSON.stringify({ version: '2.1.0', $schema: 'x', runs: [{ tool: { driver: { name: 'skillspector', rules } }, results }] }));
+    return p;
+  };
+
   const merged = {};
-  await mergeSarif(merged, await write('a', sarif([{ id: 'SHARED' }, { id: 'A' }], [{ ruleIndex: 1, message: { text: 'hit' } }])), 'a');
-  await mergeSarif(merged, await write('b', sarif([{ id: 'B' }, { id: 'SHARED' }], [{ ruleIndex: 1, message: { text: 'hit' } }])), 'b');
+  await mergeSarif(merged, await sarif('a', [{ id: 'SHARED' }, { id: 'A' }], [{ ruleIndex: 1, message: { text: 'hit' } }]), 'a');
+  await mergeSarif(merged, await sarif('b', [{ id: 'B' }, { id: 'SHARED' }], [{ ruleIndex: 1, message: { text: 'hit' } }]), 'b');
 
   const rules = merged.run.tool.driver.rules;
-  expect(rules.map((r) => r.id)).toEqual(['SHARED', 'A', 'B']);
-  expect(merged.run.results.map((r) => [r.message.text, rules[r.ruleIndex].id])).toEqual([
-    ['[a] hit', 'A'],
-    ['[b] hit', 'SHARED'],
-  ]);
-  expect(merged.run.automationDetails).toEqual({ id: 'skillspector' });
+  assert.deepEqual(rules.map((r) => r.id), ['SHARED', 'A', 'B']);
+  assert.deepEqual(
+    merged.run.results.map((r) => [r.message.text, rules[r.ruleIndex].id]),
+    [['[a] hit', 'A'], ['[b] hit', 'SHARED']],
+  );
+  assert.deepEqual(merged.run.automationDetails, { id: 'skillspector' });
 });
