@@ -1,7 +1,9 @@
 #!/usr/bin/env bun
 // Security-scans every skill in `skills.yaml` with NVIDIA SkillSpector and
-// writes one SARIF report per skill (into ./sarif) for CI to upload to the
-// GitHub code-scanning tab. See docs/security-scanning.md for the policy.
+// writes a single combined SARIF report (./sarif/skills.sarif) for CI to
+// upload to the GitHub code-scanning tab. See docs/security-scanning.md for
+// the policy. One run - not one per skill - because code scanning rejects an
+// upload with more than 20 runs, which a per-skill run hits at 21 skills.
 //
 // Gating is SkillSpector's own exit code: `scan` exits 1 when a skill's risk
 // score exceeds its threshold (>50), 2 on a scan error, 0 otherwise. This
@@ -86,12 +88,35 @@ function appendSummary(md) {
   if (f) writeFileSync(f, md, { flag: 'a' });
 }
 
-// Give each SARIF run a unique automationDetails.id so the upload-sarif action
-// can combine per-skill files without a category collision.
-async function tagSarif(sarifPath, id) {
+// Fold one skill's SARIF into the shared run: every scan uses the same tool,
+// so results merge as long as each run's rule indices are remapped onto the
+// combined rule list (deduped by rule id).
+export async function mergeSarif(merged, sarifPath, name) {
   const raw = JSON.parse(await readFile(sarifPath, 'utf8'));
-  if (raw?.runs?.[0]) raw.runs[0].automationDetails = { id };
-  await writeFile(sarifPath, JSON.stringify(raw, null, 2));
+  const run = raw?.runs?.[0];
+  if (!run) return;
+
+  if (!merged.run) {
+    merged.version = raw.version;
+    merged.$schema = raw.$schema;
+    merged.run = { ...run, results: [], automationDetails: { id: 'skillspector' } };
+    merged.run.tool = { ...run.tool, driver: { ...run.tool?.driver, rules: [] } };
+  }
+
+  const rules = merged.run.tool.driver.rules;
+  const remap = (run.tool?.driver?.rules || []).map((rule) => {
+    const at = rules.findIndex((r) => r.id === rule.id);
+    if (at !== -1) return at;
+    rules.push(rule);
+    return rules.length - 1;
+  });
+
+  for (const result of run.results || []) {
+    if (typeof result.ruleIndex === 'number') result.ruleIndex = remap[result.ruleIndex] ?? -1;
+    // Name the skill in the alert - the scanned path is a scratch dir.
+    result.message = { ...result.message, text: `[${name}] ${result.message?.text ?? ''}` };
+    merged.run.results.push(result);
+  }
 }
 
 async function main() {
@@ -100,13 +125,15 @@ async function main() {
   console.log(`Scanning ${targets.length} skill(s) with ${CMD} (${ENFORCE ? 'enforce' : 'warn-only'})`);
 
   const rows = [];
+  const merged = {};
+  const scratch = mkdtempSync(join(tmpdir(), 'skillspector-sarif-'));
   let failures = 0;
   for (const t of targets) {
-    const sarifPath = join(OUT_DIR, `${t.name}.sarif`);
+    const sarifPath = join(scratch, `${t.name}.sarif`);
     let status;
     try {
       status = scan(t, await resolveTarget(t), sarifPath);
-      if (status !== 2) await tagSarif(sarifPath, t.name);
+      if (status !== 2) await mergeSarif(merged, sarifPath, t.name);
     } catch (err) {
       console.error(`  ✗ ${t.name}: ${err.message}`);
       status = 2;
@@ -116,6 +143,13 @@ async function main() {
     rows.push(`| ${t.name} | ${t.isSelf ? 'local' : `${t.owner}/${t.repo}@${t.ref}`} | ${verdict} |`);
     console.log(`  ${status === 0 ? '✓' : '✗'} ${t.name}: ${verdict}`);
   }
+
+  const combined = {
+    version: merged.version || '2.1.0',
+    $schema: merged.$schema || 'https://json.schemastore.org/sarif-2.1.0.json',
+    runs: merged.run ? [merged.run] : [],
+  };
+  await writeFile(join(OUT_DIR, 'skills.sarif'), JSON.stringify(combined, null, 2));
 
   const summary = [
     '## SkillSpector security scan',
