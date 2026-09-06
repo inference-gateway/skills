@@ -348,3 +348,18 @@ skills:
     categories:
       - media
     homepage: https://github.com/inference-gateway/desktop
+
+  - url: https://github.com/wondelai/skills
+    ref: v1.8.0
+    path: domain-driven-design/SKILL.md
+    vendor: wondelai
+    license: MIT
+    tags:
+      - domain-driven-design
+      - ddd
+      - architecture
+      - bounded-context
+      - software-design
+    categories:
+      - developer-tools
+    homepage: https://skills.wondel.ai

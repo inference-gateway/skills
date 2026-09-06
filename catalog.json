@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-09-04T17:34:23Z",
+  "updated": "2026-09-06T13:16:06.717Z",
   "skills": [
     {
       "name": "adl",
@@ -22,7 +22,7 @@
       "_source": {
         "url": "https://github.com/inference-gateway/adl",
         "ref": "main",
-        "fetchedAt": "2026-09-04T17:25:12.324Z"
+        "fetchedAt": "2026-09-06T13:16:06.717Z"
       }
     },
     {
@@ -87,6 +87,29 @@
       "homepage": "https://github.com/cpp-best-practices/cppbestpractices",
       "language": "cpp",
       "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg"
+    },
+    {
+      "name": "domain-driven-design",
+      "description": "Model software around the business domain using bounded contexts, aggregates, and ubiquitous language. Use when the user mentions \"domain modeling\", \"bounded context\", \"aggregate root\", \"ubiquitous language\", \"anti-corruption layer\", \"context mapping\", \"domain events\", \"strategic design\", \"the code doesnt match the business\", or \"how do we split this big system\". Also trigger when breaking a monolith into services, defining service boundaries, or aligning code structure with business processes. Covers entities vs value objects, domain events, and context mapping strategies. For architecture layers, see clean-architecture. For complexity, see software-design-philosophy.",
+      "source": "https://github.com/wondelai/skills/tree/v1.8.0/domain-driven-design",
+      "vendor": "wondelai",
+      "license": "MIT",
+      "tags": [
+        "domain-driven-design",
+        "ddd",
+        "architecture",
+        "bounded-context",
+        "software-design"
+      ],
+      "categories": [
+        "developer-tools"
+      ],
+      "homepage": "https://skills.wondel.ai",
+      "_source": {
+        "url": "https://github.com/wondelai/skills",
+        "ref": "v1.8.0",
+        "fetchedAt": "2026-09-06T13:16:06.717Z"
+      }
     },
     {
       "name": "go",
@@ -171,7 +194,7 @@
       "_source": {
         "url": "https://github.com/openai/codex",
         "ref": "rust-v0.146.0",
-        "fetchedAt": "2026-09-04T17:25:12.324Z"
+        "fetchedAt": "2026-09-06T13:16:06.717Z"
       }
     },
     {
@@ -197,7 +220,7 @@
       "_source": {
         "url": "https://github.com/mvanhorn/last30days-skill",
         "ref": "v3.18.4",
-        "fetchedAt": "2026-09-04T17:25:12.324Z"
+        "fetchedAt": "2026-09-06T13:16:06.717Z"
       }
     },
     {
@@ -224,7 +247,7 @@
       "_source": {
         "url": "https://github.com/mloda-ai/mloda-skills",
         "ref": "main",
-        "fetchedAt": "2026-09-04T17:25:12.324Z"
+        "fetchedAt": "2026-09-06T13:16:06.717Z"
       }
     },
     {
@@ -249,7 +272,7 @@
       "_source": {
         "url": "https://github.com/mloda-ai/mloda-skills",
         "ref": "main",
-        "fetchedAt": "2026-09-04T17:25:12.324Z"
+        "fetchedAt": "2026-09-06T13:16:06.717Z"
       }
     },
     {
@@ -273,7 +296,7 @@
       "_source": {
         "url": "https://github.com/inference-gateway/opentask",
         "ref": "main",
-        "fetchedAt": "2026-09-04T17:25:12.324Z"
+        "fetchedAt": "2026-09-06T13:16:06.717Z"
       }
     },
     {
@@ -378,7 +401,7 @@
       "_source": {
         "url": "https://github.com/inference-gateway/tokenless",
         "ref": "main",
-        "fetchedAt": "2026-09-04T17:25:12.324Z"
+        "fetchedAt": "2026-09-06T13:16:06.717Z"
       }
     },
     {
@@ -421,7 +444,7 @@
       "_source": {
         "url": "https://github.com/Xquik-dev/x-twitter-scraper",
         "ref": "v2.4.16",
-        "fetchedAt": "2026-09-04T17:25:12.324Z"
+        "fetchedAt": "2026-09-06T13:16:06.717Z"
       }
     }
   ],
