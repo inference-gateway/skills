@@ -26,6 +26,29 @@
       }
     },
     {
+      "name": "clean-architecture",
+      "description": "Structure software around the Dependency Rule: source code dependencies point inward from frameworks to use cases to entities. Use when the user mentions \"architecture layers\", \"dependency rule\", \"ports and adapters (hexagonal)\", \"onion architecture\", \"screaming architecture\", \"where should business logic go\", \"decouple from the database\", \"swap the framework without a rewrite\", or \"keep business rules independent\". Also trigger when deciding which layer code belongs in, isolating core logic from infrastructure, defining module boundaries, or debating whether the framework should call your code or the reverse. Covers component principles, boundaries, and SOLID. For code-level quality, see clean-code. For domain modeling, see domain-driven-design.",
+      "source": "https://github.com/wondelai/skills/tree/v1.8.0/clean-architecture",
+      "vendor": "wondelai",
+      "license": "MIT",
+      "tags": [
+        "clean-architecture",
+        "architecture",
+        "hexagonal",
+        "solid",
+        "dependency-rule"
+      ],
+      "categories": [
+        "developer-tools"
+      ],
+      "homepage": "https://skills.wondel.ai",
+      "_source": {
+        "url": "https://github.com/wondelai/skills",
+        "ref": "v1.8.0",
+        "fetchedAt": "2026-09-06T13:49:44.726Z"
+      }
+    },
+    {
       "name": "clean-code",
       "description": "Write readable, maintainable code through disciplined naming, small functions, and clean error handling. Use when the user mentions \"clean up this code\", \"this function is too long\", \"code smells\", \"naming conventions\", \"boy scout rule\", \"single responsibility\", or \"unit test quality\". Also trigger when reviewing a pull request for readability, untangling a messy function, debating comment styles, or improving error-handling patterns. Covers SRP, comment discipline, formatting, and unit testing. For refactoring techniques, see refactoring-patterns. For architecture and dependency rules, see clean-architecture.",
       "source": "https://github.com/wondelai/skills/tree/v1.8.0/clean-code",
