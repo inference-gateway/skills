@@ -14,20 +14,19 @@
 //     from SKILL.md frontmatter when the entry omits it.
 //   * Externally-aggregated entries carry a `_source: {url, ref, fetchedAt}`
 //     block. Self-referencing (local) entries do not.
-//   * `release` is preserved from the existing `catalog.json` so the daily
-//     rebuild doesn't wipe semantic-release's version between releases.
-//     `updated` (and per-entry `_source.fetchedAt`) are rewritten only when
-//     the catalog content actually changed; otherwise the previous timestamps
-//     are preserved so the file stays byte-identical and the rebuild workflow
-//     doesn't open spurious PRs. Semantic-release's `prepareCmd` overwrites
-//     both at release time.
+//   * `release` and `updated` are preserved from the existing `catalog.json`;
+//     semantic-release's `prepareCmd` owns both and rewrites them at release
+//     time. Per-entry `_source.fetchedAt` is bumped only when THAT entry's
+//     content changed. So a PR's catalog.json diff is exactly the entries it
+//     touched - parallel PRs merge cleanly and the daily rebuild is a no-op
+//     unless upstream actually moved.
 //   * Fail-closed: any fetch, parse, frontmatter, license, or dedupe error
 //     aborts the catalog write - we never publish a partial catalog.
 //
 // Run with: bun run build
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import * as yaml from 'js-yaml';
 import matter from 'gray-matter';
 
@@ -288,30 +287,23 @@ function loadExistingCatalog() {
   }
 }
 
-function withoutTimestamps(catalog) {
-  const clone = JSON.parse(JSON.stringify(catalog));
-  delete clone.updated;
-  for (const skill of clone.skills ?? []) {
-    if (skill._source) delete skill._source.fetchedAt;
-  }
+function withoutFetchedAt(skill) {
+  const clone = JSON.parse(JSON.stringify(skill));
+  if (clone._source) delete clone._source.fetchedAt;
   return clone;
 }
 
-// If the only thing that would change vs. the existing catalog is the wall-clock
-// timestamps, preserve the previous timestamps so the on-disk file is
-// byte-identical. Keeps the daily rebuild cron from producing churn PRs.
-function preserveTimestampsIfUnchanged(next, existing) {
-  if (!existing) return;
-  if (JSON.stringify(withoutTimestamps(next)) !== JSON.stringify(withoutTimestamps(existing))) return;
-  if (typeof existing.updated === 'string') next.updated = existing.updated;
-  const prevByName = new Map((existing.skills ?? []).map((s) => [s.name, s]));
+// Keep an entry's previous `fetchedAt` unless the entry itself changed. Wall-
+// clock churn on untouched entries is what made every two catalog PRs conflict.
+export function preserveFetchedAt(next, existing) {
+  const prevByName = new Map((existing?.skills ?? []).map((s) => [s.name, s]));
   for (const skill of next.skills) {
     const prev = prevByName.get(skill.name);
-    if (skill._source && typeof prev?._source?.fetchedAt === 'string') {
+    if (!skill._source || typeof prev?._source?.fetchedAt !== 'string') continue;
+    if (JSON.stringify(withoutFetchedAt(skill)) === JSON.stringify(withoutFetchedAt(prev))) {
       skill._source.fetchedAt = prev._source.fetchedAt;
     }
   }
-  console.log('No meaningful changes; preserved existing timestamps');
 }
 
 async function main() {
@@ -350,15 +342,15 @@ async function main() {
     throw new Error('No skills discovered; refusing to write empty catalog');
   }
 
+  const existing = loadExistingCatalog();
   const catalog = {
     version: 1,
-    updated: fetchedAt,
+    updated: typeof existing?.updated === 'string' ? existing.updated : fetchedAt,
     skills,
   };
-  const existing = loadExistingCatalog();
   const release = typeof existing?.release === 'string' ? existing.release : undefined;
   if (release !== undefined) catalog.release = release;
-  preserveTimestampsIfUnchanged(catalog, existing);
+  preserveFetchedAt(catalog, existing);
 
   const serialized = JSON.stringify(catalog, null, 2) + '\n';
   // Re-parse before writing: defends against any future code path that hands
@@ -374,4 +366,6 @@ async function main() {
   console.log(`Wrote ${skills.length} skill(s) to ${OUTPUT_FILE}`);
 }
 
-await main();
+if (import.meta.url === pathToFileURL(process.argv[1] || '').href) {
+  await main();
+}

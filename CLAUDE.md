@@ -86,8 +86,9 @@ Commits and writes the following at release time:
 - `CHANGELOG.md` - do not hand-edit.
 - `catalog.json` - the `release` and `updated` fields are rewritten by the
   release `prepareCmd` (a `jq` invocation). Don't manually bump them in PRs.
-  The daily `Build catalog` workflow preserves the existing `release` field
-  between releases so it doesn't get wiped by rebuilds.
+  `bun run build` preserves both between releases, and only bumps an entry's
+  `_source.fetchedAt` when that entry's content changed - so a skill PR's
+  `catalog.json` diff is exactly its own entry and parallel PRs merge cleanly.
 
 Commit types that bump versions: `feat` (minor), `fix`/`refactor`/`perf`/`impr`
 (patch), plus `ci`/`docs`/`chore`/`style`/`test`/`build` (patch). `chore(release)`
