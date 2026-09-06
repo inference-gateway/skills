@@ -13,7 +13,7 @@ The scan is driven by [`scripts/scan-skills.mjs`](../scripts/scan-skills.mjs), w
 - **External skills**: the `SKILL.md` fetched at the pinned `ref` - exactly what the
   catalog ships, not upstream's default branch.
 
-It writes one SARIF report per skill into `./sarif/` for upload to the GitHub
+It writes a single combined SARIF report to `./sarif/skills.sarif` for upload to the GitHub
 code-scanning tab.
 
 ## Threshold policy
@@ -46,7 +46,7 @@ Env knobs: `SKILLSPECTOR_CMD` (default `skillspector`), `SKILLSPECTOR_SARIF_DIR`
 The scan runs in
 [`.github/workflows/security-scan.yml`](../.github/workflows/security-scan.yml) on pull
 requests that touch `skills/**`, `skills.yaml`, or the scan script, and on
-`workflow_dispatch`. It uploads the per-skill SARIF to the code-scanning tab.
+`workflow_dispatch`. It uploads the combined SARIF to the code-scanning tab.
 
 There is no published SkillSpector image or release tag yet, so CI installs it from source
 with `uv` (lighter than building the Docker image every run) and pins a commit SHA for

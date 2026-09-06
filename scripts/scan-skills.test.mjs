@@ -1,28 +1,34 @@
-import assert from 'node:assert/strict';
-import { test } from 'node:test';
-import { scanTargets } from './scan-skills.mjs';
+import { expect, test } from 'bun:test';
+import { mkdtempSync } from 'node:fs';
+import { writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { mergeSarif } from './scan-skills.mjs';
 
-test('scanTargets: local, external, and root SKILL.md', () => {
-  const [local, external, root] = scanTargets([
-    { url: 'https://github.com/inference-gateway/skills', path: 'skills/adl/SKILL.md' },
-    { url: 'https://github.com/Xquik-dev/x-twitter-scraper', ref: 'v2.4.16', path: 'skills/x-twitter-scraper/SKILL.md' },
-    { url: 'https://github.com/acme/solo-skill' }, // no path/ref -> defaults
-  ]);
+const dir = mkdtempSync(join(tmpdir(), 'sarif-test-'));
 
-  assert.equal(local.isSelf, true);
-  assert.equal(local.name, 'adl');
-  assert.equal(local.dir, 'skills/adl');
-
-  assert.equal(external.isSelf, false);
-  assert.equal(external.name, 'x-twitter-scraper');
-  assert.equal(external.ref, 'v2.4.16');
-  assert.equal(external.owner, 'Xquik-dev');
-
-  assert.equal(root.name, 'solo-skill'); // falls back to repo name
-  assert.equal(root.ref, 'main'); // default ref
-  assert.equal(root.path, 'SKILL.md'); // default path
+const sarif = (rules, results) => ({
+  version: '2.1.0',
+  $schema: 'x',
+  runs: [{ tool: { driver: { name: 'skillspector', rules } }, results }],
 });
 
-test('scanTargets: rejects a non-GitHub url', () => {
-  assert.throws(() => scanTargets([{ url: 'https://example.com/foo' }]), /invalid or missing GitHub url/);
+async function write(name, doc) {
+  const p = join(dir, `${name}.sarif`);
+  await writeFile(p, JSON.stringify(doc));
+  return p;
+}
+
+test('merges runs into one, deduping rules and remapping indices', async () => {
+  const merged = {};
+  await mergeSarif(merged, await write('a', sarif([{ id: 'SHARED' }, { id: 'A' }], [{ ruleIndex: 1, message: { text: 'hit' } }])), 'a');
+  await mergeSarif(merged, await write('b', sarif([{ id: 'B' }, { id: 'SHARED' }], [{ ruleIndex: 1, message: { text: 'hit' } }])), 'b');
+
+  const rules = merged.run.tool.driver.rules;
+  expect(rules.map((r) => r.id)).toEqual(['SHARED', 'A', 'B']);
+  expect(merged.run.results.map((r) => [r.message.text, rules[r.ruleIndex].id])).toEqual([
+    ['[a] hit', 'A'],
+    ['[b] hit', 'SHARED'],
+  ]);
+  expect(merged.run.automationDetails).toEqual({ id: 'skillspector' });
 });
