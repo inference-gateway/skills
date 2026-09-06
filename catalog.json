@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-09-06T13:16:06.717Z",
+  "updated": "2026-09-06T13:18:46.993Z",
   "skills": [
     {
       "name": "adl",
@@ -22,7 +22,30 @@
       "_source": {
         "url": "https://github.com/inference-gateway/adl",
         "ref": "main",
-        "fetchedAt": "2026-09-06T13:16:06.717Z"
+        "fetchedAt": "2026-09-06T13:18:46.993Z"
+      }
+    },
+    {
+      "name": "clean-code",
+      "description": "Write readable, maintainable code through disciplined naming, small functions, and clean error handling. Use when the user mentions \"clean up this code\", \"this function is too long\", \"code smells\", \"naming conventions\", \"boy scout rule\", \"single responsibility\", or \"unit test quality\". Also trigger when reviewing a pull request for readability, untangling a messy function, debating comment styles, or improving error-handling patterns. Covers SRP, comment discipline, formatting, and unit testing. For refactoring techniques, see refactoring-patterns. For architecture and dependency rules, see clean-architecture.",
+      "source": "https://github.com/wondelai/skills/tree/v1.8.0/clean-code",
+      "vendor": "wondelai",
+      "license": "MIT",
+      "tags": [
+        "clean-code",
+        "readability",
+        "naming",
+        "refactoring",
+        "code-review"
+      ],
+      "categories": [
+        "developer-tools"
+      ],
+      "homepage": "https://skills.wondel.ai",
+      "_source": {
+        "url": "https://github.com/wondelai/skills",
+        "ref": "v1.8.0",
+        "fetchedAt": "2026-09-06T13:18:46.993Z"
       }
     },
     {
@@ -108,7 +131,7 @@
       "_source": {
         "url": "https://github.com/wondelai/skills",
         "ref": "v1.8.0",
-        "fetchedAt": "2026-09-06T13:16:06.717Z"
+        "fetchedAt": "2026-09-06T13:18:46.993Z"
       }
     },
     {
@@ -194,7 +217,7 @@
       "_source": {
         "url": "https://github.com/openai/codex",
         "ref": "rust-v0.146.0",
-        "fetchedAt": "2026-09-06T13:16:06.717Z"
+        "fetchedAt": "2026-09-06T13:18:46.993Z"
       }
     },
     {
@@ -220,7 +243,7 @@
       "_source": {
         "url": "https://github.com/mvanhorn/last30days-skill",
         "ref": "v3.18.4",
-        "fetchedAt": "2026-09-06T13:16:06.717Z"
+        "fetchedAt": "2026-09-06T13:18:46.993Z"
       }
     },
     {
@@ -247,7 +270,7 @@
       "_source": {
         "url": "https://github.com/mloda-ai/mloda-skills",
         "ref": "main",
-        "fetchedAt": "2026-09-06T13:16:06.717Z"
+        "fetchedAt": "2026-09-06T13:18:46.993Z"
       }
     },
     {
@@ -272,7 +295,7 @@
       "_source": {
         "url": "https://github.com/mloda-ai/mloda-skills",
         "ref": "main",
-        "fetchedAt": "2026-09-06T13:16:06.717Z"
+        "fetchedAt": "2026-09-06T13:18:46.993Z"
       }
     },
     {
@@ -296,7 +319,7 @@
       "_source": {
         "url": "https://github.com/inference-gateway/opentask",
         "ref": "main",
-        "fetchedAt": "2026-09-06T13:16:06.717Z"
+        "fetchedAt": "2026-09-06T13:18:46.993Z"
       }
     },
     {
@@ -401,7 +424,7 @@
       "_source": {
         "url": "https://github.com/inference-gateway/tokenless",
         "ref": "main",
-        "fetchedAt": "2026-09-06T13:16:06.717Z"
+        "fetchedAt": "2026-09-06T13:18:46.993Z"
       }
     },
     {
@@ -444,7 +467,7 @@
       "_source": {
         "url": "https://github.com/Xquik-dev/x-twitter-scraper",
         "ref": "v2.4.16",
-        "fetchedAt": "2026-09-06T13:16:06.717Z"
+        "fetchedAt": "2026-09-06T13:18:46.993Z"
       }
     }
   ],

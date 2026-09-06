@@ -363,3 +363,18 @@ skills:
     categories:
       - developer-tools
     homepage: https://skills.wondel.ai
+
+  - url: https://github.com/wondelai/skills
+    ref: v1.8.0
+    path: clean-code/SKILL.md
+    vendor: wondelai
+    license: MIT
+    tags:
+      - clean-code
+      - readability
+      - naming
+      - refactoring
+      - code-review
+    categories:
+      - developer-tools
+    homepage: https://skills.wondel.ai
