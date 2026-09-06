@@ -378,3 +378,18 @@ skills:
     categories:
       - developer-tools
     homepage: https://skills.wondel.ai
+
+  - url: https://github.com/wondelai/skills
+    ref: v1.8.0
+    path: clean-architecture/SKILL.md
+    vendor: wondelai
+    license: MIT
+    tags:
+      - clean-architecture
+      - architecture
+      - hexagonal
+      - solid
+      - dependency-rule
+    categories:
+      - developer-tools
+    homepage: https://skills.wondel.ai
