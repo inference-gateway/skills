@@ -22,9 +22,9 @@ test('scanTargets: local, external, and root SKILL.md', () => {
   assert.equal(external.ref, 'v2.4.16');
   assert.equal(external.owner, 'Xquik-dev');
 
-  assert.equal(root.name, 'solo-skill'); // falls back to repo name
-  assert.equal(root.ref, 'main'); // default ref
-  assert.equal(root.path, 'SKILL.md'); // default path
+  assert.equal(root.name, 'solo-skill');
+  assert.equal(root.ref, 'main');
+  assert.equal(root.path, 'SKILL.md');
 });
 
 test('scanTargets: rejects a non-GitHub url', () => {
