@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.16.0](https://github.com/inference-gateway/skills/compare/v0.15.0...v0.16.0) (2026-09-06)
+
+### ✨ Features
+
+* **catalog:** add wondelai clean-architecture skill entry ([#126](https://github.com/inference-gateway/skills/issues/126)) ([b16fe3a](https://github.com/inference-gateway/skills/commit/b16fe3a1540fb6e85e6b8d42a273cd44f2e4c181))
+* **catalog:** add wondelai clean-code skill entry ([#125](https://github.com/inference-gateway/skills/issues/125)) ([7a47054](https://github.com/inference-gateway/skills/commit/7a4705483cd807a4d1f8219593f486a61692bdc2))
+* **catalog:** add wondelai domain-driven-design skill entry ([#124](https://github.com/inference-gateway/skills/issues/124)) ([de6fd93](https://github.com/inference-gateway/skills/commit/de6fd933d534c064d525e8d73878314260bb53ac))
+
+### 🐛 Bug Fixes
+
+* **catalog:** stop timestamp churn so parallel skill PRs merge cleanly ([#128](https://github.com/inference-gateway/skills/issues/128)) ([b9d30ff](https://github.com/inference-gateway/skills/commit/b9d30ffe7d3fb6c550c61d038e5bb7f4bea72364)), references [#127](https://github.com/inference-gateway/skills/issues/127)
+* **ci:** emit one combined SARIF run so code scanning accepts >20 skills ([#127](https://github.com/inference-gateway/skills/issues/127)) ([b7daf28](https://github.com/inference-gateway/skills/commit/b7daf2885fe459316e63519f8e4510b0813f68c9))
+
 ## [0.15.0](https://github.com/inference-gateway/skills/compare/v0.14.0...v0.15.0) (2026-09-04)
 
 ### ✨ Features
