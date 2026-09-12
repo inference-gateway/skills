@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.17.0](https://github.com/inference-gateway/skills/compare/v0.16.0...v0.17.0) (2026-09-12)
+
+### ✨ Features
+
+* **catalog:** add desktop-projects skill entry ([#129](https://github.com/inference-gateway/skills/issues/129)) ([fedbf37](https://github.com/inference-gateway/skills/commit/fedbf370b6fd5435c391086214e741f35cf40a01))
+
 ## [0.16.0](https://github.com/inference-gateway/skills/compare/v0.15.0...v0.16.0) (2026-09-06)
 
 ### ✨ Features
