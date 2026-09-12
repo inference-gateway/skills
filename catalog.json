@@ -137,7 +137,7 @@
     {
       "name": "desktop-projects",
       "description": "Organise the Inference Gateway Desktop sidebar - its projects, groups, project directories and which chats belong to which project - by editing ~/.infer/projects.json and the projects.root key in ~/.infer/config.yaml. Use whenever the user wants to organise/organize, group, regroup, rename, move or import projects, change where projects live (the projects root, a folder like ~/Repositories), assign or tidy chats/conversations into projects, or switch a project between code and content, even if they do not say \"project\" explicitly.",
-      "source": "https://github.com/inference-gateway/skills/tree/main/skills/desktop-projects",
+      "source": "https://github.com/inference-gateway/desktop/tree/v0.32.0/.agents/skills/desktop-projects",
       "vendor": "inference-gateway",
       "license": "Apache-2.0",
       "tags": [
@@ -149,7 +149,12 @@
       "categories": [
         "developer-tools"
       ],
-      "homepage": "https://github.com/inference-gateway/desktop"
+      "homepage": "https://github.com/inference-gateway/desktop",
+      "_source": {
+        "url": "https://github.com/inference-gateway/desktop",
+        "ref": "v0.32.0",
+        "fetchedAt": "2026-09-12T20:07:51.596Z"
+      }
     },
     {
       "name": "domain-driven-design",

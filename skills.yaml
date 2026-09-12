@@ -349,8 +349,9 @@ skills:
       - media
     homepage: https://github.com/inference-gateway/desktop
 
-  - url: https://github.com/inference-gateway/skills
-    path: skills/desktop-projects/SKILL.md
+  - url: https://github.com/inference-gateway/desktop
+    ref: v0.32.0
+    path: .agents/skills/desktop-projects/SKILL.md
     vendor: inference-gateway
     license: Apache-2.0
     tags:
