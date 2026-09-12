@@ -135,6 +135,28 @@
       "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg"
     },
     {
+      "name": "desktop-projects",
+      "description": "Organise the Inference Gateway Desktop sidebar - its projects, groups, project directories and which chats belong to which project - by editing ~/.infer/projects.json and the projects.root key in ~/.infer/config.yaml. Use whenever the user wants to organise/organize, group, regroup, rename, move or import projects, change where projects live (the projects root, a folder like ~/Repositories), assign or tidy chats/conversations into projects, or switch a project between code and content, even if they do not say \"project\" explicitly.",
+      "source": "https://github.com/inference-gateway/desktop/tree/v0.32.0/.agents/skills/desktop-projects",
+      "vendor": "inference-gateway",
+      "license": "Apache-2.0",
+      "tags": [
+        "projects",
+        "desktop",
+        "organization",
+        "conversations"
+      ],
+      "categories": [
+        "developer-tools"
+      ],
+      "homepage": "https://github.com/inference-gateway/desktop",
+      "_source": {
+        "url": "https://github.com/inference-gateway/desktop",
+        "ref": "v0.32.0",
+        "fetchedAt": "2026-09-12T20:07:51.596Z"
+      }
+    },
+    {
       "name": "domain-driven-design",
       "description": "Model software around the business domain using bounded contexts, aggregates, and ubiquitous language. Use when the user mentions \"domain modeling\", \"bounded context\", \"aggregate root\", \"ubiquitous language\", \"anti-corruption layer\", \"context mapping\", \"domain events\", \"strategic design\", \"the code doesnt match the business\", or \"how do we split this big system\". Also trigger when breaking a monolith into services, defining service boundaries, or aligning code structure with business processes. Covers entities vs value objects, domain events, and context mapping strategies. For architecture layers, see clean-architecture. For complexity, see software-design-philosophy.",
       "source": "https://github.com/wondelai/skills/tree/v1.8.0/domain-driven-design",
