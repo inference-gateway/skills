@@ -349,6 +349,19 @@ skills:
       - media
     homepage: https://github.com/inference-gateway/desktop
 
+  - url: https://github.com/inference-gateway/skills
+    path: skills/desktop-projects/SKILL.md
+    vendor: inference-gateway
+    license: Apache-2.0
+    tags:
+      - projects
+      - desktop
+      - organization
+      - conversations
+    categories:
+      - developer-tools
+    homepage: https://github.com/inference-gateway/desktop
+
   - url: https://github.com/wondelai/skills
     ref: v1.8.0
     path: domain-driven-design/SKILL.md
