@@ -82,7 +82,6 @@ jobs:
     uses: inference-gateway/.github/.github/workflows/claude.yml@main
     with:
       language: "node"
-      markdownlint: true
       plugins: |
         DietrichGebert/ponytail
       browser: ${{ inputs.browser || false }}
