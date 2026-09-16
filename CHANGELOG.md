@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.18.0](https://github.com/inference-gateway/skills/compare/v0.17.0...v0.18.0) (2026-09-16)
+
+### ✨ Features
+
+* add HeyGen HyperFrames and motion-graphics skills ([#132](https://github.com/inference-gateway/skills/issues/132)) ([c7368af](https://github.com/inference-gateway/skills/commit/c7368afc3352794507247c82d91fb668a5c4fbe7))
+
+### 🔧 Miscellaneous
+
+* **deps:** bump claude-code 2.1.245 -> 2.1.266 ([#130](https://github.com/inference-gateway/skills/issues/130)) ([aa80161](https://github.com/inference-gateway/skills/commit/aa80161b7f536d5d7588b36f75b7c6ad8797f654))
+* **deps:** bump infer CLI v0.183.0 -> v0.192.0 ([#131](https://github.com/inference-gateway/skills/issues/131)) ([128d61e](https://github.com/inference-gateway/skills/commit/128d61e489f63ea5df84061a5be516a018d1a6bb))
+
 ## [0.17.0](https://github.com/inference-gateway/skills/compare/v0.16.0...v0.17.0) (2026-09-12)
 
 ### ✨ Features
