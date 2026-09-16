@@ -407,3 +407,35 @@ skills:
     categories:
       - developer-tools
     homepage: https://skills.wondel.ai
+
+  - url: https://github.com/heygen-com/hyperframes
+    ref: v0.8.43
+    path: skills/hyperframes/SKILL.md
+    vendor: HeyGen
+    license: Apache-2.0
+    tags:
+      - hyperframes
+      - video
+      - animation
+      - motion-graphics
+      - html
+      - rendering
+    categories:
+      - media
+    homepage: https://github.com/heygen-com/hyperframes
+
+  - url: https://github.com/heygen-com/hyperframes
+    ref: v0.8.43
+    path: skills/motion-graphics/SKILL.md
+    vendor: HeyGen
+    license: Apache-2.0
+    tags:
+      - hyperframes
+      - video
+      - motion-graphics
+      - lower-third
+      - title-card
+      - overlay
+    categories:
+      - media
+    homepage: https://github.com/heygen-com/hyperframes

@@ -241,6 +241,30 @@
       "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg"
     },
     {
+      "name": "hyperframes",
+      "description": "Mandatory entry point: read this first for any request to make, create, edit, animate, or render a video, animation, or motion graphic, including a promo, explainer, captioned clip, title card, overlay, slideshow or interactive deck, Remotion port, or any HyperFrames HTML composition. Also use it to inspect, diagnose, validate, preview, publish, or batch-render an existing HyperFrames project. Inputs may be a website URL, GitHub PR, Figma design or URL, text or brief, existing footage, or music. It resumes project state, captures intent when applicable, selects and installs the owning workflow, and routes domain capabilities. HyperFrames is the default output framework unless the user explicitly chooses another framework for the deliverable or asks only to record a browser session.",
+      "source": "https://github.com/heygen-com/hyperframes/tree/v0.8.43/skills/hyperframes",
+      "vendor": "HeyGen",
+      "license": "Apache-2.0",
+      "tags": [
+        "hyperframes",
+        "video",
+        "animation",
+        "motion-graphics",
+        "html",
+        "rendering"
+      ],
+      "categories": [
+        "media"
+      ],
+      "homepage": "https://github.com/heygen-com/hyperframes",
+      "_source": {
+        "url": "https://github.com/heygen-com/hyperframes",
+        "ref": "v0.8.43",
+        "fetchedAt": "2026-09-16T21:42:26.915Z"
+      }
+    },
+    {
       "name": "imagegen",
       "description": "Generate or edit raster images when the task benefits from AI-created bitmap visuals such as photos, illustrations, textures, sprites, mockups, or transparent-background cutouts. Use when Codex should create a brand-new image, transform an existing image, or derive visual variants from references, and the output should be a bitmap asset rather than repo-native code or vector. Do not use when the task is better handled by editing existing SVG/vector/code-native assets, extending an established icon or logo system, or building the visual directly in HTML/CSS/canvas.",
       "source": "https://github.com/openai/codex/tree/rust-v0.146.0/codex-rs/skills/src/assets/samples/imagegen",
@@ -341,6 +365,30 @@
         "url": "https://github.com/mloda-ai/mloda-skills",
         "ref": "main",
         "fetchedAt": "2026-09-06T13:18:46.993Z"
+      }
+    },
+    {
+      "name": "motion-graphics",
+      "description": "A short, design-led motion graphic where motion is the message — kinetic typography, stat count-up, chart/data-viz hit, logo sting / brand lockup, lower-third / callout / social overlay, animated map (highlight regions, connect places, zoom to a location), animated tweet / news-article / headline, webpage / UI animation (scroll, cursor, callouts), or fusing a real image's geometry into a chart. Usually under 10s (up to ~30s), no narration or live-action subject; renders to MP4 or transparent overlay. Longer / narrated / multi-scene → /general-video. Unclear → /hyperframes.",
+      "source": "https://github.com/heygen-com/hyperframes/tree/v0.8.43/skills/motion-graphics",
+      "vendor": "HeyGen",
+      "license": "Apache-2.0",
+      "tags": [
+        "hyperframes",
+        "video",
+        "motion-graphics",
+        "lower-third",
+        "title-card",
+        "overlay"
+      ],
+      "categories": [
+        "media"
+      ],
+      "homepage": "https://github.com/heygen-com/hyperframes",
+      "_source": {
+        "url": "https://github.com/heygen-com/hyperframes",
+        "ref": "v0.8.43",
+        "fetchedAt": "2026-09-16T21:42:26.915Z"
       }
     },
     {
