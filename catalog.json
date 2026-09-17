@@ -522,7 +522,7 @@
     },
     {
       "name": "video-editing",
-      "description": "Add the user's own cloned voice to a screen recording - probe the video and pull scene keyframes with ffmpeg, describe them with ImageDecode (or write down what the user says in the recording with whisper-cli and clean it up), write a <stem>.timeline.json plan, and make the audio for each clip with TextToSpeech (voice_sample cloning). The desktop renders the export; the agent never muxes. Use when the user asks to add a voiceover, add their voice, explain a video, redo the voice on a recording, or redo clips of an existing timeline.",
+      "description": "Add the user's own cloned voice to a screen recording - probe the video and pull scene keyframes with ffmpeg, describe them with ImageDecode (or write down what the user says in the recording with whisper-cli and clean it up), write a <stem>.timeline.json plan, and make the audio for each clip with TextToSpeech (voice_sample cloning) - and place animated cards (title, lower third, callout, step, chart) rendered with HyperFrames on the timeline's overlay track. The desktop renders the export; the agent never muxes. Use when the user asks to add a voiceover, add their voice, explain a video, redo the voice on a recording, redo clips of an existing timeline, or add a card, title or overlay to a video.",
       "source": "https://github.com/inference-gateway/desktop/tree/main/.agents/skills/video-editing",
       "vendor": "inference-gateway",
       "license": "Apache-2.0",
@@ -542,7 +542,7 @@
       "_source": {
         "url": "https://github.com/inference-gateway/desktop",
         "ref": "main",
-        "fetchedAt": "2026-09-16T21:49:47.553Z"
+        "fetchedAt": "2026-09-17T09:06:30.237Z"
       }
     },
     {
