@@ -37,8 +37,8 @@ jobs:
       - uses: peter-evans/create-pull-request@v8.1.1
         with:
           token: ${{ steps.app-token.outputs.token }}
-          commit-message: 'chore(catalog): Rebuild catalog.json'
-          title: 'chore(catalog): Rebuild catalog.json'
+          commit-message: 'chore(catalog): rebuild catalog.json'
+          title: 'chore(catalog): rebuild catalog.json'
           body: |
             Automated rebuild of `catalog.json` from `skills.yaml` + `skills/**`.
           branch: chore/rebuild-catalog
