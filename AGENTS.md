@@ -1,39 +1,42 @@
-# Repository Guidelines
+# AGENTS.md
 
-## Project Structure & Module Organization
+Guidance for coding agents working in this repository. `README.md` is consumer-facing; `docs/security-scanning.md` covers the scan policy.
 
-This repository is a curated catalog of Agent Skills for the Inference Gateway ecosystem. `catalog.json` is the source of truth for the public registry and CLI skill
-search/install flows. Locally hosted skill bodies live in `skills/<name>/` and must include `SKILL.md`; the folder name must match the `name:` frontmatter.
-Third-party or adapted skills should keep their own `LICENSE` inside the skill folder. Root-level docs include `README.md`, `CLAUDE.md`, and generated release
-history in `CHANGELOG.md`.
+## What this repo is
 
-## Build, Test, and Development Commands
+A curated catalog of [Agent Skills](https://github.com/anthropics/skills/tree/main/spec) for the Inference Gateway ecosystem. Content is the product — there is no application code.
 
-- `task` - lists available Taskfile commands.
-- `task build` - regenerates `catalog.json` from `skills/` + `skills.yaml`. Run before every push.
-- `task lint` - runs `markdownlint '**/*.md'` (ignore globs come from `.markdownlintignore`).
-- `task lint:fix` - applies safe Markdown lint fixes.
+- `skills.yaml` — single source of truth: one entry per skill (local or external). The entry schema is documented in the comment block at the top of the file.
+- `catalog.json` — **generated** by `scripts/build-catalog.mjs` from `skills.yaml`. Served at <https://registry.inference-gateway.com/skills/> and consumed by `infer skills search` / `infer skills install`. Never hand-edit it; never add per-entry refs (the catalog is versioned as a whole by the repo git tag).
+- `skills/<name>/SKILL.md` — bodies of skills authored or vendored here. The folder name must equal the frontmatter `name:`.
 
-## Coding Style & Naming Conventions
+## Commands
 
-Markdown is the main authoring format. Follow `.markdownlint.json`: line length is 180 characters, and HTML is allowed where already used. Keep prose direct and
-actionable. Use lowercase kebab-style skill directory names, for example `skills/skill-creator/`. Each hosted `SKILL.md` must include frontmatter with `name` and
-`description`; the description should be specific enough for an agent to decide whether to invoke the skill without reading the full body.
+Requires [bun](https://bun.sh) >= 1.3 (`bun install` once first):
 
-## Testing Guidelines
+```sh
+bun run build      # regenerate catalog.json from skills.yaml + skills/ (alias: task build)
+task lint          # markdownlint over all *.md; task lint:fix to autofix
+bun test           # node:test suites in scripts/*.test.mjs
+bun run format     # prettier over all *.md; check with task format:check
+task serve         # serve catalog.json at http://localhost:8787/skills/
+bun run scan       # SkillSpector security scan - warn-only; SKILLSPECTOR_ENFORCE=1 gates it
+```
 
-Run `task build && task lint` before opening a pull request. When adding or editing a hosted skill, manually verify both sides of the contract: `catalog.json` includes `name`,
-`description`, `source`, `vendor`, `license`, `tags`, `categories`, and optional `homepage`, and `skills/<name>/SKILL.md` exists with matching frontmatter. For
-third-party derived content, confirm license and attribution files are present.
+Run `task build && task lint` before opening a PR. CI (`ci.yml`) lints with `markdownlint-cli@0.48.0` and fails if `catalog.json` is stale relative to `skills.yaml` + `skills/` — always commit the regenerated `catalog.json` in the same PR. (`.githooks/pre-commit` does this too, but is only active after `git config core.hooksPath .githooks`.)
 
-## Commit & Pull Request Guidelines
+## Adding or editing a skill
 
-Use Conventional Commits, matching the existing history: `feat:`, `fix:`, `docs:`, `chore:`, `ci:`, or scoped variants such as `chore(deps):`. Semantic-release uses
-commit types for versioning; do not hand-edit `CHANGELOG.md` or manually bump generated `release` / `updated` fields in `catalog.json`. Pull requests should describe
-the catalog change, list any added or modified skill folders, mention license or attribution implications, and include the `task lint` result.
+1. Add one entry to `skills.yaml`. Skill body in this repo: `url: https://github.com/inference-gateway/skills` + `path: skills/<name>/SKILL.md` — the build then reads the local working tree, so branch PRs build before merge. Third-party skill: point `url` at the upstream repo and pin `ref:` to a release tag, never `main`.
+2. `SKILL.md` frontmatter: `name` must match the folder and be unique catalog-wide; `description` (1–1024 chars) must let an agent decide to invoke the skill **without reading the body**; `license:` (ADL Skill enum) is recommended. The build validates all of this and aborts rather than writing a partial catalog; optional `language:` adds a devicon logo.
+3. Vendored/adapted skills: keep the upstream `LICENSE` inside `skills/<name>/` and record attribution in a root `NOTICE` — that skill's contents are governed by its own license, not the repo's Apache-2.0.
 
-## Agent-Specific Instructions
+Read `skills/skill-creator/SKILL.md` before authoring new skills. The build preserves untouched entries' `fetchedAt`, so a skill PR's `catalog.json` diff stays exactly its own entry and parallel PRs merge cleanly.
 
-Keep `catalog.json` and local skill bodies synchronized. Before creating a new skill, read `skills/skill-creator/SKILL.md` for the full authoring contract. For
-organization-wide maintenance or release questions, consult `inference-gateway/.github` (org-level `CLAUDE.md` /
-`README.md`) and each repo's own `CLAUDE.md` / `AGENTS.md` (the former `maintainer` skill is deprecated and out of the catalog).
+## Markdown style
+
+Configured in `.markdownlint.json`: 180-char lines (`MD013`; tables and code blocks exempt), `MD029` / `MD033` / `MD041` off. Prettier also formats all `*.md`. Skill folders are lowercase kebab-case.
+
+## Commits & releases
+
+Conventional Commits drive semantic-release: `feat` = minor; `fix`, `refactor`, `perf`, `impr`, `ci`, `docs`, `chore`, `style`, `test`, `build` = patch (`chore(release)` excluded). Do not hand-edit `CHANGELOG.md` or the `release` / `updated` fields in `catalog.json` — release tooling writes both, and the release workflow is manual (`workflow_dispatch`). PRs should describe the catalog change, list the skill folders touched, and note any license/attribution implications. For cross-repo conventions (e.g. docs tickets for `feat:`/`refactor:` changes), see the org-level `inference-gateway/.github` docs.
