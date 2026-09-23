@@ -1,4 +1,4 @@
-schema-version = "1.16.0"
+schema-version = "1.17.0"
 
 [install]
 bun.pkg-path = "bun"
@@ -9,7 +9,7 @@ markdownlint-cli.pkg-path = "markdownlint-cli"
 markdownlint-cli.version = "0.48.0"
 infer.flake = "github:inference-gateway/cli/v0.192.0"
 claude-code.pkg-path = "claude-code"
-claude-code.version = "^2.1.266"
+claude-code.version = "^2.1.278"
 claude-code.pkg-group = "claude-code"
 codex.pkg-path = "codex"
 codex.version = "^0.149.0"
