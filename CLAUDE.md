@@ -9,10 +9,13 @@ for the Inference Gateway ecosystem. There is no application code - content is t
 
 Two things live here, and **they must stay in sync**:
 
-1. `catalog.json` - the **generated** output served at
-   <https://registry.inference-gateway.com/skills/> and consumed by
-   `infer skills search` / `infer skills install` in the
-   [CLI](https://github.com/inference-gateway/cli). **Do not hand-edit.** It is
+1. `catalog.json` - the **generated** output, published from this repo. The
+   registry UI at <https://registry.inference-gateway.com/skills/> fetches it
+   from jsDelivr `@latest` (latest release tag); `infer skills search` /
+   `infer skills install` in the [CLI](https://github.com/inference-gateway/cli)
+   fetch
+   <https://raw.githubusercontent.com/inference-gateway/skills/main/catalog.json>
+   (`main`, unreleased). **Do not hand-edit.** It is
    rebuilt by `scripts/build-catalog.mjs` from the single source-of-truth
    input below.
 2. `skills.yaml` - **every** skill (local + external) is one entry here:
