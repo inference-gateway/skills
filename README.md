@@ -24,8 +24,13 @@ for the Inference Gateway ecosystem.
 
 This repository serves two purposes:
 
-1. **Catalog** - `catalog.json` is the generated index served at
-   <https://registry.inference-gateway.com/skills/>. It is **not hand-edited** -
+1. **Catalog** - `catalog.json` is the generated index, published straight from
+   this repo at
+   <https://cdn.jsdelivr.net/gh/inference-gateway/skills@latest/catalog.json>
+   (latest release tag, purged on every tag by `.github/workflows/purge-cdn.yml`)
+   and
+   <https://raw.githubusercontent.com/inference-gateway/skills/main/catalog.json>
+   (`main`). It is **not hand-edited** -
    `scripts/build-catalog.mjs` rebuilds it from a single source-of-truth
    input: `skills.yaml`, which lists every skill (local or external) as one
    entry. Local entries are read from `skills/<name>/SKILL.md` in this repo;
@@ -82,16 +87,18 @@ in the same pull request**; CI fails if it is stale. This keeps the catalog
 consistent with every release tag, which is what `@latest` on the CDN serves.
 
 The catalog is versioned as a whole via the repo's git tag (see [Releases](https://github.com/inference-gateway/skills/releases)),
-so per-entry refs aren't needed - consumers pin to a catalog version.
-
-The catalog is consumed by:
+so per-entry refs aren't needed. Consumers read two different channels, so a
+merged change reaches CLI users before the registry UI:
 
 - [registry.inference-gateway.com/skills/](https://registry.inference-gateway.com/skills/)
-  - human-browsable listing.
-- [registry.inference-gateway.com/skills/index.json](https://registry.inference-gateway.com/skills/index.json)
-  - machine-readable index used by `infer skills search` /
-    `infer skills install <name>` in the
-    [inference-gateway CLI](https://github.com/inference-gateway/cli).
+  - human-browsable listing. The page fetches
+    `https://cdn.jsdelivr.net/gh/inference-gateway/skills@latest/catalog.json`
+    in the browser, so it shows the **latest release tag**.
+- `infer skills search` / `infer skills install <name>` in the
+  [inference-gateway CLI](https://github.com/inference-gateway/cli) fetch
+  `https://raw.githubusercontent.com/inference-gateway/skills/main/catalog.json`
+  - the **`main` branch**, unreleased. The repo is configurable via the
+    `agent.skills.repository` setting (default `inference-gateway/skills`).
 
 ## Security scanning
 

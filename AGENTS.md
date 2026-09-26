@@ -7,7 +7,7 @@ Guidance for coding agents working in this repository. `README.md` is consumer-f
 A curated catalog of [Agent Skills](https://github.com/anthropics/skills/tree/main/spec) for the Inference Gateway ecosystem. Content is the product — there is no application code.
 
 - `skills.yaml` — single source of truth: one entry per skill (local or external). The entry schema is documented in the comment block at the top of the file.
-- `catalog.json` — **generated** by `scripts/build-catalog.mjs` from `skills.yaml`. Served at <https://registry.inference-gateway.com/skills/> and consumed by `infer skills search` / `infer skills install`. Never hand-edit it; never add per-entry refs (the catalog is versioned as a whole by the repo git tag).
+- `catalog.json` — **generated** by `scripts/build-catalog.mjs` from `skills.yaml`. Published from this repo: the registry UI at <https://registry.inference-gateway.com/skills/> fetches it from jsDelivr `@latest` (latest release tag) in the browser, while `infer skills search` / `infer skills install` fetch <https://raw.githubusercontent.com/inference-gateway/skills/main/catalog.json> (`main`, unreleased). Never hand-edit it; never add per-entry refs (the catalog is versioned as a whole by the repo git tag).
 - `skills/<name>/SKILL.md` — bodies of skills authored or vendored here. The folder name must equal the frontmatter `name:`.
 
 ## Commands

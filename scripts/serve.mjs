@@ -1,6 +1,7 @@
 #!/usr/bin/env bun
-// Local preview of the registry endpoint. Mirrors the /skills/ path served at
-// https://registry.inference-gateway.com so a locally-pointed CLI works unchanged.
+// Local preview of the generated catalog.json over HTTP. No hosted endpoint
+// serves this path: the registry UI and the CLI both read catalog.json straight
+// from this repo (jsDelivr @latest and raw.githubusercontent.com/...@main).
 //
 // Run with: bun run serve
 //
