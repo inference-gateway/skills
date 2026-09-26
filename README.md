@@ -30,9 +30,10 @@ This repository serves two purposes:
    input: `skills.yaml`, which lists every skill (local or external) as one
    entry. Local entries are read from `skills/<name>/SKILL.md` in this repo;
    external entries are fetched from upstream at the pinned `ref`.
-2. **Skill bodies** - folders under `skills/` contain skill content that the
-   Inference Gateway maintainers have authored, vendored, or adapted. Each folder
-   retains its own LICENSE.
+2. **Skill bodies** - folders under `skills/` contain skill content authored by
+   the Inference Gateway maintainers, covered by the repo-level [`LICENSE`](LICENSE)
+   (Apache-2.0). Skills distilled from an upstream project credit it at the end of
+   their `SKILL.md` and in the root [`NOTICE`](NOTICE).
 
 ## Installing a skill
 
@@ -68,13 +69,18 @@ Open a pull request that:
 https://github.com/inference-gateway/skills` and `path:
 skills/<name>/SKILL.md`. Also add `skills/<name>/SKILL.md` with valid
     Agent Skills frontmatter (`name` matching the folder, `description`
-    1-1024 chars; `license:` recommended).
+    1-1024 chars). A license is **required** in one of two places - the
+    `skills.yaml` entry or the SKILL.md frontmatter (`license:`) - and must be
+    an [ADL Skill license enum](scripts/build-catalog.mjs) value; the build
+    fails if neither sets one. The `skills.yaml` entry wins when both do.
   - **Skill body in another repo**: set `url` to the upstream repo and pin
     `ref:` to a release tag. The build job fetches the upstream `SKILL.md`,
     validates the frontmatter, and merges the entry into `catalog.json`.
-- For skills derived from a third party and vendored into this repo,
-  preserves the upstream `LICENSE` inside the skill folder and adds a
-  `NOTICE` file at the repo root recording the attribution.
+- For a skill distilled from a third-party project, credits it at the end of
+  the `SKILL.md` and adds the attribution to the root
+  [`NOTICE`](NOTICE). If upstream content is vendored **verbatim**, also
+  preserves the upstream `LICENSE` inside `skills/<name>/` and sets that
+  license on the entry.
 
 You do not edit `catalog.json` by hand - the build script regenerates it.
 Run `bun install && bun run build` and **commit the regenerated `catalog.json`
@@ -103,7 +109,11 @@ CI workflow.
 
 ## Licensing
 
-- Repository-level files (`README.md`, `catalog.json`, `LICENSE`) and IG-authored
-  skills under `skills/` are Apache-2.0.
-- Skills derived from a third-party project carry their own license inside the
-  skill folder; that license takes precedence for that skill's contents.
+- Everything in this repo - repository-level files (`README.md`,
+  `catalog.json`, `LICENSE`) and every skill under `skills/` - is Apache-2.0.
+  No skill folder currently carries its own license.
+- Skills distilled from an upstream project are still Apache-2.0 (the text is
+  original); the upstream credit lives in the `SKILL.md` and the root
+  [`NOTICE`](NOTICE).
+- If a skill ever vendors upstream content verbatim, its upstream `LICENSE` is
+  kept inside `skills/<name>/` and takes precedence for that skill's contents.

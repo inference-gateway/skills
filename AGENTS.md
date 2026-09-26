@@ -28,8 +28,8 @@ Run `task build && task lint` before opening a PR. CI (`ci.yml`) lints with `mar
 ## Adding or editing a skill
 
 1. Add one entry to `skills.yaml`. Skill body in this repo: `url: https://github.com/inference-gateway/skills` + `path: skills/<name>/SKILL.md` — the build then reads the local working tree, so branch PRs build before merge. Third-party skill: point `url` at the upstream repo and pin `ref:` to a release tag, never `main`.
-2. `SKILL.md` frontmatter: `name` must match the folder and be unique catalog-wide; `description` (1–1024 chars) must let an agent decide to invoke the skill **without reading the body**; `license:` (ADL Skill enum) is recommended. The build validates all of this and aborts rather than writing a partial catalog; optional `language:` adds a devicon logo.
-3. Vendored/adapted skills: keep the upstream `LICENSE` inside `skills/<name>/` and record attribution in a root `NOTICE` — that skill's contents are governed by its own license, not the repo's Apache-2.0.
+2. `SKILL.md` frontmatter: `name` must match the folder and be unique catalog-wide; `description` (1–1024 chars) must let an agent decide to invoke the skill **without reading the body**; a license (ADL Skill enum) is **required** in either the `skills.yaml` entry or the frontmatter `license:` (entry wins), and the build aborts with `'license' missing` when neither sets one. The build validates all of this and aborts rather than writing a partial catalog; optional `language:` adds a devicon logo.
+3. Skills distilled from an upstream project (current practice: original text, nothing reproduced): credit the upstream at the end of the `SKILL.md` and in the root `NOTICE`; the skill stays Apache-2.0. Only if upstream content is vendored **verbatim** do you also keep the upstream `LICENSE` inside `skills/<name>/` and set that license on the entry — no skill folder does this today.
 
 Read `skills/skill-creator/SKILL.md` before authoring new skills. The build preserves untouched entries' `fetchedAt`, so a skill PR's `catalog.json` diff stays exactly its own entry and parallel PRs merge cleanly.
 

@@ -26,9 +26,12 @@
 #                         multi-skill repos (including this one - e.g.
 #                         `skills/foo/SKILL.md`).
 #   vendor     (required) Vendor / org name shown in the registry UI.
-#   license    (optional) SPDX identifier. If absent, the build script reads
-#                         it from the upstream SKILL.md frontmatter. Must be
-#                         one of the ADL Skill license enum values (see
+#   license    (optional here, but REQUIRED in one of two places) SPDX
+#                         identifier. If absent, the build script reads it from
+#                         the SKILL.md frontmatter `license:`; if neither sets
+#                         one the build aborts with "'license' missing". This
+#                         entry wins when both set it. Must be one of the ADL
+#                         Skill license enum values (see
 #                         scripts/build-catalog.mjs).
 #   tags       (required) Discoverability tags, string array.
 #   categories (required) Catalog categories, string array.

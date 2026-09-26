@@ -1,0 +1,30 @@
+Inference Gateway Skills
+Copyright The Inference Gateway Authors
+
+This product includes software developed by the Inference Gateway project,
+licensed under the Apache License, Version 2.0 (see LICENSE).
+
+Some skill bodies under skills/ were written from scratch but distilled from,
+or informed by, upstream projects. No upstream text is reproduced verbatim;
+these skills are Apache-2.0 like the rest of the repository. Attribution is
+also recorded inline at the end of each SKILL.md.
+
+- skills/go/SKILL.md and skills/go-spec-reviewer/SKILL.md
+  Distilled from spf13/go-skills (MIT, by Steve Francia)
+  https://github.com/spf13/go-skills
+
+- skills/go-concurrency/SKILL.md
+  Distilled from luk4z7/go-concurrency-guide
+  https://github.com/luk4z7/go-concurrency-guide
+  which draws on "Concurrency in Go" (Katherine Cox-Buday) and
+  "The Go Programming Language" (Donovan & Kernighan)
+
+- skills/cpp-review/SKILL.md
+  Checklist derived from Jason Turner's C++ Best Practices
+  (CC BY-NC 4.0 - referenced, not reproduced)
+  https://github.com/cpp-best-practices/cppbestpractices
+  and the C++ Core Guidelines
+  https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines
+
+If a future skill vendors upstream content verbatim, that upstream LICENSE is
+preserved inside skills/<name>/ and takes precedence for that skill's contents.
