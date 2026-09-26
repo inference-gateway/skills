@@ -4,7 +4,7 @@ Skills in this catalog are security-scanned with
 [NVIDIA SkillSpector](https://github.com/NVIDIA/SkillSpector) (Apache-2.0) in CI. Skills
 execute with implicit trust in the agent that loads them, so a malicious or vulnerable
 skill is a supply-chain risk for every downstream user of `infer skills install`. Read
-["Known v1 limits"](#known-v1-limits) for what the scan does *not* cover - notably
+["Known v1 limits"](#known-v1-limits) for what the scan does _not_ cover - notably
 entries that track an upstream branch.
 
 The scan is driven by [`scripts/scan-skills.mjs`](../scripts/scan-skills.mjs), which reads
@@ -13,7 +13,7 @@ The scan is driven by [`scripts/scan-skills.mjs`](../scripts/scan-skills.mjs), w
 - **Local skills** (`url` == this repo): the on-disk `skills/<name>/` directory.
 - **External skills**: the `SKILL.md` fetched at the entry's `ref` (default `main` when
   omitted) - the same coordinates `scripts/build-catalog.mjs` uses, so the scan sees what
-  the catalog ships *at scan time*.
+  the catalog ships _at scan time_.
 
 It writes a single combined SARIF report to `./sarif/skills.sarif` for upload to the GitHub
 code-scanning tab.
@@ -63,7 +63,7 @@ reproducibility. Bump the SHA in the workflow to re-verify against a newer Skill
   `opentask`, `mloda`, `mloda-plugins` and `video-editing` set `ref: main`; `tokenless`
   omits `ref`, which defaults to `main`. `main` is the default branch of each of those
   upstream repos, and the catalog `source` is a `tree/main` URL that `infer skills
-  install` resolves at install time. The scan only runs on pull requests touching
+install` resolves at install time. The scan only runs on pull requests touching
   `skills/**`, `skills.yaml` or the scan script, plus `workflow_dispatch` - the daily
   `Build catalog` PR touches only `catalog.json` and does not trigger it. So an upstream
   commit to one of those six skills lands with consumers without being scanned. Run the
