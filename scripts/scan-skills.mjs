@@ -34,8 +34,9 @@ const ENFORCE = ['1', 'true', 'yes'].includes((process.env.SKILLSPECTOR_ENFORCE 
 
 // Derive scan targets from skills.yaml. Pure (no I/O) so it can be unit-tested.
 // Local entries (url == this repo) scan the on-disk skill directory. External
-// entries carry the pinned {owner, repo, ref, path} so we scan exactly what the
-// catalog ships - not upstream's default branch.
+// entries carry {owner, repo, ref, path} so we scan the same coordinates the
+// catalog ships. `ref` defaults to 'main' - an entry left on a branch is only
+// scanned as of this run (see "Known v1 limits" in docs/security-scanning.md).
 export function scanTargets(sources) {
   return sources.map((entry, i) => {
     const label = `skills.yaml#skills[${i}]`;
