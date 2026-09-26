@@ -63,8 +63,10 @@ Every PR that adds/edits a skill must include:
 - For in-repo entries: `skills/<name>/SKILL.md` with frontmatter `name`
   (matching the folder) and `description` (1-1024 chars; must let a reader
   decide whether to invoke the skill **without reading the body**).
-  `license:` in the frontmatter is recommended (mirrors the ADL Skill license
-  enum); the build script falls back to the skills.yaml entry if absent.
+  A license (ADL Skill license enum) is **required** in either the skills.yaml
+  entry or the SKILL.md frontmatter `license:` - the build aborts with
+  `'license' missing` when neither sets one. The skills.yaml entry wins when
+  both do.
 
 You do **not** edit `catalog.json` by hand - the build script regenerates it.
 Run `bun run build` locally to preview the resulting entry.
@@ -74,12 +76,18 @@ SKILL.md authoring contract in full - read it before adding new skills.
 
 ### Third-party derived skills
 
-When a skill body is vendored or adapted from another project:
+When a skill body is distilled from another project (the current practice for
+`go`, `go-spec-reviewer`, `go-concurrency`, `cpp-review` - original text, no
+upstream content reproduced):
 
-- Preserve the upstream `LICENSE` **inside** `skills/<name>/`.
-- Add a `NOTICE` file at the repo root recording the attribution.
-- That skill's contents are governed by its own license, **not** the repo-level
-  Apache-2.0.
+- Credit the upstream at the end of the `SKILL.md`.
+- Record the attribution in the root `NOTICE`.
+- The skill stays Apache-2.0 like the rest of the repo.
+
+Only when upstream content is vendored **verbatim**: also preserve the upstream
+`LICENSE` inside `skills/<name>/` and set that license on the entry - it then
+governs that skill's contents instead of the repo-level Apache-2.0. No skill
+folder currently does this.
 
 ## Releases (don't hand-edit generated state)
 
