@@ -95,11 +95,13 @@ The catalog is consumed by:
 
 ## Security scanning
 
-Every catalog skill is security-scanned with
-[NVIDIA SkillSpector](https://github.com/NVIDIA/SkillSpector) - local skills and
-external ones at their pinned `ref`. Run `bun run scan` locally (warn-only) or see
-[docs/security-scanning.md](docs/security-scanning.md) for the threshold policy and the
-CI workflow.
+Catalog skills are security-scanned with
+[NVIDIA SkillSpector](https://github.com/NVIDIA/SkillSpector) - local skills from the
+working tree, external ones at the `ref` in `skills.yaml`. Entries whose `ref` is a
+branch (`main`) can change upstream after the last scan, so their scan result is a
+point-in-time one. Run `bun run scan` locally (warn-only) or see
+[docs/security-scanning.md](docs/security-scanning.md) for the threshold policy, the CI
+workflow, and the known limits.
 
 ## Licensing
 
