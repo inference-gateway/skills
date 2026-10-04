@@ -68,7 +68,8 @@ install` resolves at install time. The scan only runs on pull requests touching
   `Build catalog` PR touches only `catalog.json` and does not trigger it. So an upstream
   commit to one of those six skills lands with consumers without being scanned. Run the
   workflow manually via `workflow_dispatch` to re-verify, or pin the entry to a release
-  tag (as the third-party entries do) to make the scanned content immutable.
+  tag (as the `x-twitter-scraper`, `last30days`, `imagegen`, `wondelai` and `hyperframes`
+  entries do) to make the scanned content immutable.
 - `--no-llm` keeps CI key-free and fast (static analysis only). `bun run scan` always
   passes `--no-llm`, so a deeper semantic pass means calling SkillSpector directly.
   SkillSpector picks its provider from `SKILLSPECTOR_PROVIDER` and defaults to `nv_build`

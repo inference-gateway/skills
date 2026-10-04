@@ -34,7 +34,8 @@ This repository serves two purposes:
    `scripts/build-catalog.mjs` rebuilds it from a single source-of-truth
    input: `skills.yaml`, which lists every skill (local or external) as one
    entry. Local entries are read from `skills/<name>/SKILL.md` in this repo;
-   external entries are fetched from upstream at the pinned `ref`.
+   external entries are fetched from upstream at their `ref`, which defaults to
+   `main` when omitted.
 2. **Skill bodies** - folders under `skills/` contain skill content authored by
    the Inference Gateway maintainers, covered by the repo-level [`LICENSE`](LICENSE)
    (Apache-2.0). Skills distilled from an upstream project credit it at the end of
