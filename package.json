@@ -17,6 +17,6 @@
   "dependencies": {
     "prettier": "^3.9.10",
     "gray-matter": "^4.0.3",
-    "js-yaml": "^5.4.3"
+    "js-yaml": "^5.5.0"
   }
 }
