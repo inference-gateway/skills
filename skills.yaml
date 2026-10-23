@@ -55,6 +55,22 @@
 # Third-party contributions are welcome. Open a PR adding one entry below.
 
 skills:
+  - url: https://github.com/cis2042/ux3-product-design-harness
+    ref: v0.2.0
+    path: skills/product-design-harness/SKILL.md
+    vendor: cis2042
+    license: MIT
+    tags:
+      - product-design
+      - evidence
+      - ux
+      - decision-review
+      - execution-boundary
+    categories:
+      - design
+      - developer-tools
+    homepage: https://cis2042.github.io/ux3-product-design-harness/
+
   - url: https://github.com/inference-gateway/adl
     ref: main
     path: .agents/skills/adl/SKILL.md

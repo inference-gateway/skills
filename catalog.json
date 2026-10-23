@@ -416,6 +416,30 @@
       }
     },
     {
+      "name": "product-design-harness",
+      "description": "Use when a product direction, feature, workflow, experiment, launch, feedback signal, automation, or scale decision needs judgment before execution or the next iteration.",
+      "source": "https://github.com/cis2042/ux3-product-design-harness/tree/v0.2.0/skills/product-design-harness",
+      "vendor": "cis2042",
+      "license": "MIT",
+      "tags": [
+        "product-design",
+        "evidence",
+        "ux",
+        "decision-review",
+        "execution-boundary"
+      ],
+      "categories": [
+        "design",
+        "developer-tools"
+      ],
+      "homepage": "https://cis2042.github.io/ux3-product-design-harness/",
+      "_source": {
+        "url": "https://github.com/cis2042/ux3-product-design-harness",
+        "ref": "v0.2.0",
+        "fetchedAt": "2026-10-23T06:41:18.064Z"
+      }
+    },
+    {
       "name": "rust",
       "description": "Idiomatic Rust - ownership at API boundaries, type-driven design, error handling with thiserror/anyhow, iterators and combinators, module and workspace layout, testing tiers, and the cargo toolchain. Use when writing, reviewing, or refactoring any Rust code, especially code drifting toward other-language shapes (clone-to-appease-the-borrow-checker, `Rc<RefCell<_>>` object graphs, traits with one implementor, stringly-typed APIs) - even if the user never says \"idiomatic\". Follows the Let's Get Rusty curriculum and the Rust API Guidelines.",
       "source": "https://github.com/inference-gateway/skills/tree/main/skills/rust",
