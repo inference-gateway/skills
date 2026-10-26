@@ -2,6 +2,55 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.19.0](https://github.com/inference-gateway/skills/compare/v0.18.0...v0.19.0) (2026-10-26)
+
+### ✨ Features
+
+* add UX3 Product Design Harness to skill catalog ([#170](https://github.com/inference-gateway/skills/issues/170)) ([ea72408](https://github.com/inference-gateway/skills/commit/ea724080eec1e592483709b7eaa14198100bf728))
+
+### 👷 CI
+
+* **claude:** centralize claude.yml via reusable workflow ([#140](https://github.com/inference-gateway/skills/issues/140)) ([55676f5](https://github.com/inference-gateway/skills/commit/55676f53773732780cf922da3ae734eee0366930))
+
+### 📚 Documentation
+
+* **agents:** add code readability guidelines ([#151](https://github.com/inference-gateway/skills/issues/151)) ([3615ff3](https://github.com/inference-gateway/skills/commit/3615ff3a892c298ea129e1c19e918d4d9de67152))
+* **agents:** add code readability guidelines ([#160](https://github.com/inference-gateway/skills/issues/160)) ([0c3fc37](https://github.com/inference-gateway/skills/commit/0c3fc3774e1751f0652c1f6deece782d4557cc34))
+* align licensing statements with actual practice ([#150](https://github.com/inference-gateway/skills/issues/150)) ([0d499b2](https://github.com/inference-gateway/skills/commit/0d499b205c537fea40b054e19e6f89f6c99089f3))
+* correct catalog endpoints for registry and CLI ([#148](https://github.com/inference-gateway/skills/issues/148)) ([9cb1a7d](https://github.com/inference-gateway/skills/commit/9cb1a7d5b00cf7d0fab8aaad2fb864b7a217b0a6))
+* correct ref pinning claims for external entries ([#161](https://github.com/inference-gateway/skills/issues/161)) ([f9aad57](https://github.com/inference-gateway/skills/commit/f9aad5759b31c76c2c15dfa321cc114b812e7818))
+* correct scan coverage and llm pass recipe ([#149](https://github.com/inference-gateway/skills/issues/149)) ([53b6004](https://github.com/inference-gateway/skills/commit/53b600481e37e0da9292a82f8dde2b81aa2d3f1f))
+* refresh AGENTS.md for the skills.yaml catalog workflow ([#137](https://github.com/inference-gateway/skills/issues/137)) ([0483aa5](https://github.com/inference-gateway/skills/commit/0483aa5b9333b7a2579e295efe532f78498bd763))
+
+### 🔧 Miscellaneous
+
+* **catalog:** Rebuild catalog.json ([#135](https://github.com/inference-gateway/skills/issues/135)) ([8943974](https://github.com/inference-gateway/skills/commit/8943974f02c0d6956c952cc2901d4e1bfa9d4d8d))
+* **catalog:** rebuild catalog.json ([#136](https://github.com/inference-gateway/skills/issues/136)) ([ea75628](https://github.com/inference-gateway/skills/commit/ea7562896d29006100a0b07acaf9e138c16e937c))
+* **catalog:** rebuild catalog.json ([#152](https://github.com/inference-gateway/skills/issues/152)) ([32057b2](https://github.com/inference-gateway/skills/commit/32057b29acdc2a6429cd1b327294723d857aad90))
+* **deps:** bump claude-code 2.1.266 -> 2.1.278 ([#138](https://github.com/inference-gateway/skills/issues/138)) ([b041671](https://github.com/inference-gateway/skills/commit/b041671049dc6262772a2a3a12006ce192b5251e))
+* **deps:** bump claude-code 2.1.278 -> 2.1.280 ([#143](https://github.com/inference-gateway/skills/issues/143)) ([44e2c55](https://github.com/inference-gateway/skills/commit/44e2c55b9458b644ee3365ac0eaf65b34add9c8b))
+* **deps:** bump claude-code 2.1.280 -> 2.1.283 ([#153](https://github.com/inference-gateway/skills/issues/153)) ([76cb4a1](https://github.com/inference-gateway/skills/commit/76cb4a1d9dc51a6651460d1e56f9677a06c2bd48))
+* **deps:** bump claude-code 2.1.283 -> 2.1.285 ([#158](https://github.com/inference-gateway/skills/issues/158)) ([fe2e5fa](https://github.com/inference-gateway/skills/commit/fe2e5fa36ddd7d377d605fe512fdebce952e5897))
+* **deps:** bump claude-code 2.1.285 -> 2.1.289 ([#162](https://github.com/inference-gateway/skills/issues/162)) ([0fa505c](https://github.com/inference-gateway/skills/commit/0fa505c0b6de4db508e720ef28d66faa93fae832))
+* **deps:** bump claude-code 2.1.289 -> 2.1.296 ([#166](https://github.com/inference-gateway/skills/issues/166)) ([f6fd782](https://github.com/inference-gateway/skills/commit/f6fd7829adeb8a5d553d08e7b31cba5dbdb840ac))
+* **deps:** bump github/codeql-action ([#155](https://github.com/inference-gateway/skills/issues/155)) ([79a2731](https://github.com/inference-gateway/skills/commit/79a27316ed8cc85dccecb0cf5626b0dc03214109))
+* **deps:** bump github/codeql-action ([#169](https://github.com/inference-gateway/skills/issues/169)) ([d9ff079](https://github.com/inference-gateway/skills/commit/d9ff079d542191bda7e5ecf38291abdf92eef65a))
+* **deps:** bump infer CLI v0.192.0 -> v0.205.3 ([#139](https://github.com/inference-gateway/skills/issues/139)) ([c550a35](https://github.com/inference-gateway/skills/commit/c550a3523302893e0eec84f4695403f095158b64))
+* **deps:** bump infer CLI v0.205.3 -> v0.208.0 ([#144](https://github.com/inference-gateway/skills/issues/144)) ([aac86e9](https://github.com/inference-gateway/skills/commit/aac86e9e5190b005362a83cacc51f2dd92f72125))
+* **deps:** bump infer CLI v0.208.0 -> v0.218.0 ([#154](https://github.com/inference-gateway/skills/issues/154)) ([279b394](https://github.com/inference-gateway/skills/commit/279b394440fd2e109376aa95b94d6d9b5c42ec4e))
+* **deps:** bump infer CLI v0.218.0 -> v0.221.1 ([#157](https://github.com/inference-gateway/skills/issues/157)) ([bd564f5](https://github.com/inference-gateway/skills/commit/bd564f5b876ab0639fd7f18875a823b184d3cdee))
+* **deps:** bump infer CLI v0.221.1 -> v0.226.0 ([#163](https://github.com/inference-gateway/skills/issues/163)) ([851b0e4](https://github.com/inference-gateway/skills/commit/851b0e4cdb4caf41827fc60688e51deeb301c589))
+* **deps:** bump infer CLI v0.226.0 -> v0.231.1 ([#167](https://github.com/inference-gateway/skills/issues/167)) ([4a05f3b](https://github.com/inference-gateway/skills/commit/4a05f3bc26f59c8aad328573edb3fe75cac1c75a))
+* **deps:** bump js-yaml ([#168](https://github.com/inference-gateway/skills/issues/168)) ([b2e5d9f](https://github.com/inference-gateway/skills/commit/b2e5d9fd6627ecb2fb0b88533903f82e4554d7c3))
+* **deps:** bump js-yaml from 5.4.1 to 5.4.2 in the bun-dependencies group ([#133](https://github.com/inference-gateway/skills/issues/133)) ([d1698a7](https://github.com/inference-gateway/skills/commit/d1698a7efed1e206c3853d2d910c0f2330a45f1c))
+* **deps:** bump prettier ([#156](https://github.com/inference-gateway/skills/issues/156)) ([3899d80](https://github.com/inference-gateway/skills/commit/3899d8015355d324c40c69acda406843825722d5))
+* **deps:** bump prettier in the bun-dependencies group ([#141](https://github.com/inference-gateway/skills/issues/141)) ([33d3ebf](https://github.com/inference-gateway/skills/commit/33d3ebfb68acea041ccacc61022dac18de708b3a))
+* **deps:** bump the bun-dependencies group with 2 updates ([#164](https://github.com/inference-gateway/skills/issues/164)) ([7ea7fbd](https://github.com/inference-gateway/skills/commit/7ea7fbd9937c85e815d9bb5927633bf1e3e25173))
+* **deps:** bump the github-actions group with 2 updates ([#134](https://github.com/inference-gateway/skills/issues/134)) ([777ee37](https://github.com/inference-gateway/skills/commit/777ee37ff514755574fae2213bf61bdc6111e091))
+* **deps:** bump the github-actions group with 2 updates ([#142](https://github.com/inference-gateway/skills/issues/142)) ([75211d8](https://github.com/inference-gateway/skills/commit/75211d84c151d4723f14174352a807242820a895))
+* **deps:** bump the github-actions group with 3 updates ([#165](https://github.com/inference-gateway/skills/issues/165)) ([b01232e](https://github.com/inference-gateway/skills/commit/b01232e6b32803d0da70044f8cbc8dfc10110242))
+* update commit message and title for catalog rebuild ([930b8c0](https://github.com/inference-gateway/skills/commit/930b8c02492eac8c3570980ce8f6f9c552fa9a65))
+
 ## [0.18.0](https://github.com/inference-gateway/skills/compare/v0.17.0...v0.18.0) (2026-09-16)
 
 ### ✨ Features
