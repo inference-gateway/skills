@@ -57,7 +57,7 @@ plugins:
     - assets:
         - CHANGELOG.md
         - { path: catalog.json, label: "catalog.json (v${nextRelease.version})" }
-      releasedLabels: ["released"]
+      releasedLabels: ["<%= nextRelease.channel === 'rc' ? 'rc' : 'released' %>"]
       releaseNameTemplate: "🚀 Version ${nextRelease.version}"
       successCommentCondition: "false"
 
