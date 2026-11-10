@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.19.1](https://github.com/inference-gateway/skills/compare/v0.19.0...v0.19.1) (2026-11-10)
+
+### 👷 CI
+
+* **release:** label issues and PRs shipped in an rc with rc ([#173](https://github.com/inference-gateway/skills/issues/173)) ([01e6b80](https://github.com/inference-gateway/skills/commit/01e6b809eeecc15cfd6000cf0b76e0282707b06e))
+
+### 🔧 Miscellaneous
+
+* **deps:** bump astral-sh/setup-uv ([#174](https://github.com/inference-gateway/skills/issues/174)) ([0902f47](https://github.com/inference-gateway/skills/commit/0902f470e8d141b345075d677dea724743f6edad))
+* **deps:** bump claude-code 2.1.296 -> 2.1.308 ([#171](https://github.com/inference-gateway/skills/issues/171)) ([0a7523f](https://github.com/inference-gateway/skills/commit/0a7523ff7ea87509ee09a0acca9af3c0a6c7c9c8))
+* **deps:** bump the github-actions group with 2 updates ([#172](https://github.com/inference-gateway/skills/issues/172)) ([060ac10](https://github.com/inference-gateway/skills/commit/060ac1096c417d8eae2ecbaef922638efc507045))
+
 ## [0.19.0](https://github.com/inference-gateway/skills/compare/v0.18.0...v0.19.0) (2026-10-26)
 
 ### ✨ Features
