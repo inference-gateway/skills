@@ -15,7 +15,7 @@
     "format:check": "prettier '**/*.md' --check"
   },
   "dependencies": {
-    "prettier": "^3.9.10",
+    "prettier": "^3.10.1",
     "gray-matter": "^4.0.3",
     "js-yaml": "^5.5.0"
   }
