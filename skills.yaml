@@ -461,3 +461,18 @@ skills:
     categories:
       - media
     homepage: https://github.com/heygen-com/hyperframes
+
+  - url: https://github.com/waynehamadi/datacircle
+    ref: main
+    path: skills/datacircle/SKILL.md
+    vendor: Datacircle
+    license: MIT
+    tags:
+      - api
+      - gtm
+      - benchmark
+      - pricing
+      - data-api
+    categories:
+      - data
+    homepage: https://datacircle.dev
