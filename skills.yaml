@@ -461,3 +461,16 @@ skills:
     categories:
       - media
     homepage: https://github.com/heygen-com/hyperframes
+
+  - url: https://github.com/rnthking/redya-skills
+    ref: a833171c4b126a226a31f8680118fa8df29796cc
+    path: skill/redya-xiaohongshu/SKILL.md
+    vendor: rnthking
+    license: MIT
+    tags:
+      - xiaohongshu
+      - live-photo
+      - ecommerce
+    categories:
+      - content-creation
+    homepage: https://hy.ithinkai.cn
