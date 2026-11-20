@@ -441,8 +441,8 @@
     },
     {
       "name": "redya-xiaohongshu",
-      "description": "使用红鸦 API 创作小红书图文、制作 Live 实况图片，或检测和修改文案敏感词；支持商品档案及个人词库。",
-      "source": "https://github.com/rnthking/redya-skills/tree/a833171c4b126a226a31f8680118fa8df29796cc/skill/redya-xiaohongshu",
+      "description": "Create Xiaohongshu illustrated posts, product posts, reference adaptations and Live Photos with RedYA. Review sensitive wording or hand a finished draft to the publishing editor.",
+      "source": "https://github.com/xiaoxuux/redya-skills/tree/a5fbfd1d4cc556de0c1728822f3825e4816c8382/skill/redya-xiaohongshu",
       "vendor": "rnthking",
       "license": "MIT",
       "tags": [
@@ -455,9 +455,9 @@
       ],
       "homepage": "https://hy.ithinkai.cn",
       "_source": {
-        "url": "https://github.com/rnthking/redya-skills",
-        "ref": "a833171c4b126a226a31f8680118fa8df29796cc",
-        "fetchedAt": "2026-11-18T12:48:06.822Z"
+        "url": "https://github.com/xiaoxuux/redya-skills",
+        "ref": "a5fbfd1d4cc556de0c1728822f3825e4816c8382",
+        "fetchedAt": "2026-11-20T01:09:04.500Z"
       }
     },
     {
