@@ -23,7 +23,15 @@ task serve         # serve catalog.json at http://localhost:8787/skills/
 bun run scan       # SkillSpector security scan - warn-only; SKILLSPECTOR_ENFORCE=1 gates it
 ```
 
+`task lint` / `task lint:fix` shell out to a globally installed `markdownlint` binary (`markdownlint-cli`, not a vendored dependency - CI pins 0.48.0).
+`.markdownlintignore` and `.prettierignore` exempt `AGENTS.md` (this file) and the release-generated `CHANGELOG.md` from both linters.
+
+The scripts under `scripts/` are plain ESM on `node:` built-ins, and the test suites use `node:test` (`bun test` translates them).
+When bun's runtime is unavailable or misbehaves on a machine, `node scripts/build-catalog.mjs` and `node --test scripts/*.test.mjs` are drop-in equivalents.
+
 Run `task build && task lint` before opening a PR. CI (`ci.yml`) lints with `markdownlint-cli@0.48.0` and fails if `catalog.json` is stale relative to `skills.yaml` + `skills/` - always commit the regenerated `catalog.json` in the same PR. (`.githooks/pre-commit` does this too, but is only active after `git config core.hooksPath .githooks`.) The `Build catalog` workflow (`build-catalog.yml`) also rebuilds daily at `0 4 * * *` UTC and on `workflow_dispatch`, opening a `chore/rebuild-catalog` PR titled `chore(catalog): rebuild catalog.json`.
+
+Note that `bun run build` fetches every external entry from raw.githubusercontent.com and aborts on any fetch failure - it needs outbound network even when a PR touches only local skills. On fetch-restricted machines trust the daily rebuild and CI over a local catalog write.
 
 ## Adding or editing a skill
 
