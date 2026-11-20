@@ -463,7 +463,7 @@ skills:
     homepage: https://github.com/heygen-com/hyperframes
 
   - url: https://github.com/xiaoxuux/redya-skills
-    ref: a5fbfd1d4cc556de0c1728822f3825e4816c8382
+    ref: 3d00663f770469669419fcdbb0e60f5a762c9715
     path: skill/redya-xiaohongshu/SKILL.md
     vendor: rnthking
     license: MIT

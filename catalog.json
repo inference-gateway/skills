@@ -442,7 +442,7 @@
     {
       "name": "redya-xiaohongshu",
       "description": "Create Xiaohongshu illustrated posts, product posts, reference adaptations and Live Photos with RedYA. Review sensitive wording or hand a finished draft to the publishing editor.",
-      "source": "https://github.com/xiaoxuux/redya-skills/tree/a5fbfd1d4cc556de0c1728822f3825e4816c8382/skill/redya-xiaohongshu",
+      "source": "https://github.com/xiaoxuux/redya-skills/tree/3d00663f770469669419fcdbb0e60f5a762c9715/skill/redya-xiaohongshu",
       "vendor": "rnthking",
       "license": "MIT",
       "tags": [
@@ -456,7 +456,7 @@
       "homepage": "https://hy.ithinkai.cn",
       "_source": {
         "url": "https://github.com/xiaoxuux/redya-skills",
-        "ref": "a5fbfd1d4cc556de0c1728822f3825e4816c8382",
+        "ref": "3d00663f770469669419fcdbb0e60f5a762c9715",
         "fetchedAt": "2026-11-20T01:09:04.500Z"
       }
     },
