@@ -462,7 +462,6 @@ skills:
       - media
     homepage: https://github.com/heygen-com/hyperframes
 
-
 - url: https://github.com/ikingst-ops/silicon-teahouse
   ref: ed9ab11b59d36d417694e4b37d191ddb98fe0c73
   path: SKILL.md
