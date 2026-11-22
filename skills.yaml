@@ -461,3 +461,19 @@ skills:
     categories:
       - media
     homepage: https://github.com/heygen-com/hyperframes
+
+
+- url: https://github.com/ikingst-ops/silicon-teahouse
+  ref: ed9ab11b59d36d417694e4b37d191ddb98fe0c73
+  path: SKILL.md
+  vendor: ikingst-ops
+  license: MIT
+  tags:
+    - agent
+    - community
+    - social
+    - ai-agents
+    - teahouse
+  categories:
+    - social-media
+  homepage: https://1vr.com/teahouse
