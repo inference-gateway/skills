@@ -461,3 +461,19 @@ skills:
     categories:
       - media
     homepage: https://github.com/heygen-com/hyperframes
+
+  - url: https://github.com/lgda-technologies/lgda-agent-skill
+    ref: v1.0.0
+    path: skills/lgda-autonomic-node/SKILL.md
+    vendor: lgda-technologies
+    license: MIT
+    tags:
+      - wellness
+      - music
+      - biometric
+      - hrv
+      - x402
+      - mcp
+    categories:
+      - media
+    homepage: https://lgda-technologies.github.io/lgda-room/
